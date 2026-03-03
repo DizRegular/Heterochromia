@@ -12,9 +12,16 @@ public class Vector2D {
         this.x = x;
         this.y = y;
     }
+    
+    /** get X coordinate of this vector
+    @return return integer of this vector in X axis
+    **/
     public int getXCoord() {
         return this.x;
     }
+    /** get X coordinate of this vector
+    @return return integer of this vector in Y axis
+    **/
     public int getYCoord() {
         return this.y;
     }

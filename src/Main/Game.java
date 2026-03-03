@@ -6,28 +6,34 @@ import javax.swing.*;
 public class Game implements Runnable {
 
     private final String windowName = "Game";
+    private final JFrame gameWindow;
     private final Dimension resolution = new Dimension(1920, 1080);
     private boolean running = false;
+    
+    private Fetcher fetcher;
     private Renderer renderMachine;
+    private GameManipulator gameManipulator;
     private Thread game;
-
+    
     public Game() {
-        JFrame window = new JFrame(windowName);
+        gameWindow = new JFrame(windowName);
         JPanel curtain = new JPanel();
 
         curtain.setPreferredSize(resolution);
         curtain.setBackground(Color.CYAN);
-        window.add(curtain);
+        gameWindow.add(curtain);
 
-        window.pack();
-        window.setVisible(true);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameWindow.pack();
+        gameWindow.setVisible(true);
+        gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
 
     public void start() {
         running = true;
-        renderMachine = new Renderer();
+        fetcher = new Fetcher();
+        renderMachine = new Renderer(fetcher, gameWindow);
+        gameManipulator = new GameManipulator();
         game = new Thread(this);
         game.start();
     }
@@ -50,7 +56,7 @@ public class Game implements Runnable {
 
             while (deltaTime >= 1) {
                 ticks++;
-                tick();
+                gameManipulator.tick();
                 deltaTime -= 1;
             }
             frames++;
@@ -65,11 +71,7 @@ public class Game implements Runnable {
             try {Thread.sleep(2);} catch (Exception e) {e.printStackTrace();}
         }
     }
-
-    public void tick() {
-
-    }
-
+    
     public static void main(String[] args) {
         new Game().start();
 
