@@ -2,6 +2,7 @@ package Main;
 
 import java.awt.*;
 import javax.swing.*;
+import Logic.Main;
 
 public class Game implements Runnable {
 
@@ -14,6 +15,7 @@ public class Game implements Runnable {
     private Renderer renderMachine;
     private GameManipulator gameManipulator;
     private Thread game;
+    private Thread devAPI;
     
     public Game() {
         gameWindow = new JFrame(windowName);
@@ -34,8 +36,10 @@ public class Game implements Runnable {
         fetcher = new Fetcher();
         renderMachine = new Renderer(fetcher, gameWindow);
         gameManipulator = new GameManipulator();
+        devAPI = new Thread(new Main());
         game = new Thread(this);
         game.start();
+        devAPI.start();
     }
 
     @Override
@@ -56,7 +60,7 @@ public class Game implements Runnable {
 
             while (deltaTime >= 1) {
                 ticks++;
-                gameManipulator.tick();
+                gameManipulator.tick(deltaTime);
                 deltaTime -= 1;
             }
             frames++;

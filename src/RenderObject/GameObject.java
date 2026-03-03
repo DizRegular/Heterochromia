@@ -3,14 +3,17 @@ import java.awt.image.*;
 import java.io.*;
 import java.awt.Rectangle;
 import javax.imageio.ImageIO;
+
 abstract public class GameObject {    
     protected Vector2D position;
     protected Vector2D size;
     protected Rectangle boundary;
+    protected boolean visibility = true;
     public GameObject(Vector2D pos, Vector2D size) {
         this.size=size;
         this.position = pos;
         this.boundary = new Rectangle((int)position.getXCoord(), (int)position.getYCoord(), (int)size.getXCoord(), (int)size.getYCoord());
+        
     }
     
     public Rectangle getBounds(){
@@ -29,10 +32,13 @@ abstract public class GameObject {
      * 
      * @param pos
      */
-    public void setPosition(Vector2D pos) {
+    public synchronized void setPosition(Vector2D pos) {
         this.position = pos;
     }
     
+    public void setVisibility(boolean b) {
+        
+    }
     /** move position of this object relative to their current position
      * 
      * @param pos
