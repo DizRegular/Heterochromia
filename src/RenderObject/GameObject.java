@@ -10,6 +10,7 @@ abstract public class GameObject {
     protected Vector2D size;
     protected Rectangle boundary;
     protected String Tag;
+    protected boolean isSolid = true;
     protected boolean visibility = true;
     public GameObject(String name, Vector2D pos, Vector2D size,String tag) {
         this.name = name;
@@ -19,6 +20,15 @@ abstract public class GameObject {
         this.boundary = new Rectangle((int)position.getXCoord(), (int)position.getYCoord(), (int)size.getXCoord(), (int)size.getYCoord());
         
     }
+
+    public boolean isIsSolid() {
+        return isSolid;
+    }
+
+    public void setIsSolid(boolean isSolid) {
+        this.isSolid = isSolid;
+    }
+    
     public GameObject(String name, Vector2D pos, Vector2D size) {
         this.name = name;
         this.size=size;
@@ -60,5 +70,7 @@ abstract public class GameObject {
      */
     public void movePostion(Vector2D pos) {
         this.setPosition(new Vector2D(this.position.getXCoord() + pos.getXCoord(), this.position.getYCoord() + pos.getYCoord()));
+        this.boundary.setLocation((int)this.position.getXCoord(), (int)this.position.getYCoord());
     }
+    
 }
