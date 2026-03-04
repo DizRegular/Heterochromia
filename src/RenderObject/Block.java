@@ -6,8 +6,8 @@ import javax.imageio.ImageIO;
 
 public class Block extends StyledObject {
     
-    public Block(Vector2D pos, Vector2D size, String imageName) {
-        super(pos, size, imageName);
+    public Block(String name, Vector2D pos, Vector2D size, String imageName) {
+        super(name, pos, size, imageName);
     }
     
     

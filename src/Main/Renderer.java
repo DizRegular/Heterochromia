@@ -32,7 +32,9 @@ public class Renderer {
         
         for (GameObject object : GameUniverse.ObserveUniverse()) {
             if (object instanceof StyledObject styled) {
-                g.drawImage(styled.getTexture(), styled.getPostion().getXCoord(), styled.getPostion().getYCoord(), styled.getSize().getXCoord(), styled.getSize().getYCoord(), null); 
+                if (styled.getVisibility() == true) {
+                    g.drawImage(styled.getTexture(), styled.getPostion().getXCoord(), styled.getPostion().getYCoord(), styled.getSize().getXCoord(), styled.getSize().getYCoord(), null); 
+                }
             }
 
         }

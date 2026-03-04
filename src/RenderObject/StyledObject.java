@@ -8,8 +8,8 @@ import javax.imageio.ImageIO;
 abstract public class StyledObject extends GameObject {
     protected BufferedImage image;
 
-    public StyledObject(Vector2D pos, Vector2D size, String imageName) {
-        super(pos, size);
+    public StyledObject(String name, Vector2D pos, Vector2D size, String imageName) {
+        super(name, pos, size);
         try {
             this.image = ImageIO.read(new File(imageName));
         } catch (IOException e) {

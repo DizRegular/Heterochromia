@@ -3,7 +3,7 @@ package Main;
 import java.awt.*;
 import javax.swing.*;
 import Logic.Main;
-
+import Main.InputManager;
 public class Game implements Runnable {
 
     private final String windowName = "Game";
@@ -15,7 +15,7 @@ public class Game implements Runnable {
     private Renderer renderMachine;
     private GameManipulator gameManipulator;
     private Thread game;
-    private Thread devAPI;
+    private Main devAPI;
     
     public Game() {
         gameWindow = new JFrame(windowName);
@@ -24,7 +24,8 @@ public class Game implements Runnable {
         curtain.setPreferredSize(resolution);
         curtain.setBackground(Color.CYAN);
         gameWindow.add(curtain);
-
+        gameWindow.addKeyListener(new InputManager());
+        
         gameWindow.pack();
         gameWindow.setVisible(true);
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,12 +35,14 @@ public class Game implements Runnable {
     public void start() {
         running = true;
         fetcher = new Fetcher();
+        devAPI = new Main();
+        Thread processAPI = new Thread(devAPI);
         renderMachine = new Renderer(fetcher, gameWindow);
-        gameManipulator = new GameManipulator();
-        devAPI = new Thread(new Main());
+        gameManipulator = new GameManipulator(devAPI);
+        devAPI.initialize();
         game = new Thread(this);
         game.start();
-        devAPI.start();
+        processAPI.start();
     }
 
     @Override

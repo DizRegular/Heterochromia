@@ -1,13 +1,15 @@
 package Main;
 import RenderObject.*;
-public class GameManipulator {
+import Logic.Main;
+
+public class GameManipulator {    
+    private Main devAPI;
     
-    
-    public GameManipulator() {
-        
+    public GameManipulator(Main api) {
+        this.devAPI = api;
     }
     
     public void tick(double deltaTime) {
-        
+        devAPI.process(deltaTime);
     }
 }

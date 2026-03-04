@@ -34,7 +34,6 @@ public class Fetcher {
                 }
             }   
         }
-        System.out.println(textures2D.toString());
     }
     
     
