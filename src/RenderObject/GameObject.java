@@ -9,13 +9,20 @@ abstract public class GameObject {
     protected Vector2D position;
     protected Vector2D size;
     protected Rectangle boundary;
-    protected String Type;
+    protected String Tag;
     protected boolean visibility = true;
-    public GameObject(String name, Vector2D pos, Vector2D size,String type) {
+    public GameObject(String name, Vector2D pos, Vector2D size,String tag) {
         this.name = name;
         this.size=size;
         this.position = pos;
-        this.Type=type;
+        this.Tag=tag;
+        this.boundary = new Rectangle((int)position.getXCoord(), (int)position.getYCoord(), (int)size.getXCoord(), (int)size.getYCoord());
+        
+    }
+    public GameObject(String name, Vector2D pos, Vector2D size) {
+        this.name = name;
+        this.size=size;
+        this.position = pos;
         this.boundary = new Rectangle((int)position.getXCoord(), (int)position.getYCoord(), (int)size.getXCoord(), (int)size.getYCoord());
         
     }
