@@ -8,7 +8,7 @@ public class InputManager implements KeyListener {
      * @param key
      * @return boolean
      */
-    public static boolean isKeyDown(char key) {
+    public static boolean isKeyDown(int key) {
         return InputManager.eventCurrentFlags[key];
     }
     

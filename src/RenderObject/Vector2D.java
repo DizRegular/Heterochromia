@@ -25,4 +25,17 @@ public class Vector2D {
     public double getYCoord() {
         return this.y;
     }
+    /** calculate the result of two 2d vector combine
+     * @param v
+     * @return 
+     */
+    public Vector2D addVector2D(Vector2D v) {
+        double newX = this.x + v.getXCoord();
+        double newY = this.y + v.getYCoord();
+        return new Vector2D(newX, newY);
+    }
+    @Override
+    public String toString() {
+        return "("+ this.x + ", " +this.y + ")";
+    }
 }
