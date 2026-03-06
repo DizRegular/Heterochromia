@@ -11,8 +11,10 @@ public class GameManipulator {
     public void tick(double deltaTime) {
         this.applyPhysic();
         devAPI.process(deltaTime);
+        devAPI.processEvent();
+
     }
-    
+        
     public void applyPhysic() {
         
     }

@@ -15,4 +15,8 @@ public class GameUniverse {
     public static void summon(GameObject obj) {
         objectList.add(obj);
     }
+    
+    public static void sacrifice(GameObject obj) {
+        System.out.println((objectList.remove(obj)));
+    }
 }

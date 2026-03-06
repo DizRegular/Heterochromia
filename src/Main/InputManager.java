@@ -3,36 +3,25 @@ package Main;
 import java.awt.event.*;
 import Logic.*;
 public class InputManager implements KeyListener {
-    private static EventList eventCurrentFlag = EventList.Nothing; //This control what event happens
-    public static enum EventList { //List of event that can happen
-        Nothing, WalkEast, WalkWest, WalkNorth, WalkSouth
-    } 
-    
-    public static EventList getCurrentEventFlag() {
-        return InputManager.eventCurrentFlag;
-    }
-    
-    public static void setCurrentEventFlag(EventList event) {
-        InputManager.eventCurrentFlag = event;
+    private static boolean[] eventCurrentFlags = new boolean[255]; 
+    /** return true if the key is down, uses for managing multiple keys
+     * @param key
+     * @return boolean
+     */
+    public static boolean isKeyDown(char key) {
+        return InputManager.eventCurrentFlags[key];
     }
     
     @Override
     public void keyReleased(KeyEvent e) {
-        InputManager.setCurrentEventFlag(EventList.Nothing);
+        char keyPressed = e.getKeyChar();
+        InputManager.eventCurrentFlags[keyPressed] = false;
     }
     
     @Override
     public void keyPressed(KeyEvent e) {
         char keyPressed = e.getKeyChar();
-        if (keyPressed == 'd') {
-            InputManager.setCurrentEventFlag(EventList.WalkEast);
-        } else if (keyPressed == 'a') {
-            InputManager.setCurrentEventFlag(EventList.WalkWest);
-        } else if (keyPressed == 'w') {
-            InputManager.setCurrentEventFlag(EventList.WalkNorth);
-        } else if (keyPressed == 's') {
-            InputManager.setCurrentEventFlag(EventList.WalkSouth);
-        }
+        InputManager.eventCurrentFlags[keyPressed] = true;
     }
     
     @Override

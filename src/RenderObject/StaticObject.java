@@ -1,8 +1,10 @@
 package RenderObject;
-abstract public class StaticObject extends GameObject {
-    private boolean has_physinc = false;
-    public StaticObject(String name, Vector2D pos, Vector2D size, String tag) {
-        super(name, pos, size, tag);
-    }
+abstract public class StaticObject extends StyledObject {
     
+    public StaticObject(String name, Vector2D pos, Vector2D size, String imageName, String tag) {
+        super(name, pos, size, imageName, tag);
+    }
+    public StaticObject(String name, Vector2D pos, Vector2D size, String imageName) {
+        super(name, pos, size, imageName);
+    }
 }
