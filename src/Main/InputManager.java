@@ -5,7 +5,7 @@ import Logic.*;
 public class InputManager implements KeyListener {
     private static EventList eventCurrentFlag = EventList.Nothing; //This control what event happens
     public static enum EventList { //List of event that can happen
-        Nothing, Change
+        Nothing, WalkEast, WalkWest, WalkNorth, WalkSouth
     } 
     
     public static EventList getCurrentEventFlag() {
@@ -24,8 +24,14 @@ public class InputManager implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         char keyPressed = e.getKeyChar();
-        if (keyPressed == 'w') {
-            InputManager.setCurrentEventFlag(EventList.Change);
+        if (keyPressed == 'd') {
+            InputManager.setCurrentEventFlag(EventList.WalkEast);
+        } else if (keyPressed == 'a') {
+            InputManager.setCurrentEventFlag(EventList.WalkWest);
+        } else if (keyPressed == 'w') {
+            InputManager.setCurrentEventFlag(EventList.WalkNorth);
+        } else if (keyPressed == 's') {
+            InputManager.setCurrentEventFlag(EventList.WalkSouth);
         }
     }
     

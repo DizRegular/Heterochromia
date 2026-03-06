@@ -37,8 +37,18 @@ public class Main implements Runnable {
         switch (event) {
             case EventList.Nothing:
                 break;
-            case EventList.Change:
-                pikachu.movePostion(new Vector2D(1,1));
+            case EventList.WalkEast:
+                pikachu.movePostion(new Vector2D(1,0));
+                break;
+            case EventList.WalkWest:
+                pikachu.movePostion(new Vector2D(-1, 0));
+                break;
+            case EventList.WalkNorth:
+                pikachu.movePostion(new Vector2D(0, 1));
+                break;
+            case EventList.WalkSouth:
+                pikachu.movePostion(new Vector2D(0, -1));
+                break;
         }
     }
     
