@@ -11,6 +11,7 @@ abstract public class GameObject {
     protected String Tag;
     protected boolean isSolid = true;
     protected boolean visibility = true;
+    
     public GameObject(String name, Vector2D pos, Vector2D size,String tag) {
         this.name = name;
         this.size=size;

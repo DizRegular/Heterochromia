@@ -25,10 +25,20 @@ public class Vector2D {
     public double getYCoord() {
         return this.y;
     }
+
+    
+    public void setX(double x) {
+        this.x = x;
+    }
+
     /** calculate the result of two 2d vector combine
      * @param v
      * @return 
      */
+    public void setY(double y) {    
+        this.y = y;
+    }
+
     public Vector2D addVector2D(Vector2D v) {
         double newX = this.x + v.getXCoord();
         double newY = this.y + v.getYCoord();

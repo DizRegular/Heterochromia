@@ -7,6 +7,8 @@ public class Main implements Runnable {
     /** Acts like codes that controls logic from a higher level like Unity.
      * 
      */
+    public double lf=0;
+    public double fall=-1;
     public Decoration pikachu2;
     public KinematicObject physicPikachu;
     public int count = 1;
@@ -30,7 +32,7 @@ public class Main implements Runnable {
      */
     public void process(double deltaTime) {
         if (added == false) {
-            physicPikachu.addAcceleration(new Vector2D(0, -1));
+            physicPikachu.addAcceleration(new Vector2D(lf, fall));
             added = true;
         }
     }
@@ -51,12 +53,17 @@ public class Main implements Runnable {
 //                physicPikachu.movePostion(new Vector2D(1,1));
 //            } 
             if (InputManager.isKeyDown('d')) {
-                physicPikachu.movePostion(new Vector2D(1,0));
-                return;
+                lf=1;
+                physicPikachu.movePostion(new Vector2D(lf,fall));
+                
             }
-            if (InputManager.isKeyDown('a')) {
-                physicPikachu.movePostion(new Vector2D(-1,0));
-                return;
+            else if (InputManager.isKeyDown('a')) {
+                lf=-1;
+                physicPikachu.movePostion(new Vector2D(lf,fall));
+                
+            }
+            else{
+                lf=0;
             }
 //            if (InputManager.isKeyDown('w')) {
 //                physicPikachu.movePostion(new Vector2D(0,-1));
@@ -67,9 +74,12 @@ public class Main implements Runnable {
 //                return;
 //            }
             if (InputManager.isKeyDown(KeyEvent.VK_SPACE)) {
-                physicPikachu.addAcceleration(new Vector2D(0, -2));
+                fall=-2;
+                physicPikachu.addAcceleration(new Vector2D(lf, fall));
             }
-
+            else{
+                fall=-1;
+            }
         }
 
 }
