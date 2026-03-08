@@ -1,0 +1,8 @@
+# Ignore local NetBeans user settings
+nbproject/private/
+build/
+dist/
+nbpython/
+nbproject/genfiles.properties
+nbproject/project.impl.properties
+*.class
