@@ -20,6 +20,7 @@ public class InputManager implements KeyListener {
     
     @Override
     public void keyPressed(KeyEvent e) {
+        System.out.println(e.getKeyChar());
         char keyPressed = e.getKeyChar();
         InputManager.eventCurrentFlags[keyPressed] = true;
     }

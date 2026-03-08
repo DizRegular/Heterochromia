@@ -7,4 +7,6 @@ public interface Physic {
     abstract public void addAcceleration(Vector2D v);
     abstract public Vector2D getAcceleration();
     abstract public void setAcceleration(Vector2D v);
+    
+    abstract public void showPhysicProperties();
 }

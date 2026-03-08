@@ -21,8 +21,8 @@ public class GameManipulator {
     public void applyPhysic() {
         ArrayList<KinematicObject> PhysicObjects = GameUniverse.ObservePhysic();
         for (KinematicObject obj : PhysicObjects) {
+//            if (obj.getBounds().in)
             obj.addVelocity(obj.getAcceleration());
-            obj.addAcceleration(new Vector2D(0, 9.8/60));
             obj.movePostion(obj.getVelocity());
             obj.setAcceleration(new Vector2D(0, 9.8/60));
         }

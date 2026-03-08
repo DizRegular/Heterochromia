@@ -38,4 +38,15 @@ public class KinematicObject extends CollisionObject implements Physic {
     public void setAcceleration(Vector2D a) {
         this.acceleration = a;
     }
+    
+    @Override
+    public void showPhysicProperties() {
+        System.out.println("{A: " + this.getAcceleration().toString() + "}\n" + "{V: " + this.getAcceleration().toString() + "}");
+    }
+    
+    @Override
+    public void movePostion(Vector2D pos) {
+        this.setPosition(new Vector2D(this.position.getXCoord() + pos.getXCoord(), this.position.getYCoord() + pos.getYCoord()));
+        this.boundary.setLocation((int)this.position.getXCoord() + (int)pos.getXCoord(), (int)this.position.getYCoord() + (int)pos.getYCoord());
+    }
 }

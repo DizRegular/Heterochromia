@@ -44,6 +44,10 @@ public class Vector2D {
         double newY = this.y + v.getYCoord();
         return new Vector2D(newX, newY);
     }
+    
+    /** print (x, y) for easier reading
+     * @return 
+     */
     @Override
     public String toString() {
         return "("+ this.x + ", " +this.y + ")";

@@ -1,5 +1,5 @@
 package Main;
-
+import java.awt.GraphicsEnvironment.*;
 import java.awt.*;
 import javax.swing.*;
 import Logic.Main;
@@ -8,6 +8,7 @@ public class Game implements Runnable {
 
     private final String windowName = "Game";
     private final JFrame gameWindow;
+    private final JPanel curtain;
     private final Dimension resolution = new Dimension(1920, 1080);
     private boolean running = false;
     
@@ -19,7 +20,7 @@ public class Game implements Runnable {
     
     public Game() {
         gameWindow = new JFrame(windowName);
-        JPanel curtain = new JPanel();
+        curtain = new JPanel();
 
         curtain.setPreferredSize(resolution);
         curtain.setBackground(Color.CYAN);
@@ -27,6 +28,7 @@ public class Game implements Runnable {
         gameWindow.addKeyListener(new InputManager());
         
         gameWindow.pack();
+        GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(gameWindow);
         gameWindow.setVisible(true);
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -39,7 +41,7 @@ public class Game implements Runnable {
         Thread processAPI = new Thread(devAPI);
         renderMachine = new Renderer(fetcher, gameWindow);
         gameManipulator = new GameManipulator(devAPI);
-        devAPI.initialize();
+        devAPI.initialize(this);
         game = new Thread(this);
         game.start();
         processAPI.start();
@@ -77,6 +79,10 @@ public class Game implements Runnable {
             }
             try {Thread.sleep(2);} catch (Exception e) {e.printStackTrace();}
         }
+    }
+    
+    public JPanel getGameWindow() {
+        return this.curtain;
     }
     
     public static void main(String[] args) {

@@ -3,7 +3,7 @@ package RenderObject;
 import java.awt.Rectangle;
 
 abstract public class CollisionObject extends StyledObject {
-    private Rectangle boundary;
+    protected Rectangle boundary;
     
     public CollisionObject(String name, Vector2D pos, Vector2D size, String imageName, String tag) {
         super(name, pos, size, imageName, tag);
