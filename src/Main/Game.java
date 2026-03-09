@@ -4,11 +4,12 @@ import java.awt.*;
 import javax.swing.*;
 import Logic.Main;
 import Main.InputManager;
+import javax.swing.border.Border;
 public class Game implements Runnable {
 
     private final String windowName = "Game";
-    private final JFrame gameWindow;
-    private final JPanel curtain;
+    private static JFrame gameWindow;
+    private static JPanel curtain;
     private final Dimension resolution = new Dimension(1920, 1080);
     private boolean running = false;
     
@@ -18,12 +19,21 @@ public class Game implements Runnable {
     private Thread game;
     private Main devAPI;
     
-    public Game() {
+    private static double deltaTime = 0;
+    private static int ticks = 0;
+    private static int frames = 0;
+    private static double tickPerSec = 0;
+    private static double fps = 0;
+    
+    private Game() {
         gameWindow = new JFrame(windowName);
         curtain = new JPanel();
 
         curtain.setPreferredSize(resolution);
         curtain.setBackground(Color.CYAN);
+        
+        JLabel label = new JLabel("Loading...");
+        curtain.add(label, BorderLayout.CENTER);
         gameWindow.add(curtain);
         gameWindow.addKeyListener(new InputManager());
         
@@ -39,9 +49,9 @@ public class Game implements Runnable {
         fetcher = new Fetcher();
         devAPI = new Main();
         Thread processAPI = new Thread(devAPI);
-        renderMachine = new Renderer(fetcher, gameWindow);
+        renderMachine = new Renderer(fetcher, Game.gameWindow);
         gameManipulator = new GameManipulator(devAPI);
-        devAPI.initialize(this);
+        devAPI.initialize();
         game = new Thread(this);
         game.start();
         processAPI.start();
@@ -51,12 +61,8 @@ public class Game implements Runnable {
     public void run() {
         long lastTime = System.nanoTime();
         double nsPerTick = 1000000000D / 60D;
-
-        int ticks = 0;
-        int frames = 0;
-
         long lasTimer = System.currentTimeMillis();
-        double deltaTime = 0;
+        
 
         while (running) {
             long now = System.nanoTime();
@@ -73,7 +79,8 @@ public class Game implements Runnable {
 
             if (System.currentTimeMillis() - lasTimer >= 1000) {
                 lasTimer += 1000;
-                System.out.println(frames + ", " + ticks + ", " + deltaTime);
+                Game.tickPerSec = ticks;
+                Game.fps = frames;
                 ticks = 0;
                 frames = 0;
             }
@@ -81,8 +88,22 @@ public class Game implements Runnable {
         }
     }
     
-    public JPanel getGameWindow() {
-        return this.curtain;
+    
+    
+    public static JPanel getGameWindow() {
+        return Game.curtain;
+    }
+    
+    public static double getDeltaTime() {
+        return Game.deltaTime;
+    }
+    
+    public static double getFramesPerSecond() {
+        return Game.fps;
+    }
+        
+    public static double getTickPerSecond() {
+        return Game.tickPerSec;
     }
     
     public static void main(String[] args) {

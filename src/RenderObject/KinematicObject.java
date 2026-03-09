@@ -1,12 +1,20 @@
 package RenderObject;
+
+import Main.GameManipulator;
+
 public class KinematicObject extends CollisionObject implements Physic {
     protected Vector2D acceleration = new Vector2D(0,0);
     protected Vector2D velocity = new Vector2D(0,0);
+    
+    protected boolean hasPhysicChange = false;
+    protected int[] insideQudrant;
     public KinematicObject(String name, Vector2D pos, Vector2D size, String imageName, String tag) {
         super(name, pos, size, imageName, tag);
+        GameManipulator.sortPhysicObjectPosition(this);
     }
     public KinematicObject(String name, Vector2D pos, Vector2D size, String imageName) {
         super(name, pos, size, imageName);
+        GameManipulator.sortPhysicObjectPosition(this);
     }
     
      @Override
@@ -48,5 +56,22 @@ public class KinematicObject extends CollisionObject implements Physic {
     public void movePostion(Vector2D pos) {
         this.setPosition(new Vector2D(this.position.getXCoord() + pos.getXCoord(), this.position.getYCoord() + pos.getYCoord()));
         this.boundary.setLocation((int)this.position.getXCoord() + (int)pos.getXCoord(), (int)this.position.getYCoord() + (int)pos.getYCoord());
+        this.hasPhysicChange = true;
+    }
+    
+    public boolean getPhysicChange() {
+        return this.hasPhysicChange;
+    }
+    
+    public void setPhysicChange(boolean b) {
+        this.hasPhysicChange = b;
+    }
+    
+    public int[] getQuadrants() {
+        return this.insideQudrant;
+    }
+    
+    public void setQuadrant(int[] quads) {
+        this.insideQudrant = quads;
     }
 }

@@ -24,13 +24,14 @@ public class Main implements Runnable {
     
     /** run once when the game runs
      */
-    public void initialize(Game gameEngine) {
-        this.gameEngine = gameEngine;
-        pikachu2 = new Decoration("Pikachu2", new Vector2D(203, 100), new Vector2D(400,400), "res/GameAssets/Textures/placeholder.jpg");
-        physicPikachu = new KinematicObject("Pikachu3", new Vector2D(500, 0), new Vector2D(550,200), "res/GameAssets/Textures/placeholder.jpg");
-        GameUniverse.summon(pikachu2);
-        GameUniverse.summon(physicPikachu);
-        System.out.println(this.gameEngine.getGameWindow().getSize().toString());
+    public void initialize() {
+        physicPikachu = new KinematicObject("Pikachu3", new Vector2D(0, 0), new Vector2D(550,200), "res/GameAssets/Textures/placeholder.jpg");
+        for (int i = 1; i < 11; i++) {
+            pikachu2 = new Decoration("Pikachu2", new Vector2D(i*100, 0), new Vector2D(200,200), "res/GameAssets/Textures/placeholder.jpg");
+            GameUniverse.newInstance(pikachu2);
+
+        }
+        GameUniverse.newInstance(physicPikachu);
     }
     
     /** run every tick when the game is running
@@ -42,25 +43,13 @@ public class Main implements Runnable {
             added = true;
         }
         if (physicPikachu.getPostion().getYCoord() > gameEngine.getGameWindow().getSize().getHeight() ) {
-            physicPikachu.setPosition(new Vector2D(physicPikachu.getPostion().getXCoord(), 0));
+            physicPikachu.setPosition(new Vector2D(physicPikachu.getPostion().getXCoord(), 799));
         }
     }
     /** Do what will happen when an event Occur 
      * run before process and run after every tick
      */
     public void processEvent() {
-//            if ((InputManager.isKeyDown('d')) && (InputManager.isKeyDown('w'))) {
-//                physicPikachu.movePostion(new Vector2D(1,-1));
-//            } 
-//            if ((InputManager.isKeyDown('a')) && (InputManager.isKeyDown('w'))) {
-//                physicPikachu.movePostion(new Vector2D(-1,-1));
-//            } 
-//            if ((InputManager.isKeyDown('a')) && (InputManager.isKeyDown('s'))) {
-//                physicPikachu.movePostion(new Vector2D(-1,1));
-//            } 
-//            if ((InputManager.isKeyDown('d')) && (InputManager.isKeyDown('s'))) {
-//                physicPikachu.movePostion(new Vector2D(1,1));
-//            } 
             if (InputManager.isKeyDown('d')) {
                 lf=5;
                 physicPikachu.movePostion(new Vector2D(lf,fall));
@@ -71,14 +60,6 @@ public class Main implements Runnable {
                 physicPikachu.movePostion(new Vector2D(lf,fall));
                 
             }
-//            if (InputManager.isKeyDown('w')) {
-//                physicPikachu.movePostion(new Vector2D(0,-1));
-//                return;
-//            }
-//            if (InputManager.isKeyDown('s')) {
-//                physicPikachu.movePostion(new Vector2D(0,1));
-//                return;
-//            }
             if (InputManager.isKeyDown(KeyEvent.VK_SPACE)) {
                 fall=-1;
                 physicPikachu.addAcceleration(new Vector2D(0, fall));

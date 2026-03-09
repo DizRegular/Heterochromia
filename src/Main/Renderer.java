@@ -10,7 +10,7 @@ public class Renderer {
     private Fetcher gameAssetsLoader;
     
     private JFrame gameWindow;
-    
+    private static String text = ""; //use this for debugging
     public Renderer(Fetcher f, JFrame window) {
         this.gameAssetsLoader = f;
         this.gameWindow = window;
@@ -24,7 +24,7 @@ public class Renderer {
         }
         Graphics2D g = (Graphics2D)bs.getDrawGraphics();
         
-        g.setColor(Color.BLACK);
+        g.setColor(Color.blue);
         g.fillRect(0, 0, gameWindow.getWidth(), gameWindow.getHeight());
         
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, 
@@ -38,7 +38,14 @@ public class Renderer {
             }
 
         }
+        g.drawString("Frames:" + Game.getFramesPerSecond(), 100, 10);
+        g.drawString("Tick:" + Game.getTickPerSecond(), 100, 30);
+        g.drawString(text, 100, 50);
         g.dispose();
         bs.show();
+    }
+    
+    public static void setPrintingTextOnScreen(String s) {
+        Renderer.text = s;
     }
 }

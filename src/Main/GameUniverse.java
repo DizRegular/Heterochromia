@@ -18,7 +18,7 @@ public class GameUniverse {
         return GameUniverse.objectList.size();
     }
     
-    public static void summon(GameObject obj) {
+    public static void newInstance(GameObject obj) {
         objectList.add(obj);
         if (obj instanceof KinematicObject Kinematic_Object) {
             PhysicObjectList.add(Kinematic_Object);

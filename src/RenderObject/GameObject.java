@@ -68,4 +68,9 @@ abstract public class GameObject {
         this.setPosition(new Vector2D(this.position.getXCoord() + pos.getXCoord(), this.position.getYCoord() + pos.getYCoord()));
     }
     
+    @Override
+    public String toString() {
+        return this.name;
+    }
+    
 }
