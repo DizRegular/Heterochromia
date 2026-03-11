@@ -17,6 +17,9 @@ public class Main implements Runnable {
     public KinematicObject physicPikachu;
     public int count = 1;
     public boolean added = false;
+    public int startjump=0;
+    public int maxjump=25;
+    public boolean jumping=false;
     @Override
     public void run() {      //this run very fast use with caution....  
         
@@ -61,8 +64,19 @@ public class Main implements Runnable {
                 
             }
             if (InputManager.isKeyDown(KeyEvent.VK_SPACE)) {
+                if(!jumping){//add chack is tuch ground after addhitbox
+                    startjump=maxjump;
+                    jumping=true;
+                }}
+            if(jumping&&startjump>0){
+                
                 fall=-1;
                 physicPikachu.addAcceleration(new Vector2D(0, fall));
+                startjump--;
+            }
+            if(jumping&&startjump<=0){
+                jumping=false;
+                startjump=0;
             }
             
             if (InputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {
