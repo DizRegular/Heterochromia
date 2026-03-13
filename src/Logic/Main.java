@@ -55,13 +55,14 @@ public class Main implements Runnable {
     public void processEvent() {
             if (InputManager.isKeyDown('d')) {
                 lf=5;
-                physicPikachu.movePostion(new Vector2D(lf,fall));
                 
             }
             else if (InputManager.isKeyDown('a')) {
                 lf=-5;
-                physicPikachu.movePostion(new Vector2D(lf,fall));
                 
+            }
+            else{
+                lf=0;
             }
             if (InputManager.isKeyDown(KeyEvent.VK_SPACE)) {
                 if(!jumping){//add chack is tuch ground after addhitbox
@@ -78,7 +79,7 @@ public class Main implements Runnable {
                 jumping=false;
                 startjump=0;
             }
-            
+            physicPikachu.movePostion(new Vector2D(lf, fall));
             if (InputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {
                 System.exit(0);
             }
