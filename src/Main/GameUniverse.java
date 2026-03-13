@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import RenderObject.*;
 public class GameUniverse {
     private static CopyOnWriteArrayList<GameObject> objectList = new CopyOnWriteArrayList<>();
-    private static ArrayList<KinematicObject> PhysicObjectList = new ArrayList<>();
+    private static ArrayList<CollisionObject> PhysicObjectList = new ArrayList<>();
     
     public static CopyOnWriteArrayList<GameObject> ObserveUniverse() {
         return GameUniverse.objectList;
     }
     
-    public static ArrayList<KinematicObject> ObservePhysic() {
+    public static ArrayList<CollisionObject> ObservePhysic() {
         return GameUniverse.PhysicObjectList;
     }
     
@@ -20,9 +20,9 @@ public class GameUniverse {
     
     public static void newInstance(GameObject obj) {
         objectList.add(obj);
-        if (obj instanceof KinematicObject Kinematic_Object) {
-            PhysicObjectList.add(Kinematic_Object);
-        }
+        if (obj instanceof CollisionObject collision) {
+            PhysicObjectList.add(collision);
+        } 
     }
     
     public static void explode(GameObject obj) {
