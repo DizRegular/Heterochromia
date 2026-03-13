@@ -1,29 +1,30 @@
 package RenderObject;
 
-import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 
 abstract public class CollisionObject extends StyledObject {
-    protected Rectangle boundary;
+    protected Rectangle2D boundary;
     protected int[] insideQudrant;
-    protected boolean hasPhysicChange = false;
+    protected boolean hasPhysicChange = true;
 
     public CollisionObject(String name, Vector2D pos, Vector2D size, String imageName, String tag) {
         super(name, pos, size, imageName, tag);
-        this.boundary = new Rectangle((int)position.getXCoord(), (int)position.getYCoord(), (int)size.getXCoord(), (int)size.getYCoord());
+        this.boundary = new Rectangle2D.Double(position.getXCoord(), position.getYCoord(), size.getXCoord(), size.getYCoord());
     }
     public CollisionObject(String name, Vector2D pos, Vector2D size, String imageName) {
         super(name, pos, size, imageName);
-        this.boundary = new Rectangle((int)position.getXCoord(), (int)position.getYCoord(), (int)size.getXCoord(), (int)size.getYCoord());
+        this.boundary = new Rectangle2D.Double(position.getXCoord(), position.getYCoord(), size.getXCoord(), size.getYCoord());
     }
     
-    public Rectangle getBounds(){
+    public Rectangle2D getBounds(){
         return this.boundary;
     }
     
     @Override
     public void movePostion(Vector2D pos) {
-        this.setPosition(new Vector2D(this.position.getXCoord() + pos.getXCoord(), this.position.getYCoord() + pos.getYCoord()));
-        this.boundary.setLocation((int)this.position.getXCoord() + (int)pos.getXCoord(), (int)this.position.getYCoord() + (int)pos.getYCoord());
+        Vector2D startPos = this.position;
+        this.setPosition(new Vector2D(startPos.getXCoord() + pos.getXCoord(), startPos.getYCoord() + pos.getYCoord()));
+        this.boundary.setFrame(startPos.getXCoord() + pos.getXCoord(), startPos.getYCoord() + pos.getYCoord(), this.boundary.getWidth(), this.boundary.getHeight());
         this.hasPhysicChange = true;
     }
     

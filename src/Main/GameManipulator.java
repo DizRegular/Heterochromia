@@ -1,7 +1,7 @@
 package Main;
 import RenderObject.*;
 import Logic.Main;
-import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 public class GameManipulator {    
     
@@ -75,17 +75,26 @@ public class GameManipulator {
     
 
     
-    private boolean setYCollsion(double YIntersect, KinematicObject k, Rectangle collidedArea, Vector2D startVelo, Vector2D startAcce) {
+    private boolean setYCollsion(double YIntersect, KinematicObject k, CollisionObject otherObj, Rectangle2D collidedArea, Vector2D startVelo, Vector2D startAcce) {
+        int direction = -1;
+        double a2 = k.getBounds().getMaxY();
+        double b2 = otherObj.getBounds().getMinY();
+        double YDiff = k.getBounds().getMaxY() - otherObj.getBounds().getMinY();
+        if (YDiff < 0) {
+            direction *= -1;
+        }
         if (YIntersect > 0) {
-            k.movePostion(new Vector2D(0, collidedArea.getHeight() * -1));
+            k.movePostion(new Vector2D(0, YDiff * direction));
             k.setAcceleration(new Vector2D(startAcce.getXCoord(), 0));
             k.setVelocity(new Vector2D(startVelo.getXCoord(),0));
+            System.out.println(collidedArea.getHeight() + "," + a2 + "," + b2);
+            System.out.println(k.getBounds().getMaxY());
             return true;
         }
         return false;
     }
     
-    private void setXCollsion(double XIntersect, KinematicObject k, Rectangle collidedArea, Vector2D startVelo, Vector2D startAcce) {
+    private void setXCollsion(double XIntersect, KinematicObject k, CollisionObject otherObj, Rectangle2D collidedArea, Vector2D startVelo, Vector2D startAcce) {
         if (XIntersect > 0) {
             k.movePostion(new Vector2D(collidedArea.getWidth(), 0));
             k.setAcceleration(new Vector2D(0, startAcce.getYCoord()));
@@ -98,13 +107,13 @@ public class GameManipulator {
             quadrant.clear();
         }
         for (CollisionObject obj : PhysicObjects) { //Sort quadrant for every collision object 
-            if (obj.getPhysicChange() == true) {
-                GameManipulator.sortPhysicObjectPosition(obj);
-                obj.setPhysicChange(false);
-            }
+            GameManipulator.sortPhysicObjectPosition(obj);
         }
         for (CollisionObject obj : PhysicObjects) { //Apply collsion and gravity to kinematic
             if (obj instanceof KinematicObject k) {
+                k.addVelocity(k.getAcceleration());
+                k.movePostion(k.getVelocity());
+                k.setAcceleration(new Vector2D(0, 9.8/60));
                 int[] IsInside = k.getQuadrants();
                 boolean touchedFloor = false;
                 Vector2D startVelo = k.getVelocity();
@@ -113,32 +122,26 @@ public class GameManipulator {
                     if (quadrant == -1) { break;}
                     for (CollisionObject otherObj : GameManipulator.quadrantContainer.get(quadrant)) {
                         if (k.equals(otherObj)) {continue;}
-                        Rectangle collidedArea = k.getBounds().intersection(otherObj.getBounds());
-                    
+                        Rectangle2D collidedArea = k.getBounds().createIntersection(otherObj.getBounds());
                         if (collidedArea.isEmpty()) {continue;}
                         double XIntersect = collidedArea.getHeight();
                         double YIntersect = collidedArea.getWidth();
-                        if (XIntersect < YIntersect) {
-                            touchedFloor = setYCollsion(YIntersect, k, collidedArea, startVelo, startAcce);
-                            collidedArea = k.getBounds().intersection(otherObj.getBounds());
-                            if (collidedArea.isEmpty()) {continue;}
-                            setXCollsion(XIntersect, k, collidedArea, startVelo, startAcce);
-                        } else {
-                            setXCollsion(XIntersect, k, collidedArea, startVelo, startAcce);
-                            collidedArea = k.getBounds().intersection(otherObj.getBounds());
-                            if (collidedArea.isEmpty()) {continue;}
-                            touchedFloor = setYCollsion(YIntersect, k, collidedArea, startVelo, startAcce);
-                        }
+                        touchedFloor = setYCollsion(YIntersect, k, otherObj, collidedArea, startVelo, startAcce);
                     }
-                if (!touchedFloor) {
-                    k.addVelocity(k.getAcceleration());
-                    k.movePostion(k.getVelocity());
-                    k.setAcceleration(new Vector2D(0, 9.8/60));
                 }
                 k.setTouchedFloor(touchedFloor);
-                }
             }
         }
         
+    }
+    
+    public static void printPhysicObject() {
+        for (int i = 0; i < 4; i++) {
+            System.out.println(i + "-------------");
+            for (CollisionObject obj : GameManipulator.quadrantContainer.get(i)) {
+                System.out.println(obj.getName());
+            }
+        }
+        System.out.println("End <><><>><><><><><><><>");
     }
 }

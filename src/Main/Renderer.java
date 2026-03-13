@@ -30,6 +30,7 @@ public class Renderer {
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, 
         RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
         
+        g.drawImage(GameUniverse.getBackground(), 0, 0,Game.getGameWindow().getWidth(), Game.getGameWindow().getHeight(), null);
         for (GameObject object : GameUniverse.ObserveUniverse()) {
             if (object instanceof StyledObject styled) {
                 if (styled.getVisibility() == true) {

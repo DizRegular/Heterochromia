@@ -1,7 +1,6 @@
 package RenderObject;
 import java.awt.image.*;
 import java.io.*;
-import java.awt.Rectangle;
 import javax.imageio.ImageIO;
 
 abstract public class GameObject { 
