@@ -5,16 +5,19 @@ import RenderObject.*;
 import Main.InputManager;
 import Main.Renderer;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 public class Main implements Runnable {
     /** Acts like codes that controls logic from a higher level like Unity.
      * 
      */
     public Game gameEngine; //DO NOT REMOVE
+    public ArrayList<GameObject> mustInstanceObj = new ArrayList<>();
     
     public double lf=0;
     public double fall=-1;
     public Block pikachu2;
     public KinematicObject physicPikachu;
+    public AreaDetector area;
     public int count = 1;
     public boolean added = false;
     public int startjump=0;
@@ -29,20 +32,15 @@ public class Main implements Runnable {
      */
     public void initialize() {
         physicPikachu = new KinematicObject("Pikachu3", new Vector2D(0, 0), new Vector2D(50,50), "res/GameAssets/Textures/placeholder.jpg");
-//        for (int i = 1; i < 5; i++) {
-//            pikachu2 = new Block("Pikachu2", new Vector2D(i*100, 350), new Vector2D(100,100), "res/GameAssets/Textures/placeholder.jpg");
-//            GameUniverse.newInstance(pikachu2);
-//
-//        }
-//        for (int i = 1; i < 5; i++) {
-//            pikachu2 = new Block("Pikachu2", new Vector2D(200 + i*100, 100), new Vector2D(100,100), "res/GameAssets/Textures/placeholder.jpg");
-//            GameUniverse.newInstance(pikachu2);
-//        }
+        area = new AreaDetector("Pikachu3", new Vector2D(300, 300), new Vector2D(50,50), "res/GameAssets/Textures/placeholder.jpg");
         for (int i = 0; i < 2; i++) {
         pikachu2 = new Block("Pikachu3", new Vector2D(350, 350), new Vector2D(500,500), "res/GameAssets/Textures/placeholder.jpg");
         GameUniverse.newInstance(pikachu2);
         }
+        pikachu2 = new Block("Pikachu3", new Vector2D(350, 100), new Vector2D(100,50), "res/GameAssets/Textures/placeholder.jpg");
+        GameUniverse.newInstance(pikachu2);
         GameUniverse.newInstance(physicPikachu);
+        GameUniverse.newInstance(area);
         GameUniverse.setBackground("res/GameAssets/Background/bgplacegholder.jpg");
     }
     
@@ -69,10 +67,10 @@ public class Main implements Runnable {
                 GameUniverse.setBackground("res/GameAssets/Background/bgplaceholder2.png");
             }
             if (InputManager.isKeyDown('d')) {
-                physicPikachu.movePostion(new Vector2D(1, 0));
+                physicPikachu.movePostion(new Vector2D(5, 0));
             }
             else if (InputManager.isKeyDown('a')) {
-                physicPikachu.movePostion(new Vector2D(-1, 0));
+                physicPikachu.movePostion(new Vector2D(-5, 0));
             }
 
             if (InputManager.isKeyDown(KeyEvent.VK_SPACE)) {

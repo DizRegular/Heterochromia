@@ -21,7 +21,7 @@ public class Fetcher {
                     texture = ImageIO.read(new File(texture2Dlocation.getPath() + "/" + textureDes));
                 } catch (IOException e) {
                     e.printStackTrace();
-                    texture = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
+                    texture = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
                     texture.setRGB(0, 0, Color.MAGENTA.getRGB());
                 }
             int imageHeight = texture.getHeight();

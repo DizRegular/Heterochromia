@@ -29,7 +29,13 @@ public class GameUniverse {
         } 
     }
     
-    public static void explode(GameObject obj) {
+    public static void newInstanceAll(ArrayList<GameObject> allObject) {
+        for (GameObject obj : allObject) {
+            GameUniverse.newInstance(obj);
+        }
+    }
+    
+    public static void delete(GameObject obj) {
         System.out.println((objectList.remove(obj)));
     }
     

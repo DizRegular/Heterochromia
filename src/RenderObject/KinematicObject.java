@@ -2,7 +2,7 @@ package RenderObject;
 
 import Main.GameManipulator;
 
-public class KinematicObject extends CollisionObject implements Physic {
+public class KinematicObject extends CollisionObject implements Gravity {
     protected Vector2D acceleration = new Vector2D(0,0);
     protected Vector2D velocity = new Vector2D(0,0);
     protected boolean touchedFloor = false;

@@ -3,6 +3,7 @@ import RenderObject.*;
 import Logic.Main;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.math.*;
 public class GameManipulator {    
     
     /** Controls physic and order of action
@@ -23,7 +24,15 @@ public class GameManipulator {
         ArrayList<CollisionObject> PhysicObjects = GameUniverse.ObservePhysic();
         this.applyPhysic(PhysicObjects);
     }
-        
+      
+    public boolean callGameEventListener(GameObject eventSource, GameObject eventCause) {
+        if (eventSource instanceof touchable) {
+            GameEventListener.handleTouch(eventSource, eventCause, "");
+            return true;
+        }
+        return false;
+    } 
+    
     public static int getQuadrant(Vector2D v) {
         /** find what quadrant this vertex belongs to
          */
@@ -74,22 +83,26 @@ public class GameManipulator {
     
 
     
-    private boolean setYCollsion(double YIntersect, KinematicObject k, CollisionObject otherObj, Rectangle2D collidedArea, Vector2D startVelo, Vector2D startAcce) {
-        if (YIntersect > 0) {
+    private void setYCollsion(double YIntersect, KinematicObject k, CollisionObject otherObj, double YAxis) {
+        if (YIntersect <= 0) {return;}
+        if (YAxis >= 0) {
             k.getPostion().setY(otherObj.getBounds().getMinY() - k.getSize().getYCoord());
-            k.getAcceleration().setY(0);
-            k.getVelocity().setY(0);
-            return true;
+        } else {
+            k.getPostion().setY(otherObj.getBounds().getMaxY());
         }
-        return false;
+        k.getAcceleration().setY(0);
+        k.getVelocity().setY(0);
     }
     
-    private void setXCollsion(double XIntersect, KinematicObject k, CollisionObject otherObj, Rectangle2D collidedArea, Vector2D startVelo, Vector2D startAcce) {
-        if (XIntersect > 0) {
-            k.movePostion(new Vector2D(collidedArea.getWidth(), 0));
-            k.setAcceleration(new Vector2D(0, startAcce.getYCoord()));
-            k.setVelocity(new Vector2D(0,startVelo.getYCoord()));
+    private void setXCollsion(double XIntersect, KinematicObject k, CollisionObject otherObj, double XAxis) {
+        if (XIntersect <= 0) { return; }
+        if (XAxis >= 0) {
+            k.getPostion().setX((otherObj.getBounds().getMinX() - k.getSize().getYCoord()));
+        } else {
+            k.getPostion().setX((otherObj.getBounds().getMaxX()));
         }
+        k.getAcceleration().setX(0);
+        k.getVelocity().setX(0);
     }
     
     public void applyPhysic(ArrayList<CollisionObject> PhysicObjects) {
@@ -113,19 +126,25 @@ public class GameManipulator {
                     for (CollisionObject otherObj : GameManipulator.quadrantContainer.get(quadrant)) {
                         if (k.equals(otherObj)) {continue;}
                         Rectangle2D collidedArea = k.getBounds().createIntersection(otherObj.getBounds());
-                        if (collidedArea.isEmpty()) {touchedFloor = false ; continue;}
-                        double XIntersect = collidedArea.getWidth();
-                        double YIntersect = collidedArea.getHeight();
-                        touchedFloor |= setYCollsion(YIntersect, k, otherObj, collidedArea, startVelo, startAcce);
-//                        setXCollsion(YIntersect, k, otherObj, collidedArea, startVelo, startAcce);
+                        if (collidedArea.isEmpty()) {continue;}
+                        boolean skip = callGameEventListener(otherObj, k);
+                        if (skip == true) {continue;}
+                        double XOverlap = collidedArea.getWidth();
+                        double YOverlap = collidedArea.getHeight();
+                        double XAxis = otherObj.getBounds().getCenterX() - k.getBounds().getCenterX();
+                        double YAxis = otherObj.getBounds().getCenterY() - k.getBounds().getCenterY();
+                        if (Math.abs(XAxis) < Math.abs(YAxis) 
+                                || (XOverlap > YOverlap)) {
+                            setYCollsion(YOverlap, k, otherObj, YAxis);
+                        } else {
+                            setXCollsion(XOverlap, k, otherObj, XAxis);
+                        }
+                        
+                        Rectangle2D floorDetector = new Rectangle2D.Double(k.getBounds().getMinX() , k.getBounds().getMaxY(), k.getSize().getXCoord(), 2);
+                        touchedFloor |= floorDetector.intersects(otherObj.getBounds());
                     }
                 }
                 k.setTouchedFloor(touchedFloor);
-                if (touchedFloor) {
-                    System.out.println("GROUNDED: " + k.getPostion().getYCoord());
-                } else {
-                    System.out.println("FALLING: " + k.getPostion().getYCoord());
-                }
             }
         }
         
