@@ -3,6 +3,7 @@ import Main.Game;
 import Main.GameUniverse;
 import RenderObject.*;
 import Main.InputManager;
+import Main.Renderer;
 import java.awt.event.KeyEvent;
 public class Main implements Runnable {
     /** Acts like codes that controls logic from a higher level like Unity.
@@ -22,7 +23,7 @@ public class Main implements Runnable {
     
     @Override
     public void run() {      //this run very fast use with caution....  
-        
+
     }
     /** run once when the game runs
      */
@@ -68,20 +69,18 @@ public class Main implements Runnable {
                 GameUniverse.setBackground("res/GameAssets/Background/bgplaceholder2.png");
             }
             if (InputManager.isKeyDown('d')) {
-                lf=5;
+                physicPikachu.movePostion(new Vector2D(1, 0));
             }
             else if (InputManager.isKeyDown('a')) {
-                lf=-5;
+                physicPikachu.movePostion(new Vector2D(-1, 0));
             }
-            else{
-                lf=0;
-            }
+
             if (InputManager.isKeyDown(KeyEvent.VK_SPACE)) {
 //                if(!jumping){//add chack is tuch ground after addhitbox
 //                    startjump=maxjump;
 //                    jumping=true;
 //                }
-                physicPikachu.addAcceleration(new Vector2D(0, -1));
+                physicPikachu.setVelocity(new Vector2D(0, -5));
             }
 //            if(jumping&&startjump>0){
 //                fall=-1;
@@ -92,7 +91,7 @@ public class Main implements Runnable {
 //                jumping=false;
 //                startjump=0;
 //            }
-            physicPikachu.movePostion(new Vector2D(lf, fall));
+//            physicPikachu.movePostion(new Vector2D(lf, fall));
             if (InputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {
                 System.exit(0);
             }
