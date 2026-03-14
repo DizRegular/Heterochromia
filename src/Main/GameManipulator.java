@@ -3,7 +3,6 @@ import RenderObject.*;
 import Logic.Main;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.math.*;
 public class GameManipulator {    
     
     /** Controls physic and order of action
@@ -118,9 +117,7 @@ public class GameManipulator {
                 k.movePostion(k.getVelocity());
                 k.setAcceleration(new Vector2D(0, 9.8/60));
                 int[] IsInside = k.getQuadrants();
-                boolean touchedFloor = k.getTouchedFloor();
-                Vector2D startVelo = new Vector2D(k.getVelocity().getXCoord(), k.getVelocity().getYCoord());
-                Vector2D startAcce = new Vector2D(k.getAcceleration().getXCoord(), k.getAcceleration().getYCoord());
+                boolean touchedFloor = false;
                 for (int quadrant : IsInside) {
                     if (quadrant == -1) { break;}
                     for (CollisionObject otherObj : GameManipulator.quadrantContainer.get(quadrant)) {

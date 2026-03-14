@@ -8,7 +8,6 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 public class Main implements Runnable {
     /** Acts like codes that controls logic from a higher level like Unity.
-     * 
      */
     public Game gameEngine; //DO NOT REMOVE
     public ArrayList<GameObject> mustInstanceObj = new ArrayList<>();
@@ -38,6 +37,8 @@ public class Main implements Runnable {
         GameUniverse.newInstance(pikachu2);
         }
         pikachu2 = new Block("Pikachu3", new Vector2D(350, 100), new Vector2D(100,50), "res/GameAssets/Textures/placeholder.jpg");
+        GameUniverse.newInstance(pikachu2);
+        pikachu2 = new Block("Pikachu3", new Vector2D(499, 346), new Vector2D(500,500), "res/GameAssets/Textures/placeholder.jpg");
         GameUniverse.newInstance(pikachu2);
         GameUniverse.newInstance(physicPikachu);
         GameUniverse.newInstance(area);
@@ -78,7 +79,10 @@ public class Main implements Runnable {
 //                    startjump=maxjump;
 //                    jumping=true;
 //                }
-                physicPikachu.setVelocity(new Vector2D(0, -5));
+                System.out.println(physicPikachu.getTouchedFloor());
+                if (physicPikachu.getTouchedFloor()) {
+                    physicPikachu.setVelocity(new Vector2D(0, -5));
+                }
             }
 //            if(jumping&&startjump>0){
 //                fall=-1;
