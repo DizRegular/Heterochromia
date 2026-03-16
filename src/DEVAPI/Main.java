@@ -21,7 +21,7 @@ public class Main implements Runnable {
     public int count = 1;
     public boolean added = false;
     public int startjump=0;
-    public int maxjump=25;
+    public int maxjump=6;
     public boolean jumping=false;
     
     @Override
@@ -86,7 +86,6 @@ public class Main implements Runnable {
                     physicPikachu.setVelocity(new Vector2D(0, -5));
                 }
             }
-            
             if (InputManager.isKeyDown('j')) {
                 physicPikachu.removeConstraint(cam1);
                 cam1.movePostion(new Vector2D(-10, 0));
