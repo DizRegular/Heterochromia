@@ -20,7 +20,7 @@ public class Main implements Runnable {
     public int count = 1;
     public boolean added = false;
     public int startjump=0;
-    public int maxjump=25;
+    public int maxjump=6;
     public boolean jumping=false;
     
     @Override
@@ -68,32 +68,38 @@ public class Main implements Runnable {
                 GameUniverse.setBackground("res/GameAssets/Background/bgplaceholder2.png");
             }
             if (InputManager.isKeyDown('d')) {
-                physicPikachu.movePostion(new Vector2D(5, 0));
+                lf=5;
             }
             else if (InputManager.isKeyDown('a')) {
-                physicPikachu.movePostion(new Vector2D(-5, 0));
+                lf=-5;
+            }
+            else{
+                lf=0;
             }
 
             if (InputManager.isKeyDown(KeyEvent.VK_SPACE)) {
-//                if(!jumping){//add chack is tuch ground after addhitbox
-//                    startjump=maxjump;
-//                    jumping=true;
-//                }
-                System.out.println(physicPikachu.getTouchedFloor());
-                if (physicPikachu.getTouchedFloor()) {
-                    physicPikachu.setVelocity(new Vector2D(0, -5));
+                if(!jumping&&physicPikachu.getTouchedFloor()){//add chack is tuch ground after addhitbox
+                    startjump=maxjump;
+                    jumping=true;
                 }
+//                System.out.println(physicPikachu.getTouchedFloor());
+//                if (physicPikachu.getTouchedFloor()) {
+//                    fall=-5;
+//                }
             }
-//            if(jumping&&startjump>0){
-//                fall=-1;
-//                physicPikachu.addAcceleration(new Vector2D(0, fall));
-//                startjump--;
-//            }
-//            if(jumping&&startjump<=0){
-//                jumping=false;
-//                startjump=0;
-//            }
-//            physicPikachu.movePostion(new Vector2D(lf, fall));
+            if(jumping&&startjump>0){
+                fall=-1;
+                physicPikachu.addAcceleration(new Vector2D(0, fall));
+                startjump--;
+            }
+            else{
+                fall=1;
+            }
+            if(jumping&&startjump<=0){
+                jumping=false;
+                startjump=0;
+            }
+            physicPikachu.movePostion(new Vector2D(lf, 0));
             if (InputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {
                 System.exit(0);
             }
