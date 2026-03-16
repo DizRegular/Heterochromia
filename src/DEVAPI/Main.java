@@ -21,7 +21,7 @@ public class Main implements Runnable {
     public int count = 1;
     public boolean added = false;
     public int startjump=0;
-    public int maxjump=6;
+    public int maxjump=25;
     public boolean jumping=false;
     
     @Override
@@ -106,16 +106,12 @@ public class Main implements Runnable {
             if (InputManager.isKeyDown('-')) {
                 cam1.setZoomFactor(cam1.getZoomFactor() - 0.01);
             }
-//            if(jumping&&startjump>0){
-//                fall=-1;
-//                physicPikachu.addAcceleration(new Vector2D(0, fall));
-//                startjump--;
-//            }
-//            if(jumping&&startjump<=0){
-//                jumping=false;
-//                startjump=0;
-//            }
-//            physicPikachu.movePostion(new Vector2D(lf, fall));
+            if (InputManager.isKeyDown(KeyEvent.VK_SPACE)) {
+                if (physicPikachu.getTouchedFloor()) {
+                    physicPikachu.setVelocity(new Vector2D(0, -5));
+                }
+            }
+
             if (InputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {
                 System.exit(0);
             }

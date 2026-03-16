@@ -5,5 +5,4 @@ dist/
 nbpython/
 nbproject/genfiles.properties
 nbproject/project.impl.properties
-nbproject/project.properties
 *.class
