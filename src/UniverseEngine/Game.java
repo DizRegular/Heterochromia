@@ -1,12 +1,11 @@
-package Main;
+package UniverseEngine;
 import java.awt.GraphicsEnvironment.*;
 import java.awt.*;
 import javax.swing.*;
-import Logic.Main;
-import Main.InputManager;
+import DEVAPI.Main;
+import UniverseEngine.InputManager;
 import javax.swing.border.Border;
 public class Game implements Runnable {
-
     private final String windowName = "Game";
     private static JFrame gameWindow;
     private static JPanel curtain;
@@ -14,7 +13,6 @@ public class Game implements Runnable {
     private boolean running = false;
     
     private Fetcher fetcher;
-    private Renderer renderMachine;
     private GameManipulator gameManipulator;
     private Thread game;
     private Main devAPI;
@@ -26,22 +24,7 @@ public class Game implements Runnable {
     private static double fps = 0;
     
     private Game() {
-        gameWindow = new JFrame(windowName);
-        curtain = new JPanel();
-
-        curtain.setPreferredSize(resolution);
-        curtain.setBackground(Color.CYAN);
         
-        JLabel label = new JLabel("Loading...");
-        curtain.add(label, BorderLayout.CENTER);
-        gameWindow.add(curtain);
-        gameWindow.addKeyListener(new InputManager());
-        
-        gameWindow.pack();
-//        GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(gameWindow);
-        gameWindow.setVisible(true);
-        gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
     }
 
     public void start() {
@@ -49,7 +32,6 @@ public class Game implements Runnable {
         fetcher = new Fetcher();
         devAPI = new Main();
         Thread processAPI = new Thread(devAPI);
-        renderMachine = new Renderer(fetcher, Game.gameWindow);
         gameManipulator = new GameManipulator(devAPI);
         devAPI.initialize();
         game = new Thread(this);
@@ -75,7 +57,7 @@ public class Game implements Runnable {
                 deltaTime -= 1;
             }
             frames++;
-            renderMachine.render();
+            RenderManager.render();
 
             if (System.currentTimeMillis() - lasTimer >= 1000) {
                 lasTimer += 1000;

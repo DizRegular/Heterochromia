@@ -1,9 +1,9 @@
-package Logic;
-import Main.Game;
-import Main.GameUniverse;
+package DEVAPI;
+import UniverseEngine.Game;
+import UniverseEngine.GameUniverse;
 import RenderObject.*;
-import Main.InputManager;
-import Main.Renderer;
+import UniverseEngine.InputManager;
+import UniverseEngine.Renderer;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 public class Main implements Runnable {
@@ -16,6 +16,7 @@ public class Main implements Runnable {
     public double fall=-1;
     public Block pikachu2;
     public KinematicObject physicPikachu;
+    public Camera cam1;
     public AreaDetector area;
     public int count = 1;
     public boolean added = false;
@@ -31,7 +32,10 @@ public class Main implements Runnable {
      */
     public void initialize() {
         physicPikachu = new KinematicObject("Pikachu3", new Vector2D(0, 0), new Vector2D(50,50), "res/GameAssets/Textures/placeholder.jpg");
-        area = new AreaDetector("Pikachu3", new Vector2D(300, 300), new Vector2D(50,50), "res/GameAssets/Textures/placeholder.jpg");
+        area = new AreaDetector("Pikachu3", new Vector2D(300, 500), new Vector2D(300,50), "res/GameAssets/Textures/placeholder.jpg");
+        Block block2 = new Block("Pikachu3", new Vector2D(0, 700), new Vector2D(2000, 50), "res/GameAssets/Textures/placeholder.jpg");
+        cam1 = new Camera("cam1", new Vector2D(0,0), new Vector2D(1920, 1080));
+        Camera cam2 = new Camera("cam1", new Vector2D(0,0), new Vector2D(1920, 1080));
         for (int i = 0; i < 2; i++) {
         pikachu2 = new Block("Pikachu3", new Vector2D(350, 350), new Vector2D(500,500), "res/GameAssets/Textures/placeholder.jpg");
         GameUniverse.newInstance(pikachu2);
@@ -39,6 +43,10 @@ public class Main implements Runnable {
         pikachu2 = new Block("Pikachu3", new Vector2D(350, 100), new Vector2D(100,50), "res/GameAssets/Textures/placeholder.jpg");
         GameUniverse.newInstance(pikachu2);
         pikachu2 = new Block("Pikachu3", new Vector2D(499, 346), new Vector2D(500,500), "res/GameAssets/Textures/placeholder.jpg");
+        physicPikachu.addConstraint(cam1);
+        GameUniverse.newInstance(block2);
+        GameUniverse.newInstance(cam1);
+        GameUniverse.newInstance(cam2);
         GameUniverse.newInstance(pikachu2);
         GameUniverse.newInstance(physicPikachu);
         GameUniverse.newInstance(area);
@@ -53,9 +61,6 @@ public class Main implements Runnable {
             physicPikachu.addAcceleration(new Vector2D(lf, fall));
             added = true;
         }
-        if (physicPikachu.getPostion().getYCoord() > gameEngine.getGameWindow().getSize().getHeight() ) {
-            physicPikachu.setPosition(new Vector2D(physicPikachu.getPostion().getXCoord(), 800));
-        }
     }
     /** Do what will happen when an event Occur 
      * run before process and run after every tick
@@ -69,20 +74,38 @@ public class Main implements Runnable {
             }
             if (InputManager.isKeyDown('d')) {
                 physicPikachu.movePostion(new Vector2D(5, 0));
+                physicPikachu.setAcceleration(new Vector2D(0.3, physicPikachu.getAcceleration().getYCoord()));
             }
             else if (InputManager.isKeyDown('a')) {
                 physicPikachu.movePostion(new Vector2D(-5, 0));
+                physicPikachu.setAcceleration(new Vector2D(-0.3, physicPikachu.getAcceleration().getYCoord()));
             }
 
             if (InputManager.isKeyDown(KeyEvent.VK_SPACE)) {
-//                if(!jumping){//add chack is tuch ground after addhitbox
-//                    startjump=maxjump;
-//                    jumping=true;
-//                }
-                System.out.println(physicPikachu.getTouchedFloor());
-                if (physicPikachu.getTouchedFloor()) {
+                if (physicPikachu.getTouchedFloor() && physicPikachu.getVelocity().getYCoord() < 10) {
                     physicPikachu.setVelocity(new Vector2D(0, -5));
                 }
+            }
+            
+            if (InputManager.isKeyDown('j')) {
+                physicPikachu.removeConstraint(cam1);
+                cam1.movePostion(new Vector2D(-10, 0));
+            }
+            if (InputManager.isKeyDown('l')) {
+                                cam1.movePostion(new Vector2D(10, 0));
+            }
+            if (InputManager.isKeyDown('k')) {
+                cam1.movePostion(new Vector2D(0, 10));
+            }
+            if (InputManager.isKeyDown('i')) {
+                cam1.movePostion(new Vector2D(0, -10));
+                
+            }
+            if (InputManager.isKeyDown('=')) {
+                cam1.setZoomFactor(cam1.getZoomFactor() + 0.01);
+            }
+            if (InputManager.isKeyDown('-')) {
+                cam1.setZoomFactor(cam1.getZoomFactor() - 0.01);
             }
 //            if(jumping&&startjump>0){
 //                fall=-1;

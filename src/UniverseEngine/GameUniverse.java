@@ -1,4 +1,4 @@
-package Main;
+package UniverseEngine;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.ArrayList;
 import RenderObject.*;
@@ -9,6 +9,7 @@ public class GameUniverse {
     private static CopyOnWriteArrayList<GameObject> objectList = new CopyOnWriteArrayList<>();
     private static ArrayList<CollisionObject> PhysicObjectList = new ArrayList<>();
     private static BufferedImage background;
+    private RenderManager renderManager;
     
     public static CopyOnWriteArrayList<GameObject> ObserveUniverse() {
         return GameUniverse.objectList;
@@ -23,10 +24,15 @@ public class GameUniverse {
     }
     
     public static void newInstance(GameObject obj) {
+        if (obj instanceof Camera cam) {
+            RenderManager.registerNewViewer(cam);
+            return;
+        }
         objectList.add(obj);
         if (obj instanceof CollisionObject collision) {
             PhysicObjectList.add(collision);
         } 
+
     }
     
     public static void newInstanceAll(ArrayList<GameObject> allObject) {

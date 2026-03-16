@@ -1,4 +1,4 @@
-package Main;
+package UniverseEngine;
 import java.awt.Color;
 import java.util.*;
 import javax.imageio.ImageIO;

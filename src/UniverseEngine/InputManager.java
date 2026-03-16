@@ -1,7 +1,6 @@
-package Main;
+package UniverseEngine;
 
 import java.awt.event.*;
-import Logic.*;
 public class InputManager implements KeyListener {
     private static boolean[] eventCurrentFlags = new boolean[255]; 
     /** return true if the key is down, uses for managing multiple keys

@@ -1,6 +1,6 @@
-package Main;
+package UniverseEngine;
 import RenderObject.*;
-import Logic.Main;
+import DEVAPI.Main;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 public class GameManipulator {    
@@ -9,6 +9,8 @@ public class GameManipulator {
      */
     private Main devAPI;
     private static final ArrayList<ArrayList<CollisionObject>> quadrantContainer = new ArrayList<>();
+    private static final int gameQuadrantWidth = 1080;
+    private static  final int gameQuadrantHeight = 1920;
     
     public GameManipulator(Main api) {
         this.devAPI = api;
@@ -24,7 +26,7 @@ public class GameManipulator {
         this.applyPhysic(PhysicObjects);
     }
       
-    public boolean callGameEventListener(GameObject eventSource, GameObject eventCause) {
+    public boolean notifyGameEventListener(GameObject eventSource, GameObject eventCause) {
         if (eventSource instanceof touchable) {
             GameEventListener.handleTouch(eventSource, eventCause, "");
             return true;
@@ -35,13 +37,13 @@ public class GameManipulator {
     public static int getQuadrant(Vector2D v) {
         /** find what quadrant this vertex belongs to
          */
-        int windowHeight = Game.getGameWindow().getSize().height;
-        int windowWidth = Game.getGameWindow().getSize().width;
-        if ((v.getXCoord() < windowWidth/2) && (v.getYCoord() < windowHeight/2)) {
+        int gameQuadrantHeight = GameManipulator.gameQuadrantWidth;
+        int gameQuadrantWidth = GameManipulator.gameQuadrantHeight;
+        if ((v.getXCoord() < gameQuadrantWidth/2) && (v.getYCoord() < gameQuadrantHeight/2)) {
             return 0;
-        } else if ((v.getXCoord() > windowWidth/2) && (v.getYCoord() < windowHeight/2)) {
+        } else if ((v.getXCoord() > gameQuadrantWidth/2) && (v.getYCoord() < gameQuadrantHeight/2)) {
             return 1;
-        } else if ((v.getXCoord() < windowWidth/2) && (v.getYCoord() > windowHeight/2)) {
+        } else if ((v.getXCoord() < gameQuadrantWidth/2) && (v.getYCoord() > gameQuadrantHeight/2)) {
             return 2;
         } else {
             return 3;
@@ -92,7 +94,7 @@ public class GameManipulator {
         k.getAcceleration().setY(0);
         k.getVelocity().setY(0);
     }
-    
+
     private void setXCollsion(double XIntersect, KinematicObject k, CollisionObject otherObj, double XAxis) {
         if (XIntersect <= 0) { return; }
         if (XAxis >= 0) {
@@ -124,7 +126,7 @@ public class GameManipulator {
                         if (k.equals(otherObj)) {continue;}
                         Rectangle2D collidedArea = k.getBounds().createIntersection(otherObj.getBounds());
                         if (collidedArea.isEmpty()) {continue;}
-                        boolean skip = callGameEventListener(otherObj, k);
+                        boolean skip = notifyGameEventListener(otherObj, k);
                         if (skip == true) {continue;}
                         double XOverlap = collidedArea.getWidth();
                         double YOverlap = collidedArea.getHeight();

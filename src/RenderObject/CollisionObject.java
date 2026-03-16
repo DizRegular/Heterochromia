@@ -21,7 +21,7 @@ abstract public class CollisionObject extends StyledObject {
     }
     
     @Override
-    public void movePostion(Vector2D pos) {
+    synchronized public void  movePostion(Vector2D pos) {
         Vector2D startPos = this.position;
         this.setPosition(new Vector2D(startPos.getXCoord() + pos.getXCoord(), startPos.getYCoord() + pos.getYCoord()));
         this.boundary.setFrame(startPos.getXCoord() + pos.getXCoord(), startPos.getYCoord() + pos.getYCoord(), this.boundary.getWidth(), this.boundary.getHeight());

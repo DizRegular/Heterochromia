@@ -1,6 +1,6 @@
 package RenderObject;
 
-import Main.GameManipulator;
+import UniverseEngine.GameManipulator;
 
 public class KinematicObject extends CollisionObject implements Gravity {
     protected Vector2D acceleration = new Vector2D(0,0);
