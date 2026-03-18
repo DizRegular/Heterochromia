@@ -7,13 +7,8 @@ abstract public class CollisionObject extends StyledObject {
     protected int[] insideQudrant;
     protected boolean hasPhysicChange = true;
 
-    public CollisionObject(String name, Vector2D pos, Vector2D size, String imageName, String tag) {
-        super(name, pos, size, imageName, tag);
-        this.boundary = new Rectangle2D.Double(position.getXCoord(), position.getYCoord(), size.getXCoord(), size.getYCoord());
-    }
-    public CollisionObject(String name, Vector2D pos, Vector2D size, String imageName) {
-        super(name, pos, size, imageName);
-        this.boundary = new Rectangle2D.Double(position.getXCoord(), position.getYCoord(), size.getXCoord(), size.getYCoord());
+    public CollisionObject(String name) {
+        super(name);
     }
     
     public Rectangle2D getBounds(){
@@ -42,5 +37,15 @@ abstract public class CollisionObject extends StyledObject {
     
     public void setPhysicChange(boolean b) {
         this.hasPhysicChange = b;
+    }
+    
+    @Override
+    public void createInstance() throws InvalidGameObjectPropertyException {
+        super.createInstance();
+        try {
+            this.boundary = new Rectangle2D.Double(position.getXCoord(), position.getYCoord(), size.getXCoord(), size.getYCoord());
+        } catch (NullPointerException e) {
+            throw new InvalidGameObjectPropertyException(this.ID + " : CollisionObject can't instancetiate because position or size or both which is required to create boundary.");
+        }
     }
 }

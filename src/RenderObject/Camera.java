@@ -15,30 +15,38 @@ public class Camera extends GameObject {
     private Renderer renderStyle;
     private double zoomFactor = 1;
     
-    public Camera(String name, Vector2D pos, Vector2D size) {
-        super(name, pos, size);
-        view = new JFrame(this.name);
-        screenDisplay = new JPanel();
-
-        screenDisplay.setPreferredSize(new Dimension((int)size.getXCoord(), (int)size.getYCoord()));
-        screenDisplay.setBackground(Color.CYAN);
+    public Camera(String name) {
+        super(name);
+    }
+    
+    @Override
+    public void setSize(Vector2D v) throws InvalidGameObjectPropertyException {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double screenSizeX = screenSize.width;
+        double screenSizeY = screenSize.height;
+        if ((screenSizeX >= v.getXCoord()) &&
+            (screenSizeY >= v.getYCoord())) {
+            this.size = v;
+        } else {
+            throw new InvalidGameObjectPropertyException(this.name + "camera size is larger than player's screen");
+        }
         
-        JLabel label = new JLabel("Loading...");
-        screenDisplay.add(label, BorderLayout.CENTER);
-        view.add(screenDisplay);
-        view.addKeyListener(new InputManager());
+    }
 
-        view.pack();
-//        GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(view);
-        view.setVisible(true);
-        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public Renderer getRenderStyle() {
+        return renderStyle;
+    }
 
-        view.setPreferredSize(new Dimension((int)size.getXCoord(), (int)size.getYCoord()));
-        renderStyle = new NormalRenderer(view, this);
+    public void setRenderStyle(Renderer renderStyle) {
+        this.renderStyle = renderStyle;
     }
     
     public JFrame getWindow() {
         return this.view;
+    }
+    
+    public void setWindow(JFrame view) {
+        this.view = view;
     }
     
     public double getZoomFactor() {

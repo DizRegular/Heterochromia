@@ -1,19 +1,22 @@
 package RenderObject;
 
 import UniverseEngine.GameManipulator;
+import UniverseEngine.GameUniverse;
 
 public class KinematicObject extends CollisionObject implements Gravity {
     protected Vector2D acceleration = new Vector2D(0,0);
     protected Vector2D velocity = new Vector2D(0,0);
     protected boolean touchedFloor = false;
     
-    public KinematicObject(String name, Vector2D pos, Vector2D size, String imageName, String tag) {
-        super(name, pos, size, imageName, tag);
-        GameManipulator.sortPhysicObjectPosition(this);
+    public KinematicObject(String name) {
+        super(name);
     }
-    public KinematicObject(String name, Vector2D pos, Vector2D size, String imageName) {
-        super(name, pos, size, imageName);
+    
+    @Override
+    public void createInstance() throws InvalidGameObjectPropertyException {
+        super.createInstance();
         GameManipulator.sortPhysicObjectPosition(this);
+
     }
     
      @Override

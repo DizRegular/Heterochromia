@@ -36,7 +36,7 @@ abstract public class Renderer {
         g.translate(XCenter, YCenter);
         g.scale(zoomFactor, zoomFactor);
         g.translate(-XCenter, -YCenter);
-        for (GameObject object : GameUniverse.ObserveUniverse()) {
+        for (FounderObject object : GameUniverse.ObserveUniverse()) {
             if (object instanceof StyledObject styled && styled.getVisibility()) {
                 g.drawImage(styled.getTexture(), (int)styled.getPostion().getXCoord() - (int)camera.getPosition().getXCoord(), (int)styled.getPostion().getYCoord() - (int)camera.getPosition().getYCoord(), (int)styled.getSize().getXCoord(), (int)styled.getSize().getYCoord(), null); 
             }
@@ -44,9 +44,10 @@ abstract public class Renderer {
         }
         g.setTransform(transform);
 
-        g.drawString("Frames:" + Game.getFramesPerSecond(), 100, 10);
-        g.drawString("Tick:" + Game.getTickPerSecond(), 100, 30);
-        g.drawString(text, 100, 50);
+        g.drawString("Frames:" + Game.getFramesPerSecond(), 100, 50);
+        g.drawString("Tick:" + Game.getTickPerSecond(), 100, 70);
+        g.drawString(camera.getSize().toString() , 100, 90);
+        g.drawString(text, (int)camera.getSize().getXCoord()/2 , (int)camera.getSize().getYCoord()/2);
         g.dispose();
         bs.show();
     }

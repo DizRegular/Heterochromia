@@ -5,6 +5,7 @@ import RenderObject.*;
 import UniverseEngine.InputManager;
 import UniverseEngine.Renderer;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
 public class Main implements Runnable {
     /** Acts like codes that controls logic from a higher level like Unity.
@@ -12,17 +13,20 @@ public class Main implements Runnable {
     public Game gameEngine; //DO NOT REMOVE
     public ArrayList<GameObject> mustInstanceObj = new ArrayList<>();
     
-    public double lf=0;
-    public double fall=-1;
+
     public Block pikachu2;
     public KinematicObject physicPikachu;
     public Camera cam1;
     public AreaDetector area;
-    public int count = 1;
+    
+    public double lf=0;
+    public double fall=-1;
     public boolean added = false;
     public int startjump=0;
     public int maxjump=3;
     public boolean jumping=false;
+    public File pikachuImage = new File("res/GameAssets/Textures/placeholder.jpg");
+    public File NoImage = new File("res/GameAssets/Textures/NoImagePlaceHolder.png");
     
     @Override
     public void run() {      //this run very fast use with caution....  
@@ -31,26 +35,57 @@ public class Main implements Runnable {
     /** run once when the game runs
      */
     public void initialize() {
-        physicPikachu = new KinematicObject("Pikachu3", new Vector2D(0, 0), new Vector2D(50,50), "res/GameAssets/Textures/placeholder.jpg");
-        area = new AreaDetector("Pikachu3", new Vector2D(300, 500), new Vector2D(300,50), "res/GameAssets/Textures/placeholder.jpg");
-        Block block2 = new Block("Pikachu3", new Vector2D(0, 700), new Vector2D(2000, 50), "res/GameAssets/Textures/placeholder.jpg");
-        cam1 = new Camera("cam1", new Vector2D(0,0), new Vector2D(1920, 1080));
-        Camera cam2 = new Camera("cam1", new Vector2D(0,0), new Vector2D(1920, 1080));
-        for (int i = 0; i < 2; i++) {
-        pikachu2 = new Block("Pikachu3", new Vector2D(350, 350), new Vector2D(500,500), "res/GameAssets/Textures/placeholder.jpg");
-        GameUniverse.newInstance(pikachu2);
+        try {
+            physicPikachu = new KinematicObject("PikachuPlayer");
+            AreaDetector area = new AreaDetector("trampoline");
+            for (int i = 0; i < 6; i++) {
+                Block floor = new Block("Platform");
+                floor.setSize(new Vector2D(100,100));
+                floor.setPosition(new Vector2D(i*100, 500));
+                floor.setTexture(pikachuImage);
+                floor.createInstance();
+            }
+            for (int i = 0; i < 10; i++) {
+                Block floor = new Block("Platform");
+                floor.setSize(new Vector2D(100,100));
+                floor.setPosition(new Vector2D(700+i*50, 500-i*3));
+                floor.setTexture(pikachuImage);
+                floor.createInstance();
+            }
+            for (int i = 0; i < 40; i++) {
+                Block floor = new Block("Platform");
+                floor.setSize(new Vector2D(100,100));
+                floor.setPosition(new Vector2D(1000+i, 500-i*4));
+                floor.setTexture(pikachuImage);
+                floor.createInstance();
+            }
+            Block floor = new Block("Platform");
+            floor.setSize(new Vector2D(100,50));
+            floor.setPosition(new Vector2D(100, 220));
+            floor.createInstance();
+            
+            area.setSize(new Vector2D(50, 500));
+            area.setPosition(new Vector2D(200, 200));
+            area.createInstance();
+            
+            physicPikachu.setSize(new Vector2D(50, 50));
+            physicPikachu.setPosition(new Vector2D(0,0));
+            physicPikachu.createInstance();
+            
+            ViewPort window = new ViewPort("viewPort");
+            cam1 = new Camera("GameCam");
+            cam1.setSize(new Vector2D(1200, 800));
+            cam1.setPosition(new Vector2D(0, 0));
+            physicPikachu.addConstraint(cam1);
+            StyledObject[] textureObjects = {physicPikachu, area, floor};
+            StyledObject.setTextureAll(textureObjects, pikachuImage);
+            window.setCamera(cam1);
+            cam1.createInstance();
+            window.createInstance();
+            GameUniverse.setBackground("res/GameAssets/Background/bgplacegholder.jpg");
+        } catch (InvalidGameObjectPropertyException e) {
+            e.printStackTrace();
         }
-        pikachu2 = new Block("Pikachu3", new Vector2D(350, 100), new Vector2D(100,50), "res/GameAssets/Textures/placeholder.jpg");
-        GameUniverse.newInstance(pikachu2);
-        pikachu2 = new Block("Pikachu3", new Vector2D(499, 346), new Vector2D(500,500), "res/GameAssets/Textures/placeholder.jpg");
-        physicPikachu.addConstraint(cam1);
-        GameUniverse.newInstance(block2);
-        GameUniverse.newInstance(cam1);
-        GameUniverse.newInstance(cam2);
-        GameUniverse.newInstance(pikachu2);
-        GameUniverse.newInstance(physicPikachu);
-        GameUniverse.newInstance(area);
-        GameUniverse.setBackground("res/GameAssets/Background/bgplacegholder.jpg");
     }
     
     /** run every tick when the game is running
@@ -86,10 +121,6 @@ public class Main implements Runnable {
                     startjump=maxjump;
                     jumping=true;
                 }
-//                System.out.println(physicPikachu.getTouchedFloor());
-//                if (physicPikachu.getTouchedFloor()) {
-//                    fall=-5;
-//                }
             }
             if(jumping&&startjump>0){
                 fall=-1;

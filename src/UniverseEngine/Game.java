@@ -4,13 +4,11 @@ import java.awt.*;
 import javax.swing.*;
 import DEVAPI.Main;
 import UniverseEngine.InputManager;
+import java.util.ArrayList;
 import javax.swing.border.Border;
 public class Game implements Runnable {
-    private final String windowName = "Game";
-    private static JFrame gameWindow;
-    private static JPanel curtain;
-    private final Dimension resolution = new Dimension(1920, 1080);
     private boolean running = false;
+    private static ArrayList<JFrame> windowsHolder = new ArrayList<>();
     
     private Fetcher fetcher;
     private GameManipulator gameManipulator;
@@ -72,8 +70,24 @@ public class Game implements Runnable {
     
     
     
-    public static JPanel getGameWindow() {
-        return Game.curtain;
+    public static JFrame createNewWindow(String viewPortName) {
+        JFrame window = new JFrame(viewPortName);
+        Game.windowsHolder.add(window);
+        JPanel screenDisplay = new JPanel();
+        screenDisplay.setBackground(Color.CYAN);
+        
+        JLabel label = new JLabel("Loading...");
+        screenDisplay.add(label, BorderLayout.CENTER);
+        window.add(screenDisplay);
+        window.addKeyListener(new InputManager());
+
+        window.pack();
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        return window;
+    }
+    
+    public static ArrayList<JFrame> getWindowHolder() {
+        return Game.windowsHolder;
     }
     
     public static double getDeltaTime() {
@@ -92,5 +106,6 @@ public class Game implements Runnable {
         new Game().start();
 
     }
+    
 
 }

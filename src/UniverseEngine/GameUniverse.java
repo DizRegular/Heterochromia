@@ -6,12 +6,18 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 public class GameUniverse {
-    private static CopyOnWriteArrayList<GameObject> objectList = new CopyOnWriteArrayList<>();
+    private static CopyOnWriteArrayList<FounderObject> objectList = new CopyOnWriteArrayList<>();
     private static ArrayList<CollisionObject> PhysicObjectList = new ArrayList<>();
+    private static int currentNewObjectID = -1;
     private static BufferedImage background;
     private RenderManager renderManager;
     
-    public static CopyOnWriteArrayList<GameObject> ObserveUniverse() {
+    public static int generateNewID() {
+        currentNewObjectID++;
+        return GameUniverse.currentNewObjectID;
+    }
+    
+    public static CopyOnWriteArrayList<FounderObject> ObserveUniverse() {
         return GameUniverse.objectList;
     }
     
@@ -23,7 +29,7 @@ public class GameUniverse {
         return GameUniverse.objectList.size();
     }
     
-    public static void newInstance(GameObject obj) {
+    public static void newInstance(FounderObject obj) {
         if (obj instanceof Camera cam) {
             RenderManager.registerNewViewer(cam);
             return;
@@ -35,8 +41,8 @@ public class GameUniverse {
 
     }
     
-    public static void newInstanceAll(ArrayList<GameObject> allObject) {
-        for (GameObject obj : allObject) {
+    public static void newInstanceAll(ArrayList<FounderObject> allObject) {
+        for (FounderObject obj : allObject) {
             GameUniverse.newInstance(obj);
         }
     }

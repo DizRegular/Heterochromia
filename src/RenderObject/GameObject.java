@@ -1,41 +1,13 @@
 package RenderObject;
-import java.awt.image.*;
-import java.io.*;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
 
-abstract public class GameObject { 
-    protected String name;
+abstract public class GameObject extends FounderObject { 
     protected Vector2D position;
     protected Vector2D size;
-    protected String Tag;
-    protected boolean isSolid = true;
-    protected boolean visibility = true;
     protected ArrayList<GameObject> constraints = new ArrayList<>();
     
-    public GameObject(String name, Vector2D pos, Vector2D size,String tag) {
-        this.name = name;
-        this.size=size;
-        this.position = pos;
-        this.Tag=tag;        
-    }
-
-    public boolean isIsSolid() {
-        return isSolid;
-    }
-
-    public void setIsSolid(boolean isSolid) {
-        this.isSolid = isSolid;
-    }
-    
-    public GameObject(String name, Vector2D pos, Vector2D size) {
-        this.name = name;
-        this.size=size;
-        this.position = pos;        
-    }
-        
-    public String getName() {
-        return this.name;
+    public GameObject(String name) {
+        super(name);
     }
     
     public Vector2D getPostion() {
@@ -44,6 +16,17 @@ abstract public class GameObject {
     
     public Vector2D getSize() {
         return this.size;
+    }
+    
+    public void setSize(Vector2D v) throws InvalidGameObjectPropertyException  {
+        if ((5000 >= v.getXCoord()) &&
+            (5000 >= v.getYCoord()) && 
+            (10 <= v.getXCoord()) &&
+            (10 <= v.getYCoord())) {
+            this.size = v;
+        } else {
+            throw new InvalidGameObjectPropertyException(this.name + "'s size is larger than 5000 or smaller than 10");
+        }
     }
     
     /** teleport position of this object to another position 
@@ -61,19 +44,16 @@ abstract public class GameObject {
         }
     }
     
-    public boolean getVisibility() {
-        return this.visibility;
-    }
-    
-    public void setVisibility(boolean b) {
-        this.visibility = b;
-    }
     /** move position of this object relative to their current position
      * 
      * @param pos
      */
     synchronized public void movePostion(Vector2D pos) {
         this.setPosition(new Vector2D(this.position.getXCoord() + pos.getXCoord(), this.position.getYCoord() + pos.getYCoord()));
+    }
+    
+    public ArrayList<GameObject> getConstraints() {
+        return this.constraints;
     }
     
     public void addConstraint(GameObject obj) {
@@ -83,10 +63,19 @@ abstract public class GameObject {
     public void removeConstraint(GameObject obj) {
         this.constraints.remove(obj);
     }
+    @Override
+    public void createInstance() throws InvalidGameObjectPropertyException {
+        super.createInstance();
+        if (this.size == null) {
+            throw new InvalidGameObjectPropertyException(this.ID + " : Object size has not been initialized.");
+        } else if (this.position == null) {
+            throw new InvalidGameObjectPropertyException(this.ID + " : Object position has not been intialized.");
+        }
+    }
     
     @Override
     public String toString() {
-        return this.name;
+        return this.getID();
     }
     
 }
