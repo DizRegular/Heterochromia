@@ -1,16 +1,13 @@
 package UniverseEngine;
-import java.awt.GraphicsEnvironment.*;
 import java.awt.*;
 import javax.swing.*;
 import DEVAPI.Main;
-import UniverseEngine.InputManager;
 import java.util.ArrayList;
-import javax.swing.border.Border;
 public class Game implements Runnable {
     private boolean running = false;
     private static ArrayList<JFrame> windowsHolder = new ArrayList<>();
     
-    private Fetcher fetcher;
+    //Hidden Dependencies = { Fetcher }
     private GameManipulator gameManipulator;
     private Thread game;
     private Main devAPI;
@@ -27,7 +24,7 @@ public class Game implements Runnable {
 
     public void start() {
         running = true;
-        fetcher = new Fetcher();
+        Fetcher.initiate();
         devAPI = new Main();
         Thread processAPI = new Thread(devAPI);
         gameManipulator = new GameManipulator(devAPI);
@@ -74,7 +71,7 @@ public class Game implements Runnable {
         JFrame window = new JFrame(viewPortName);
         Game.windowsHolder.add(window);
         JPanel screenDisplay = new JPanel();
-        screenDisplay.setBackground(Color.CYAN);
+        screenDisplay.setBackground(EngineSettings.LOADING_BACKGROUND_COLOR);
         
         JLabel label = new JLabel("Loading...");
         screenDisplay.add(label, BorderLayout.CENTER);

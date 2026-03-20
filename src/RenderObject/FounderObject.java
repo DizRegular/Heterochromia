@@ -7,7 +7,7 @@ abstract public class FounderObject {
     protected String name;
     protected String ID;
     protected boolean Enabled = true;
-    protected boolean instanced = false;
+    protected boolean isInstanced = false;
     protected ArrayList<String> TagsContainer = new ArrayList<>();
     
     public FounderObject(String name) {
@@ -51,8 +51,12 @@ abstract public class FounderObject {
         this.TagsContainer.remove(s);
     }
     
+    public boolean hasInstance() {
+        return this.isInstanced;
+    }
+    
     public void createInstance() throws InvalidGameObjectPropertyException {
-        instanced = true;
+        this.isInstanced = true;
         GameUniverse.newInstance(this);
     }
 }

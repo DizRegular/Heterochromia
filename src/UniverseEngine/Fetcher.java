@@ -1,43 +1,40 @@
 package UniverseEngine;
 import java.awt.Color;
-import java.util.*;
+import java.awt.Graphics2D;
+import java.util.HashMap;
 import javax.imageio.ImageIO;
 import java.io.*;
 import java.awt.image.BufferedImage;
 public class Fetcher {
     /** Load games assets so other game handler can use the resource.
-     * 
      */
-    private static final int pixelResolution = 64; //determine sprite sheet grid size
-    private static final File texture2Dlocation = new File("res/GameAssets/Textures");
+    private static String MISSING_TEXTURE_PATH = EngineSettings.MISSING_TEXTURE_PATH;
+    private static HashMap<String, BufferedImage> texturesHolder = new HashMap<>();
     
-    
-    private HashMap<String, BufferedImage> textures2D = new HashMap<>();
-    public Fetcher() {
-        String[] textureFolder = texture2Dlocation.list();
-        for (String textureDes : textureFolder) {
-            BufferedImage texture = null;
-                try {
-                    texture = ImageIO.read(new File(texture2Dlocation.getPath() + "/" + textureDes));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    texture = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-                    texture.setRGB(0, 0, Color.MAGENTA.getRGB());
-                }
-            int imageHeight = texture.getHeight();
-            int imageWidth = texture.getWidth();
-            for (int i = 0; i < imageHeight/pixelResolution; i++) {
-                for (int j = 0; j < imageWidth/pixelResolution; j++) {
-                    String eye = String.valueOf(i);
-                    String jay = String.valueOf(j);
-                    textures2D.put(eye+jay, texture);
-                }
-            }   
+    public static void initiate() {
+        try (FileInputStream fin = new FileInputStream(MISSING_TEXTURE_PATH)) {
+            BufferedImage missingTexureImage = ImageIO.read(fin);
+            texturesHolder.put("missingTexureImage", missingTexureImage);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     
-    
-    public HashMap<String, BufferedImage> getTextures2D() {
-        return this.textures2D;
+    public static void loadTexture(String name, String pathfile) {
+        try (FileInputStream fin = new FileInputStream(pathfile)) {
+            BufferedImage texture = ImageIO.read(fin);
+            texturesHolder.put(name, texture);
+        } catch (IOException e) {
+            
+        }
     }
+    
+    public static BufferedImage getTextures2D(String name) {
+        BufferedImage texture = texturesHolder.get(name);
+        if (texture == null) {
+            return texturesHolder.get("missingTexureImage");
+        }
+        return texture;
+    }
+    
 }

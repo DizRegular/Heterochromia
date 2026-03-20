@@ -62,4 +62,12 @@ public class GameUniverse {
             System.out.println("Did you type wrong path? Did the file exist in res?");
         }
     }
+    
+    public static void loadImage(String name, String pathfile) {
+        Fetcher.loadTexture(name, pathfile);
+    }
+    
+    public static BufferedImage fetchImage(String name) {
+        return Fetcher.getTextures2D(name);
+    }
 }

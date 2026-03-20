@@ -20,7 +20,6 @@ public class GameManipulator {
     }
     
     public void tick(double deltaTime) {
-        devAPI.processEvent();
         devAPI.process(deltaTime);
         ArrayList<CollisionObject> PhysicObjects = GameUniverse.ObservePhysic();
         this.applyPhysic(PhysicObjects);
@@ -117,13 +116,13 @@ public class GameManipulator {
             if (obj instanceof KinematicObject k) {
                 k.addVelocity(k.getAcceleration());
                 k.movePostion(k.getVelocity());
-                k.setAcceleration(new Vector2D(0, 9.8/60));
+                k.setAcceleration(new Vector2D(0, EngineSettings.GRAVITY_CONSTANT/60));
                 int[] IsInside = k.getQuadrants();
                 boolean touchedFloor = false;
                 for (int quadrant : IsInside) {
                     if (quadrant == -1) { break;}
                     for (CollisionObject otherObj : GameManipulator.quadrantContainer.get(quadrant)) {
-                        if (k.equals(otherObj)) {continue;}
+                        if (k.equals(otherObj) || otherObj.getCollision() == false) {continue;}
                         Rectangle2D collidedArea = k.getBounds().createIntersection(otherObj.getBounds());
                         if (collidedArea.isEmpty()) {continue;}
                         boolean skip = notifyGameEventListener(otherObj, k);

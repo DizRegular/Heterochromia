@@ -1,22 +1,18 @@
 package RenderObject;
 
-import UniverseEngine.Fetcher;
-import UniverseEngine.InputManager;
-import UniverseEngine.NormalRenderer;
 import UniverseEngine.Renderer;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 public class Camera extends GameObject {
     private JFrame view;
-    private JPanel screenDisplay;
     private Renderer renderStyle;
     private double zoomFactor = 1;
     
     public Camera(String name) {
         super(name);
+        super.Enabled = false;
     }
     
     @Override
@@ -66,6 +62,6 @@ public class Camera extends GameObject {
     }
     
     public void snap() {
-        renderStyle.render();
+        Renderer.render(this, view);
     }
 }

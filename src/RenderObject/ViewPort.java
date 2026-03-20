@@ -1,8 +1,6 @@
 package RenderObject;
 
 import UniverseEngine.Game;
-import UniverseEngine.NormalRenderer;
-import UniverseEngine.Renderer;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,27 +10,38 @@ public class ViewPort extends FounderObject {
     private JFrame window;
     private JPanel screen;
     private boolean fullScreen = false;
-    private Renderer renderStyle;
     
     public ViewPort(String name) {
         super(name);
         this.window = Game.createNewWindow(name);
-        screen = (JPanel)this.window.getContentPane();
+        this.screen = (JPanel)this.window.getContentPane();
     }
     
     public Camera getCamera(Camera cam) {
         return this.currView;
     }
     
-    public void setCamera(Camera cam) {
+    public void setCamera(Camera cam) throws InvalidGameObjectPropertyException {
+        if (cam.hasInstance() == false) {
+            throw new InvalidGameObjectPropertyException(this.ID + " : Can't Set viewPort to a camera that hasn't been initialized.");
+        }
+        if (this.currView != null) {
+            this.removeCamera();
+        }
         this.currView = cam;
+        currView.setEnabled(true);
         currView.setWindow(window);
+        screen.setPreferredSize(new Dimension((int)currView.getSize().getXCoord(), (int)currView.getSize().getYCoord()));
+        
+        window.pack();
     }
     
     public void removeCamera() {
         this.currView.setWindow(null);
+        this.currView.setEnabled(false);
         this.currView = null;
     }
+    
     @Override
     public void setEnabled(boolean Enabled) {
         if (Enabled == true) {
@@ -47,23 +56,6 @@ public class ViewPort extends FounderObject {
     @Override
     public void createInstance() throws InvalidGameObjectPropertyException {
         super.createInstance();
-        if (currView == null) {
-            throw new InvalidGameObjectPropertyException(this.ID + " : this viewport has not been assigned to any camera");
-        }
-        if (currView.instanced == false) {
-            throw new InvalidGameObjectPropertyException(this.ID + " : this viewport's camera has not been initiated.");
-        }
-        try {
-            currView.getPosition();
-            currView.getSize();
-        } catch (NullPointerException e) {
-            throw new InvalidGameObjectPropertyException(this.ID + " : camera of this viewport doesn't initiate size or position");
-        }
-        renderStyle = new NormalRenderer(window, currView);
-        currView.setRenderStyle(renderStyle);
-        screen.setPreferredSize(new Dimension((int)currView.getSize().getXCoord(), (int)currView.getSize().getYCoord()));
-        window.pack();
-        this.setEnabled(this.Enabled);
     }
     
     

@@ -56,7 +56,10 @@ abstract public class GameObject extends FounderObject {
         return this.constraints;
     }
     
-    public void addConstraint(GameObject obj) {
+    public void addConstraint(GameObject obj) throws InvalidGameObjectPropertyException {
+        if (obj == null) {
+            throw new InvalidGameObjectPropertyException(this.ID + " : this object tries to add constraint that is \"null\"");
+        }
         this.constraints.add(obj);
     }
     

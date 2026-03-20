@@ -12,7 +12,9 @@ public class RenderManager {
     
     public static void render() {
         for (Camera cam : allViewers) {
-            cam.snap();
+            if (cam.isEnabled() == true) {
+                cam.snap();
+            }
         }
     }
 }

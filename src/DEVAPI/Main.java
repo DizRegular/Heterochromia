@@ -3,9 +3,7 @@ import UniverseEngine.Game;
 import UniverseEngine.GameUniverse;
 import RenderObject.*;
 import UniverseEngine.InputManager;
-import UniverseEngine.Renderer;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.util.ArrayList;
 public class Main implements Runnable {
     /** Acts like codes that controls logic from a higher level like Unity.
@@ -17,7 +15,10 @@ public class Main implements Runnable {
     public Block pikachu2;
     public KinematicObject physicPikachu;
     public Camera cam1;
+    public Camera cam2;
+    public ViewPort window;
     public AreaDetector area;
+    public Block Flyingfloor;
     
     public double lf=0;
     public double fall=-1;
@@ -25,8 +26,7 @@ public class Main implements Runnable {
     public int startjump=0;
     public int maxjump=3;
     public boolean jumping=false;
-    public File pikachuImage = new File("res/GameAssets/Textures/placeholder.jpg");
-    public File NoImage = new File("res/GameAssets/Textures/NoImagePlaceHolder.png");
+    public String pikachuImage = "res/GameAssets/Textures/placeholder.jpg";
     
     @Override
     public void run() {      //this run very fast use with caution....  
@@ -36,33 +36,40 @@ public class Main implements Runnable {
      */
     public void initialize() {
         try {
+            GameUniverse.loadImage("pikachuImage", pikachuImage);
             physicPikachu = new KinematicObject("PikachuPlayer");
             AreaDetector area = new AreaDetector("trampoline");
             for (int i = 0; i < 6; i++) {
                 Block floor = new Block("Platform");
                 floor.setSize(new Vector2D(100,100));
                 floor.setPosition(new Vector2D(i*100, 500));
-                floor.setTexture(pikachuImage);
+                floor.setTexture("pikachuImage");
                 floor.createInstance();
             }
             for (int i = 0; i < 10; i++) {
                 Block floor = new Block("Platform");
                 floor.setSize(new Vector2D(100,100));
                 floor.setPosition(new Vector2D(700+i*50, 500-i*3));
-                floor.setTexture(pikachuImage);
+                floor.setTexture("pikachuImage");
                 floor.createInstance();
             }
             for (int i = 0; i < 40; i++) {
                 Block floor = new Block("Platform");
                 floor.setSize(new Vector2D(100,100));
                 floor.setPosition(new Vector2D(1000+i, 500-i*4));
-                floor.setTexture(pikachuImage);
+                floor.setTexture("pikachuImage");
                 floor.createInstance();
             }
-            Block floor = new Block("Platform");
-            floor.setSize(new Vector2D(100,50));
-            floor.setPosition(new Vector2D(100, 220));
-            floor.createInstance();
+            Flyingfloor = new Block("FlyingPlatform");
+            Flyingfloor.setSize(new Vector2D(100,50));
+            Flyingfloor.setPosition(new Vector2D(100, 220));
+            Flyingfloor.createInstance();
+            Flyingfloor.setCollision(false);
+            
+            Block LongPlatform = new Block("LongPlatform");
+            LongPlatform.setSize(new Vector2D(500,50));
+            LongPlatform.setPosition(new Vector2D(251, 220));
+            LongPlatform.createInstance();
             
             area.setSize(new Vector2D(50, 500));
             area.setPosition(new Vector2D(200, 200));
@@ -72,16 +79,22 @@ public class Main implements Runnable {
             physicPikachu.setPosition(new Vector2D(0,0));
             physicPikachu.createInstance();
             
-            ViewPort window = new ViewPort("viewPort");
+            window = new ViewPort("Game");
+            window.createInstance();
             cam1 = new Camera("GameCam");
             cam1.setSize(new Vector2D(1200, 800));
             cam1.setPosition(new Vector2D(0, 0));
-            physicPikachu.addConstraint(cam1);
-            StyledObject[] textureObjects = {physicPikachu, area, floor};
-            StyledObject.setTextureAll(textureObjects, pikachuImage);
-            window.setCamera(cam1);
             cam1.createInstance();
-            window.createInstance();
+            cam2 = new Camera("GameCam2");
+            cam2.setSize(new Vector2D(1200, 800));
+            cam2.setPosition(new Vector2D(0, 0));
+            cam2.createInstance();
+            physicPikachu.getSize();
+            window.setCamera(cam1);
+            physicPikachu.addConstraint(cam1);
+            StyledObject[] textureObjects = {physicPikachu, area, Flyingfloor, LongPlatform};
+            StyledObject.setTextureAll(textureObjects, "pikachuImage");
+
             GameUniverse.setBackground("res/GameAssets/Background/bgplacegholder.jpg");
         } catch (InvalidGameObjectPropertyException e) {
             e.printStackTrace();
@@ -96,16 +109,21 @@ public class Main implements Runnable {
             physicPikachu.addAcceleration(new Vector2D(lf, fall));
             added = true;
         }
-    }
-    /** Do what will happen when an event Occur 
-     * run before process and run after every tick
-     */
-    public void processEvent() {
             if (InputManager.isKeyDown('1')) {
                 GameUniverse.setBackground("res/GameAssets/Background/bgplacegholder.jpg");
+                try {
+                    window.setCamera(cam1);
+                } catch (InvalidGameObjectPropertyException e) {
+                    e.printStackTrace();
+                }
             }
             if (InputManager.isKeyDown('2')) {
                 GameUniverse.setBackground("res/GameAssets/Background/bgplaceholder2.png");
+                try {
+                    window.setCamera(cam2);
+                } catch (InvalidGameObjectPropertyException e) {
+                    e.printStackTrace();
+                }
             }
             if (InputManager.isKeyDown('d')) {
                 lf=5;
@@ -170,6 +188,6 @@ public class Main implements Runnable {
             if (InputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {
                 System.exit(0);
             }
-        }
+    }
 
 }

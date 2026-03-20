@@ -4,32 +4,26 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
-abstract public class Renderer {
+public class Renderer {
     /** Render every that this game is meant to see to the player
      */
     private Fetcher gameAssetsLoader;
-    private Camera camera;
-    private JFrame viewPort;
     
     private static String text = ""; //use this for debugging
-    public Renderer(JFrame window, Camera camera) {
-        this.camera = camera;
-        this.viewPort = camera.getWindow();
-    }
     
-    public void render() {
-        BufferStrategy bs = this.camera.getWindow().getBufferStrategy();
+    public static void render(Camera camera, JFrame viewPort) {
+        BufferStrategy bs = camera.getWindow().getBufferStrategy();
         if (bs == null) {
-            this.camera.getWindow().createBufferStrategy(3);
+            camera.getWindow().createBufferStrategy(3);
             return;
         }
         Graphics2D g = (Graphics2D)bs.getDrawGraphics();
         
         g.setColor(Color.blue);
-        g.fillRect(0, 0, (int)this.camera.getSize().getXCoord(), (int)this.camera.getSize().getYCoord());
-        g.drawImage(GameUniverse.getBackground(), 0, 0,(int)this.camera.getSize().getXCoord(), (int)this.camera.getSize().getYCoord(), null);
+        g.fillRect(0, 0, (int)camera.getSize().getXCoord(), (int)camera.getSize().getYCoord());
+        g.drawImage(GameUniverse.getBackground(), 0, 0,(int)camera.getSize().getXCoord(), (int)camera.getSize().getYCoord(), null);
         
-        double zoomFactor = this.camera.getZoomFactor();
+        double zoomFactor = camera.getZoomFactor();
         double XCenter = viewPort.getSize().getWidth() / 2;
         double YCenter = viewPort.getSize().getHeight()/ 2;
         AffineTransform transform = g.getTransform();
@@ -38,9 +32,11 @@ abstract public class Renderer {
         g.translate(-XCenter, -YCenter);
         for (FounderObject object : GameUniverse.ObserveUniverse()) {
             if (object instanceof StyledObject styled && styled.getVisibility()) {
-                g.drawImage(styled.getTexture(), (int)styled.getPostion().getXCoord() - (int)camera.getPosition().getXCoord(), (int)styled.getPostion().getYCoord() - (int)camera.getPosition().getYCoord(), (int)styled.getSize().getXCoord(), (int)styled.getSize().getYCoord(), null); 
+                g.drawImage(GameUniverse.fetchImage(styled.getTexture()), (int)styled.getPostion().getXCoord() - (int)camera.getPosition().getXCoord(), (int)styled.getPostion().getYCoord() - (int)camera.getPosition().getYCoord(), (int)styled.getSize().getXCoord(), (int)styled.getSize().getYCoord(), null); 
+                if (styled instanceof CollisionObject cobj && EngineSettings.SHOW_HITBOXES == true) {
+                    g.drawRect((int)cobj.getBounds().getMinX() - (int)camera.getPosition().getXCoord(), (int)cobj.getBounds().getMinY()  - (int)camera.getPosition().getYCoord(), (int)cobj.getBounds().getWidth(), (int)cobj.getBounds().getHeight());
+                }
             }
-
         }
         g.setTransform(transform);
 

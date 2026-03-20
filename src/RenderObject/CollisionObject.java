@@ -6,7 +6,8 @@ abstract public class CollisionObject extends StyledObject {
     protected Rectangle2D boundary;
     protected int[] insideQudrant;
     protected boolean hasPhysicChange = true;
-
+    protected boolean Collision = true;
+    
     public CollisionObject(String name) {
         super(name);
     }
@@ -27,6 +28,10 @@ abstract public class CollisionObject extends StyledObject {
         return this.insideQudrant;
     }
     
+    public boolean getCollision() {
+        return this.Collision;
+    }
+    
     public void setQuadrant(int[] quads) {
         this.insideQudrant = quads;
     }
@@ -39,13 +44,17 @@ abstract public class CollisionObject extends StyledObject {
         this.hasPhysicChange = b;
     }
     
+    public void setCollision(boolean b) {
+        this.Collision = b;
+    }
+    
     @Override
     public void createInstance() throws InvalidGameObjectPropertyException {
         super.createInstance();
         try {
-            this.boundary = new Rectangle2D.Double(position.getXCoord(), position.getYCoord(), size.getXCoord(), size.getYCoord());
+            this.boundary = new Rectangle2D.Double(position.getXCoord(), position.getYCoord()+0, size.getXCoord()+0, size.getYCoord()+0);
         } catch (NullPointerException e) {
-            throw new InvalidGameObjectPropertyException(this.ID + " : CollisionObject can't instancetiate because position or size or both which is required to create boundary.");
+            throw new InvalidGameObjectPropertyException(this.ID + " : CollisionObject can't instance because position or size or both which is required to create Hitbox.");
         }
     }
 }
