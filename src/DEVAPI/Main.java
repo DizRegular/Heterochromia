@@ -81,6 +81,7 @@ public class Main implements Runnable {
             
             window = new ViewPort("Game");
             window.createInstance();
+            window.setEnabled(true);
             cam1 = new Camera("GameCam");
             cam1.setSize(new Vector2D(1200, 800));
             cam1.setPosition(new Vector2D(0, 0));
