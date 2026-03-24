@@ -4,8 +4,11 @@
  */
 package DEVAPI;
 
+import RenderObject.AreaDetector;
 import RenderObject.GameObject;
+import RenderObject.InvalidGameObjectPropertyException;
 import RenderObject.StaticObject;
+import RenderObject.Vector2D;
 import RenderObject.touchable;
 import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
@@ -23,7 +26,15 @@ public class Door extends StaticObject implements touchable{
     @Override
     public void onTouched(GameObject obj) {
             if(InputManager.isKeyDown('e')){
-                                GameUniverse.setBackground("res/GameAssets/Background/bgplaceholder2.png");
+                GameUniverse.setBackground("res/GameAssets/Background/bgplaceholder2.png");
+                AreaDetector area = new AreaDetector("ExtraPlatform");
+                try {
+                    area.setSize(new Vector2D(50, 500));
+                    area.setPosition(new Vector2D(200, -200));
+                    area.createInstance();
+                } catch (InvalidGameObjectPropertyException e) {
+                    e.printStackTrace();
+                }
 //            SceneManager.setScene(/*scene*/null);
     }
     }

@@ -61,7 +61,7 @@ public class Game implements Runnable {
                 ticks = 0;
                 frames = 0;
             }
-            try {Thread.sleep(2);} catch (Exception e) {e.printStackTrace();}
+            try {Thread.sleep(1);} catch (Exception e) {e.printStackTrace();}
         }
     }
     
@@ -77,7 +77,8 @@ public class Game implements Runnable {
         screenDisplay.add(label, BorderLayout.CENTER);
         window.add(screenDisplay);
         window.addKeyListener(new InputManager());
-
+        window.setResizable(false);
+        window.setUndecorated(true);
         window.pack();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         return window;

@@ -2,6 +2,7 @@ package RenderObject;
 
 import UniverseEngine.Game;
 import java.awt.Dimension;
+import java.awt.Insets;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -32,8 +33,9 @@ public class ViewPort extends FounderObject {
         currView.setEnabled(true);
         currView.setWindow(window);
         screen.setPreferredSize(new Dimension((int)currView.getSize().getXCoord(), (int)currView.getSize().getYCoord()));
-        
+        screen.revalidate();
         window.pack();
+        window.setLocationRelativeTo(null);
     }
     
     public void removeCamera() {

@@ -9,6 +9,7 @@ public class Camera extends GameObject {
     private JFrame view;
     private Renderer renderStyle;
     private double zoomFactor = 1;
+    private Vector2D oldPosition = new Vector2D();
     
     public Camera(String name) {
         super(name);
@@ -56,9 +57,20 @@ public class Camera extends GameObject {
         return this.position;
     }
     
+    public Vector2D getOldPosition() {
+        return this.oldPosition;
+    }
+    
+    public void setOldPosition(Vector2D currPos) {
+        this.oldPosition = currPos;
+    }
     public void setPositionByCenter(GameObject constraint) {
         this.position = new Vector2D(constraint.getPostion().getXCoord() + constraint.getSize().getXCoord()/2 - size.getXCoord()/2
                 , constraint.getPostion().getYCoord() + constraint.getSize().getYCoord()/2 - size.getYCoord()/2);
+    }
+    
+    public void transition() {
+        
     }
     
     public void snap() {

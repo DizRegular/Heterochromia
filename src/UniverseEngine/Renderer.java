@@ -46,6 +46,7 @@ public class Renderer {
         g.drawString(text, (int)camera.getSize().getXCoord()/2 , (int)camera.getSize().getYCoord()/2);
         g.dispose();
         bs.show();
+        Toolkit.getDefaultToolkit().sync();
     }
     
     public static void setPrintingTextOnScreen(String s) {

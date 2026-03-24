@@ -45,6 +45,12 @@ public class Vector2D {
         return new Vector2D(newX, newY);
     }
     
+    public Vector2D multiply(double n) {
+        double newX = this.x * n;
+        double newY = this.y * n;
+        return new Vector2D(newX, newY);
+    }
+    
     /** print (x, y) for easier reading
      * @return 
      */
