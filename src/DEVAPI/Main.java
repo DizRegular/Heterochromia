@@ -39,6 +39,7 @@ public class Main implements Runnable {
             GameUniverse.loadImage("pikachuImage", pikachuImage);
             physicPikachu = new KinematicObject("PikachuPlayer");
             AreaDetector area = new AreaDetector("trampoline");
+            Door newDoor = new Door("bgtransition");
             for (int i = 0; i < 6; i++) {
                 Block floor = new Block("Platform");
                 floor.setSize(new Vector2D(100,100));
@@ -65,6 +66,10 @@ public class Main implements Runnable {
             Flyingfloor.setPosition(new Vector2D(100, 220));
             Flyingfloor.createInstance();
             Flyingfloor.setCollision(false);
+            
+            newDoor.setSize(new Vector2D(50, 50));
+            newDoor.setPosition(new Vector2D(100, 100));
+            newDoor.createInstance();
             
             Block LongPlatform = new Block("LongPlatform");
             LongPlatform.setSize(new Vector2D(500,50));

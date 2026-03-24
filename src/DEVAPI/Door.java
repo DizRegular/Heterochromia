@@ -7,6 +7,7 @@ package DEVAPI;
 import RenderObject.GameObject;
 import RenderObject.StaticObject;
 import RenderObject.touchable;
+import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
 
 /**
@@ -22,7 +23,8 @@ public class Door extends StaticObject implements touchable{
     @Override
     public void onTouched(GameObject obj) {
             if(InputManager.isKeyDown('e')){
-            SceneManager.setScene(/*scene*/null);
+                                GameUniverse.setBackground("res/GameAssets/Background/bgplaceholder2.png");
+//            SceneManager.setScene(/*scene*/null);
     }
     }
     
