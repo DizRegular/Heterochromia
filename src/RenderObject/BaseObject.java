@@ -13,7 +13,6 @@ abstract public class BaseObject {
     
     public BaseObject(String name) {
         this.name = name;
-        this.ID = this.name + "#" + GameUniverse.generateNewID();
     }
 
     public String getName() {
@@ -28,8 +27,8 @@ abstract public class BaseObject {
         return ID;
     }
 
-    public void setID(String ID) throws InvalidGameObjectPropertyException {
-        throw new InvalidGameObjectPropertyException("ID property cannot be set.");
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public boolean isEnabled() {
@@ -68,9 +67,8 @@ abstract public class BaseObject {
         //Nothing
     }
     
-    public void createInstance() throws InvalidGameObjectPropertyException {
+    public void instance() {
         this.isInstanced = true;
-        GameUniverse.newInstance(this);
     }
     
     public void onCreate() {

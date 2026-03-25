@@ -9,9 +9,9 @@ public class EngineSettings {
     
     public static Color LOADING_BACKGROUND_COLOR = Color.PINK;
     
-     public static Color DEBUG_TEXT_COLOR = Color.WHITE;
+     public static Color DEBUG_TEXT_COLOR = Color.BLUE;
     
     public static double GRAVITY_CONSTANT = 9.8;
     
-    public static boolean SHOW_HITBOXES = false;
+    public static boolean SHOW_HITBOXES = true;
 }

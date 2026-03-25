@@ -53,12 +53,4 @@ public class ViewPort extends BaseObject {
         }
         this.Enabled = Enabled;
     }
-    
-
-    @Override
-    public void createInstance() throws InvalidGameObjectPropertyException {
-        super.createInstance();
-    }
-    
-    
 }

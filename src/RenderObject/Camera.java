@@ -16,9 +16,9 @@ public class Camera extends GameObject {
         super(name);
         super.Enabled = false;
     }
-    
+
     @Override
-    public void setSize(Vector2D v) throws InvalidGameObjectPropertyException {
+    public void setSize(Vector2D v) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double screenSizeX = screenSize.width;
         double screenSizeY = screenSize.height;
@@ -26,9 +26,8 @@ public class Camera extends GameObject {
             (screenSizeY >= v.getYCoord())) {
             this.size = v;
         } else {
-            throw new InvalidGameObjectPropertyException(this.name + "camera size is larger than player's screen");
+            this.size = new Vector2D(screenSizeX, screenSizeY);
         }
-        
     }
 
     public Renderer getRenderStyle() {
@@ -73,7 +72,17 @@ public class Camera extends GameObject {
     }
     
     @Override
+    public void instance() {
+        super.instance();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double screenSizeX = screenSize.width;
+        double screenSizeY = screenSize.height;
+        this.size = new Vector2D(screenSizeX, screenSizeY);
+    }
+    
+    @Override
     public void onCreate() {
+        super.onCreate();
         RenderManager.registerNewViewer(this);
     }
     

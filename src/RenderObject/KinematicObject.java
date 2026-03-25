@@ -13,8 +13,8 @@ public class KinematicObject extends CollisionObject implements Gravity {
     }
     
     @Override
-    public void createInstance() throws InvalidGameObjectPropertyException {
-        super.createInstance();
+    public void instance() {
+        super.instance();
         GameManipulator.sortPhysicObjectPosition(this);
 
     }

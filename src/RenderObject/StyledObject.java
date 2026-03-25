@@ -1,5 +1,7 @@
 package RenderObject;
 
+import UniverseEngine.Renderer;
+
 abstract public class StyledObject extends GameObject {
     protected String imageName;
     protected boolean visibility = true;
@@ -29,5 +31,17 @@ abstract public class StyledObject extends GameObject {
         for (int i =0; i < size; i++) {
             objs[i].setTexture(imageName);
         }
+    }
+    
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Renderer.registerStyledObject(this);
+    }
+    
+    @Override
+     public void onDestroy() {
+        super.onDestroy();
+        Renderer.unregisterStyledObject(this);
     }
 }

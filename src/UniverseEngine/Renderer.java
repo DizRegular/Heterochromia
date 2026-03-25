@@ -3,12 +3,13 @@ import RenderObject.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 public class Renderer {
     /** Render every that this game is meant to see to the player
      */
     private Fetcher gameAssetsLoader;
-    
+    private static final ArrayList<StyledObject> texturedObject = new ArrayList<>();
     private static String text = ""; //use this for debugging
     
     public static void render(Camera camera, JFrame viewPort) {
@@ -30,7 +31,7 @@ public class Renderer {
         g.translate(XCenter, YCenter);
         g.scale(zoomFactor, zoomFactor);
         g.translate(-XCenter, -YCenter);
-        for (BaseObject object : GameUniverse.ObserveUniverse()) {
+        for (BaseObject object : texturedObject) {
             if (object instanceof StyledObject styled && styled.getVisibility()) {
                 g.drawImage(GameUniverse.fetchImage(styled.getTexture()), (int)styled.getPosition().getXCoord() - (int)camera.getPosition().getXCoord(), (int)styled.getPosition().getYCoord() - (int)camera.getPosition().getYCoord(), (int)styled.getSize().getXCoord(), (int)styled.getSize().getYCoord(), null); 
                 if (styled instanceof CollisionObject cobj && EngineSettings.SHOW_HITBOXES == true) {
@@ -47,6 +48,14 @@ public class Renderer {
         g.dispose();
         bs.show();
         Toolkit.getDefaultToolkit().sync();
+    }
+    
+    public static void registerStyledObject(StyledObject styObj) {
+        Renderer.texturedObject.add(styObj);
+    }
+    
+    public static void unregisterStyledObject(StyledObject styObj) {
+        Renderer.texturedObject.remove(styObj);
     }
     
     public static void setPrintingTextOnScreen(String s) {

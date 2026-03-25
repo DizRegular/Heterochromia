@@ -20,15 +20,8 @@ abstract public class GameObject extends BaseObject {
         return this.size;
     }
     
-    public void setSize(Vector2D v) throws InvalidGameObjectPropertyException  {
-        if ((5000 >= v.getXCoord()) &&
-            (5000 >= v.getYCoord()) && 
-            (10 <= v.getXCoord()) &&
-            (10 <= v.getYCoord())) {
-            this.size = v;
-        } else {
-            throw new InvalidGameObjectPropertyException(this.name + "'s size is larger than 5000 or smaller than 10");
-        }
+    public void setSize(Vector2D v) {
+        this.size = v;
     }
     
     /** teleport position of this object to another position 
@@ -87,16 +80,15 @@ abstract public class GameObject extends BaseObject {
     
     public void removeConstraint(GameObject obj) {
         this.constraints.remove(obj);
+        obj.setIsConstrain(false);
     }
     
     @Override
-    public void createInstance() throws InvalidGameObjectPropertyException {
-        super.createInstance();
-        if (this.size == null) {
-            throw new InvalidGameObjectPropertyException(this.ID + " : Object size has not been initialized.");
-        } else if (this.position == null) {
-            throw new InvalidGameObjectPropertyException(this.ID + " : Object position has not been intialized.");
-        }
+    public void instance() {
+        super.instance();
+        this.size = new Vector2D(10, 10);
+        this.position = new Vector2D(0, 0);
+        
     }
     
     @Override

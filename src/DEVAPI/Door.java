@@ -18,25 +18,17 @@ import UniverseEngine.InputManager;
  * @author tin_sel
  */
 public class Door extends StaticObject implements touchable{
-    private boolean opened = false;
     public Door(/*gamesecen*/String name){
         super(name);
     }
 
     @Override
     public void onTouched(GameObject obj) {
-            if(InputManager.isKeyDown('e') && (opened == false)){
-                opened = true;
+            if(InputManager.isKeyDown('e')){
                 GameUniverse.setBackground("res/GameAssets/Background/bgplaceholder2.png");
-                AreaDetector area = new AreaDetector("ExtraPlatform");
-                try {
-                    area.setSize(new Vector2D(50, 500
-                    ));
-                    area.setPosition(new Vector2D(200, -200));
-                    area.createInstance();
-                } catch (InvalidGameObjectPropertyException e) {
-                    e.printStackTrace();
-                }
+                AreaDetector area = GameUniverse.createInstance(new AreaDetector("ExtraPlatform"));
+                area.setSize(new Vector2D(50, 500));
+                area.setPosition(new Vector2D(200, -200));
 //            SceneManager.setScene(/*scene*/null);
     }
     }

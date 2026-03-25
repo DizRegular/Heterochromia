@@ -18,21 +18,20 @@ public class GameUniverse {
         return GameUniverse.currentNewObjectID;
     }
     
-    public static CopyOnWriteArrayList<BaseObject> ObserveUniverse() {
-        return GameUniverse.objectList;
-    }
-    
     public static int numObjectUniverse() {
         return GameUniverse.objectList.size();
     }
     
-    public static void newInstance(BaseObject obj) {
-        spawnQueue.add(obj); 
+    public static <C extends BaseObject> C createInstance(C object) {
+        object.setID(object.getName() + "#" + GameUniverse.generateNewID());
+        object.instance();
+        spawnQueue.add(object); 
+        return object;
     }
     
     public static void newInstanceAll(ArrayList<BaseObject> allObject) {
         for (BaseObject obj : allObject) {
-            GameUniverse.newInstance(obj);
+            GameUniverse.createInstance(obj);
         }
     }
     
@@ -66,6 +65,24 @@ public class GameUniverse {
         }
         objectList.removeAll(deadObjects);
         deadObjects.clear();
+    }
+    
+    public static <C extends BaseObject> C getObjectById(String id, Class<C> clazz) {
+        for (BaseObject obj : objectList) {
+            if (obj.getID().equals(id) && clazz.isInstance(obj)) {
+                return clazz.cast(obj);
+            }
+        }
+        return null;
+    }
+    
+    public static <C extends BaseObject> C getObjectByName(String name, Class<C> clazz) {
+        for (BaseObject obj : objectList) {
+            if (obj.getName().equals(name) && clazz.isInstance(obj)) {
+                return clazz.cast(obj);
+            }
+        }
+        return null;
     }
     
     public static BufferedImage getBackground() {

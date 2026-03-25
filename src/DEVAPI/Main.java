@@ -37,89 +37,75 @@ public class Main implements Runnable {
     /** run once when the game runs
      */
     public void initialize() {
-        try {
             GameUniverse.loadImage("pikachuImage", pikachuImage);
-            physicPikachu = new KinematicObject("PikachuPlayer");
-            area = new AreaDetector("trampoline");
-            Door newDoor = new Door("bgtransition");
+            physicPikachu = GameUniverse.createInstance(new KinematicObject("PikachuPlayer"));
+            area = GameUniverse.createInstance(new AreaDetector("trampoline"));
+            Door newDoor = GameUniverse.createInstance(new Door("bgtransition"));
             for (int i = 0; i < 6; i++) {
-                Block floor = new Block("Platform");
+                Block floor = GameUniverse.createInstance(new Block("Platform"));
                 floor.setSize(new Vector2D(100,100));
                 floor.setPosition(new Vector2D(i*100, 500));
                 floor.setTexture("pikachuImage");
-                floor.createInstance();
             }
             for (int i = 0; i < 10; i++) {
-                Block floor = new Block("Platform");
+                Block floor = GameUniverse.createInstance(new Block("Platform"));
                 floor.setSize(new Vector2D(100,100));
                 floor.setPosition(new Vector2D(700+i*50, 500-i*3));
                 floor.setTexture("pikachuImage");
-                floor.createInstance();
             }
             for (int i = 0; i < 40; i++) {
-                Block floor = new Block("Platform");
+                Block floor = GameUniverse.createInstance(new Block("Platform"));
                 floor.setSize(new Vector2D(100,100));
                 floor.setPosition(new Vector2D(1000+i, 500-i*4));
                 floor.setTexture("pikachuImage");
-                floor.createInstance();
             }
-            Flyingfloor = new Block("FlyingPlatform");
+            Flyingfloor = GameUniverse.createInstance(new Block("FlyingPlatform"));
             Flyingfloor.setSize(new Vector2D(100,50));
             Flyingfloor.setPosition(new Vector2D(100, 220));
-            Flyingfloor.createInstance();
             
             newDoor.setSize(new Vector2D(50, 50));
             newDoor.setPosition(new Vector2D(100, 100));
-            newDoor.createInstance();
             
-            Block LongPlatform = new Block("LongPlatform");
+            Block LongPlatform = GameUniverse.createInstance(new Block("LongPlatform"));
             LongPlatform.setSize(new Vector2D(500,150));
             LongPlatform.setPosition(new Vector2D(251, -200));
-            LongPlatform.createInstance();
             
             area.setSize(new Vector2D(50, 5000));
             area.setPosition(new Vector2D(200, 200));
-            area.createInstance();
             
             physicPikachu.setSize(new Vector2D(50, 50));
             physicPikachu.setPosition(new Vector2D(0,0));
-            physicPikachu.createInstance();
             
-            scaredpik = new ScaredPikachu("ScaredPikachu");
+            scaredpik = GameUniverse.createInstance(new ScaredPikachu("ScaredPikachu"));
             scaredpik.setSize(new Vector2D(70, 40));
             scaredpik.setPosition(new Vector2D(450, 450));
-            scaredpik.createInstance();
             
-            Decoration scaredpikfriend = new Decoration("ScaredPikachuFriend");
+            Decoration scaredpikfriend = GameUniverse.createInstance(new Decoration("ScaredPikachuFriend"));
             scaredpikfriend.setSize(new Vector2D(50, 70));
             scaredpikfriend.setPosition(new Vector2D(0, 0));
-            scaredpikfriend.createInstance();
             
-            scaredpik.addConstraint(scaredpikfriend);
             
-            window = new ViewPort("Game");
-            window.createInstance();
+            window = GameUniverse.createInstance(new ViewPort("Game"));
             window.setEnabled(true);
-            cam1 = new Camera("GameCam");
+            cam1 = GameUniverse.createInstance(new Camera("GameCam"));
             cam1.setSize(new Vector2D(1200, 800));
             cam1.setPosition(new Vector2D(0, 0));
-            cam1.createInstance();
-            cam2 = new Camera("GameCam2");
+            cam2 = GameUniverse.createInstance(new Camera("GameCam2"));
             cam2.setSize(new Vector2D(1400, 500));
             cam2.setPosition(new Vector2D(0, 0));
-            cam2.createInstance();
-            physicPikachu.getSize();
-            window.setCamera(cam1);
-            physicPikachu.addConstraint(cam1);
+            try {
+                scaredpik.addConstraint(scaredpikfriend);
+                window.setCamera(cam1);
+                physicPikachu.addConstraint(cam1);
+            } catch (InvalidGameObjectPropertyException e) {
+                e.printStackTrace();
+            }
             StyledObject[] textureObjects = {
                 physicPikachu, area, Flyingfloor, 
                 LongPlatform, scaredpik, scaredpikfriend};
             StyledObject.setTextureAll(textureObjects, "pikachuImage");
 
             GameUniverse.setBackground("res/GameAssets/Background/bgplacegholder.jpg");
-        } catch (InvalidGameObjectPropertyException e) {
-            e.printStackTrace();
-        }
     }
     
     /** run every tick when the game is running
@@ -133,7 +119,8 @@ public class Main implements Runnable {
             if (InputManager.isKeyDown('1')) {
                 GameUniverse.setBackground("res/GameAssets/Background/bgplacegholder.jpg");
                 try {
-                    window.setCamera(cam1);
+                    Camera a = GameUniverse.getObjectByName("GameCam", Camera.class);
+                    window.setCamera(a);
                 } catch (InvalidGameObjectPropertyException e) {
                     e.printStackTrace();
                 }
@@ -202,7 +189,7 @@ public class Main implements Runnable {
             }
             
             if (InputManager.isKeyDown(KeyEvent.VK_DELETE)) {
-                scaredpik.destroyInstance();
+                physicPikachu.destroyInstance();
             }
             
             if (InputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {

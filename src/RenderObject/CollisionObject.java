@@ -18,6 +18,12 @@ abstract public class CollisionObject extends StyledObject {
     }
     
     @Override
+    public void setPosition(Vector2D pos) {
+        super.setPosition(pos);
+        this.boundary.setFrame(pos.getXCoord(), pos.getYCoord(), this.boundary.getWidth(), this.boundary.getHeight());
+    }
+    
+    @Override
     synchronized public void  movePostion(Vector2D pos) {
         super.movePostion(pos);
         Vector2D startPos = this.position;
@@ -50,22 +56,26 @@ abstract public class CollisionObject extends StyledObject {
     }
     
     @Override
+    public void setSize(Vector2D size) {
+        super.setSize(size);
+        this.boundary = new Rectangle2D.Double(this.position.getXCoord(), this.position.getYCoord()+0, size.getXCoord()+0, size.getYCoord()+0);
+    }
+    
+    @Override
     public void onDestroy() {
+        super.onDestroy();
         GameManipulator.unregisterPhysicObject(this);
     }
     
     @Override
-    public void createInstance() throws InvalidGameObjectPropertyException {
-        super.createInstance();
-        try {
-            this.boundary = new Rectangle2D.Double(position.getXCoord(), position.getYCoord()+0, size.getXCoord()+0, size.getYCoord()+0);
-        } catch (NullPointerException e) {
-            throw new InvalidGameObjectPropertyException(this.ID + " : CollisionObject can't instance because position or size or both which is required to create Hitbox.");
-        }
+    public void instance(){
+        super.instance();
+        this.boundary = new Rectangle2D.Double(position.getXCoord(), position.getYCoord()+0, size.getXCoord()+0, size.getYCoord()+0);
     }
     
     @Override
     public void onCreate() {
+        super.onCreate();
         GameManipulator.registerPhysicObject(this);
     }
 }
