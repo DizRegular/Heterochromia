@@ -189,7 +189,8 @@ public class Main implements Runnable {
             }
             
             if (InputManager.isKeyDown(KeyEvent.VK_DELETE)) {
-                physicPikachu.destroyInstance();
+                Door d = GameUniverse.getObjectByName("ExtraPlatform", Door.class);
+                d.destroyInstance();
             }
             
             if (InputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {

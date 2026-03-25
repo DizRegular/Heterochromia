@@ -6,3 +6,4 @@ nbpython/
 nbproject/genfiles.properties
 nbproject/project.impl.properties
 *.class
+*.log
