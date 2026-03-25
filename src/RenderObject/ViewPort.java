@@ -6,7 +6,7 @@ import java.awt.Insets;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class ViewPort extends FounderObject {
+public class ViewPort extends BaseObject {
     private Camera currView;
     private JFrame window;
     private JPanel screen;

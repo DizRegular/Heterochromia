@@ -1,5 +1,6 @@
 package RenderObject;
 
+import UniverseEngine.RenderManager;
 import UniverseEngine.Renderer;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -53,9 +54,6 @@ public class Camera extends GameObject {
     public void setZoomFactor(double n) {
         this.zoomFactor = n;
     }
-    public Vector2D getPosition() {
-        return this.position;
-    }
     
     public Vector2D getOldPosition() {
         return this.oldPosition;
@@ -64,13 +62,19 @@ public class Camera extends GameObject {
     public void setOldPosition(Vector2D currPos) {
         this.oldPosition = currPos;
     }
-    public void setPositionByCenter(GameObject constraint) {
-        this.position = new Vector2D(constraint.getPostion().getXCoord() + constraint.getSize().getXCoord()/2 - size.getXCoord()/2
-                , constraint.getPostion().getYCoord() + constraint.getSize().getYCoord()/2 - size.getYCoord()/2);
-    }
     
     public void transition() {
         
+    }
+    
+    @Override
+    public void onDestroy() {
+        RenderManager.unregisterViewer(this);
+    }
+    
+    @Override
+    public void onCreate() {
+        RenderManager.registerNewViewer(this);
     }
     
     public void snap() {

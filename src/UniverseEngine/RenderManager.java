@@ -10,6 +10,10 @@ public class RenderManager {
         allViewers.add(cam);
     }
     
+    public static void unregisterViewer(Camera cam) {
+        allViewers.remove(cam);
+    }
+    
     public static void render() {
         for (Camera cam : allViewers) {
             if (cam.isEnabled() == true) {

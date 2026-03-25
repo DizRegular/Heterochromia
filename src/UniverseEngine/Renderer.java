@@ -19,7 +19,7 @@ public class Renderer {
         }
         Graphics2D g = (Graphics2D)bs.getDrawGraphics();
         
-        g.setColor(Color.blue);
+        g.setColor(EngineSettings.DEBUG_TEXT_COLOR);
         g.fillRect(0, 0, (int)camera.getSize().getXCoord(), (int)camera.getSize().getYCoord());
         g.drawImage(GameUniverse.getBackground(), 0, 0,(int)camera.getSize().getXCoord(), (int)camera.getSize().getYCoord(), null);
         
@@ -30,9 +30,9 @@ public class Renderer {
         g.translate(XCenter, YCenter);
         g.scale(zoomFactor, zoomFactor);
         g.translate(-XCenter, -YCenter);
-        for (FounderObject object : GameUniverse.ObserveUniverse()) {
+        for (BaseObject object : GameUniverse.ObserveUniverse()) {
             if (object instanceof StyledObject styled && styled.getVisibility()) {
-                g.drawImage(GameUniverse.fetchImage(styled.getTexture()), (int)styled.getPostion().getXCoord() - (int)camera.getPosition().getXCoord(), (int)styled.getPostion().getYCoord() - (int)camera.getPosition().getYCoord(), (int)styled.getSize().getXCoord(), (int)styled.getSize().getYCoord(), null); 
+                g.drawImage(GameUniverse.fetchImage(styled.getTexture()), (int)styled.getPosition().getXCoord() - (int)camera.getPosition().getXCoord(), (int)styled.getPosition().getYCoord() - (int)camera.getPosition().getYCoord(), (int)styled.getSize().getXCoord(), (int)styled.getSize().getYCoord(), null); 
                 if (styled instanceof CollisionObject cobj && EngineSettings.SHOW_HITBOXES == true) {
                     g.drawRect((int)cobj.getBounds().getMinX() - (int)camera.getPosition().getXCoord(), (int)cobj.getBounds().getMinY()  - (int)camera.getPosition().getYCoord(), (int)cobj.getBounds().getWidth(), (int)cobj.getBounds().getHeight());
                 }

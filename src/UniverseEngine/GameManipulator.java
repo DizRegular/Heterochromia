@@ -9,6 +9,7 @@ public class GameManipulator {
      */
     private Main devAPI;
     private static final ArrayList<ArrayList<CollisionObject>> quadrantContainer = new ArrayList<>();
+    private static final ArrayList<CollisionObject> physicObjects = new ArrayList<>();
     private static final int gameQuadrantWidth = 1080;
     private static  final int gameQuadrantHeight = 1920;
     
@@ -20,11 +21,21 @@ public class GameManipulator {
     }
     
     public void tick(double deltaTime) {
+        GameUniverse.processSpawningObject();
         devAPI.process(deltaTime);
-        ArrayList<CollisionObject> PhysicObjects = GameUniverse.ObservePhysic();
-        this.applyPhysic(PhysicObjects);
+        this.applyPhysic();
+        GameUniverse.clean();
     }
-      
+    
+    
+    public static void registerPhysicObject(CollisionObject obj) {
+        physicObjects.add(obj);
+    }
+    
+    public static void unregisterPhysicObject(CollisionObject obj) {
+         physicObjects.remove(obj);
+    }
+    
     public boolean notifyGameEventListener(GameObject eventSource, GameObject eventCause) {
         if (eventSource instanceof touchable) {
             GameEventListener.handleTouch(eventSource, eventCause, "");
@@ -53,7 +64,7 @@ public class GameManipulator {
         /** Sort obj to their respective quadrant to reduce amount of calculation
          * And keep that infomation in quadrant container
          */
-        Vector2D objPosition = obj.getPostion();
+        Vector2D objPosition = obj.getPosition();
         Vector2D objSize = obj.getSize();
         int ltVertexQuadrant = GameManipulator.getQuadrant(new Vector2D(objPosition.getXCoord(), objPosition.getYCoord() + objSize.getYCoord()));
         int rtVertexQuadrant = GameManipulator.getQuadrant(new Vector2D(objPosition.getXCoord()+ objSize.getXCoord(), objPosition.getYCoord() + objSize.getYCoord()));
@@ -86,9 +97,9 @@ public class GameManipulator {
     private void setYCollsion(double YIntersect, KinematicObject k, CollisionObject otherObj, double YAxis) {
         if (YIntersect <= 0) {return;}
         if (YAxis >= 0) {
-            k.getPostion().setY(otherObj.getBounds().getMinY() - k.getSize().getYCoord());
+            k.getPosition().setY(otherObj.getBounds().getMinY() - k.getSize().getYCoord());
         } else {
-            k.getPostion().setY(otherObj.getBounds().getMaxY());
+            k.getPosition().setY(otherObj.getBounds().getMaxY());
         }
         k.getAcceleration().setY(0);
         k.getVelocity().setY(0);
@@ -97,22 +108,23 @@ public class GameManipulator {
     private void setXCollsion(double XIntersect, KinematicObject k, CollisionObject otherObj, double XAxis) {
         if (XIntersect <= 0) { return; }
         if (XAxis >= 0) {
-            k.getPostion().setX((otherObj.getBounds().getMinX() - k.getSize().getYCoord()));
+            k.getPosition().setX((otherObj.getBounds().getMinX() - k.getSize().getYCoord()));
         } else {
-            k.getPostion().setX((otherObj.getBounds().getMaxX()));
+            k.getPosition().setX((otherObj.getBounds().getMaxX()));
         }
         k.getAcceleration().setX(0);
         k.getVelocity().setX(0);
     }
     
-    public void applyPhysic(ArrayList<CollisionObject> PhysicObjects) {
+    public void applyPhysic() {
+        
         for (ArrayList quadrant : GameManipulator.quadrantContainer) {
             quadrant.clear();
         }
-        for (CollisionObject obj : PhysicObjects) { //Sort quadrant for every collision object 
+        for (CollisionObject obj : physicObjects) { //Sort quadrant for every collision object 
             GameManipulator.sortPhysicObjectPosition(obj);
         }
-        for (CollisionObject obj : PhysicObjects) { //Apply collsion and gravity to kinematic
+        for (CollisionObject obj : physicObjects) { //Apply collsion and gravity to kinematic
             if (obj instanceof KinematicObject k) {
                 k.addVelocity(k.getAcceleration());
                 k.movePostion(k.getVelocity());

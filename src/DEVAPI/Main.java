@@ -5,6 +5,7 @@ import RenderObject.*;
 import UniverseEngine.InputManager;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Vector;
 public class Main implements Runnable {
     /** Acts like codes that controls logic from a higher level like Unity.
      */
@@ -19,6 +20,7 @@ public class Main implements Runnable {
     public ViewPort window;
     public AreaDetector area;
     public Block Flyingfloor;
+    public ScaredPikachu scaredpik;
     
     public double lf=0;
     public double fall=-1;
@@ -65,7 +67,6 @@ public class Main implements Runnable {
             Flyingfloor.setSize(new Vector2D(100,50));
             Flyingfloor.setPosition(new Vector2D(100, 220));
             Flyingfloor.createInstance();
-            Flyingfloor.setCollision(false);
             
             newDoor.setSize(new Vector2D(50, 50));
             newDoor.setPosition(new Vector2D(100, 100));
@@ -84,6 +85,18 @@ public class Main implements Runnable {
             physicPikachu.setPosition(new Vector2D(0,0));
             physicPikachu.createInstance();
             
+            scaredpik = new ScaredPikachu("ScaredPikachu");
+            scaredpik.setSize(new Vector2D(70, 40));
+            scaredpik.setPosition(new Vector2D(450, 450));
+            scaredpik.createInstance();
+            
+            Decoration scaredpikfriend = new Decoration("ScaredPikachuFriend");
+            scaredpikfriend.setSize(new Vector2D(50, 70));
+            scaredpikfriend.setPosition(new Vector2D(0, 0));
+            scaredpikfriend.createInstance();
+            
+            scaredpik.addConstraint(scaredpikfriend);
+            
             window = new ViewPort("Game");
             window.createInstance();
             window.setEnabled(true);
@@ -98,7 +111,9 @@ public class Main implements Runnable {
             physicPikachu.getSize();
             window.setCamera(cam1);
             physicPikachu.addConstraint(cam1);
-            StyledObject[] textureObjects = {physicPikachu, area, Flyingfloor, LongPlatform};
+            StyledObject[] textureObjects = {
+                physicPikachu, area, Flyingfloor, 
+                LongPlatform, scaredpik, scaredpikfriend};
             StyledObject.setTextureAll(textureObjects, "pikachuImage");
 
             GameUniverse.setBackground("res/GameAssets/Background/bgplacegholder.jpg");
@@ -160,11 +175,6 @@ public class Main implements Runnable {
             }
             physicPikachu.movePostion(new Vector2D(lf, 0));
 
-            if (InputManager.isKeyDown(KeyEvent.VK_SPACE)) {
-                if (physicPikachu.getTouchedFloor() && physicPikachu.getVelocity().getYCoord() < 10) {
-                    physicPikachu.setVelocity(new Vector2D(0, -5));
-                }
-            }
             if (InputManager.isKeyDown('j')) {
                 physicPikachu.removeConstraint(cam1);
                 cam1.movePostion(new Vector2D(-10, 0));
@@ -190,7 +200,11 @@ public class Main implements Runnable {
                     physicPikachu.setVelocity(new Vector2D(0, -5));
                 }
             }
-
+            
+            if (InputManager.isKeyDown(KeyEvent.VK_DELETE)) {
+                scaredpik.destroyInstance();
+            }
+            
             if (InputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {
                 System.exit(0);
             }

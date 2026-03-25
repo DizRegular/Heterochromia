@@ -1,5 +1,6 @@
 package RenderObject;
 
+import UniverseEngine.GameManipulator;
 import java.awt.geom.Rectangle2D;
 
 abstract public class CollisionObject extends StyledObject {
@@ -18,8 +19,8 @@ abstract public class CollisionObject extends StyledObject {
     
     @Override
     synchronized public void  movePostion(Vector2D pos) {
+        super.movePostion(pos);
         Vector2D startPos = this.position;
-        this.setPosition(new Vector2D(startPos.getXCoord() + pos.getXCoord(), startPos.getYCoord() + pos.getYCoord()));
         this.boundary.setFrame(startPos.getXCoord() + pos.getXCoord(), startPos.getYCoord() + pos.getYCoord(), this.boundary.getWidth(), this.boundary.getHeight());
         this.hasPhysicChange = true;
     }
@@ -49,6 +50,11 @@ abstract public class CollisionObject extends StyledObject {
     }
     
     @Override
+    public void onDestroy() {
+        GameManipulator.unregisterPhysicObject(this);
+    }
+    
+    @Override
     public void createInstance() throws InvalidGameObjectPropertyException {
         super.createInstance();
         try {
@@ -56,5 +62,10 @@ abstract public class CollisionObject extends StyledObject {
         } catch (NullPointerException e) {
             throw new InvalidGameObjectPropertyException(this.ID + " : CollisionObject can't instance because position or size or both which is required to create Hitbox.");
         }
+    }
+    
+    @Override
+    public void onCreate() {
+        GameManipulator.registerPhysicObject(this);
     }
 }

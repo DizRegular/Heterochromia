@@ -6,8 +6,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 public class GameUniverse {
-    private static CopyOnWriteArrayList<FounderObject> objectList = new CopyOnWriteArrayList<>();
-    private static ArrayList<CollisionObject> PhysicObjectList = new ArrayList<>();
+    private static CopyOnWriteArrayList<BaseObject> objectList = new CopyOnWriteArrayList<>();
+    private static ArrayList<BaseObject> spawnQueue = new ArrayList<>();
+    private static ArrayList<BaseObject> deadObjects = new ArrayList<>();
     private static int currentNewObjectID = -1;
     private static BufferedImage background;
     private RenderManager renderManager;
@@ -17,38 +18,54 @@ public class GameUniverse {
         return GameUniverse.currentNewObjectID;
     }
     
-    public static CopyOnWriteArrayList<FounderObject> ObserveUniverse() {
+    public static CopyOnWriteArrayList<BaseObject> ObserveUniverse() {
         return GameUniverse.objectList;
-    }
-    
-    public static ArrayList<CollisionObject> ObservePhysic() {
-        return GameUniverse.PhysicObjectList;
     }
     
     public static int numObjectUniverse() {
         return GameUniverse.objectList.size();
     }
     
-    public static void newInstance(FounderObject obj) {
-        if (obj instanceof Camera cam) {
-            RenderManager.registerNewViewer(cam);
-            return;
-        }
-        objectList.add(obj);
-        if (obj instanceof CollisionObject collision) {
-            PhysicObjectList.add(collision);
-        } 
-
+    public static void newInstance(BaseObject obj) {
+        spawnQueue.add(obj); 
     }
     
-    public static void newInstanceAll(ArrayList<FounderObject> allObject) {
-        for (FounderObject obj : allObject) {
+    public static void newInstanceAll(ArrayList<BaseObject> allObject) {
+        for (BaseObject obj : allObject) {
             GameUniverse.newInstance(obj);
         }
     }
     
-    public static void delete(GameObject obj) {
-        System.out.println((objectList.remove(obj)));
+    public static void processSpawningObject() {
+        if (spawnQueue.isEmpty()) {return;}
+        for (BaseObject newObj : spawnQueue) {
+            objectList.add(newObj);
+            newObj.onCreate();
+        }
+        spawnQueue.clear();
+    }
+    
+    public static void cleanObj(GameObject obj) {
+        ArrayList<GameObject> constraints = obj.getConstraints();
+        if (deadObjects.contains(obj)) {return;}
+        deadObjects.add(obj);
+        obj.onDestroy();
+        if (constraints != null) {
+            for (GameObject constraint : constraints) {
+                cleanObj(constraint);
+            }
+        }
+    }
+    
+    public static void clean() {
+        for (BaseObject obj : objectList) {
+            if (obj.isObjAlive() == true) {continue;}
+            if (obj instanceof GameObject gObj) {
+                GameUniverse.cleanObj(gObj);
+            }
+        }
+        objectList.removeAll(deadObjects);
+        deadObjects.clear();
     }
     
     public static BufferedImage getBackground() {
