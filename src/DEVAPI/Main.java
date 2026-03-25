@@ -121,7 +121,7 @@ public class Main implements Runnable {
                 try {
                     Camera a = GameUniverse.getObjectByName("GameCam", Camera.class);
                     window.setCamera(a);
-                } catch (InvalidGameObjectPropertyException e) {
+                } catch (InvalidGameObjectPropertyException e ) {
                     e.printStackTrace();
                 }
             }
@@ -189,8 +189,10 @@ public class Main implements Runnable {
             }
             
             if (InputManager.isKeyDown(KeyEvent.VK_DELETE)) {
-                Door d = GameUniverse.getObjectByName("ExtraPlatform", Door.class);
-                d.destroyInstance();
+                AreaDetector d = GameUniverse.getObjectByName("ExtraPlatform", AreaDetector.class);
+                if (d != null) {
+                    d.destroyInstance();
+                }
             }
             
             if (InputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {
