@@ -1,5 +1,6 @@
 package DEVAPI;
 
+import Boss1ass.Boss1;
 import RenderObject.AreaDetector;
 import RenderObject.Block;
 import RenderObject.Camera;
@@ -33,6 +34,8 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
     public int startjump=0;
     public int maxjump=3;
     public boolean jumping=false;
+    
+    public Boss1 level1Boss;
     
     public DebugLevelLoaderScript(String name) {
         super(name);
@@ -103,11 +106,18 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
         } catch (InvalidGameObjectPropertyException e) {
             e.printStackTrace();
         }
+        level1Boss = GameUniverse.createInstance(new Boss1("ArtilleryBoss"));
+    
+    // ตั้งค่าขนาดและตำแหน่งบนหน้าจอ
+        level1Boss.setSize(new Vector2D(150, 150)); // บอสตัวใหญ่หน่อย
+        level1Boss.setPosition(new Vector2D(800, 350)); // วางไว้ด้านขวาของด่าน
+        level1Boss.setTexture("boss1Texture"); // ใส่รูป
+        
         StyledObject[] textureObjects = {
             physicPikachu, area, Flyingfloor, 
         LongPlatform, scaredpik, scaredpikfriend};
         StyledObject.setTextureAll(textureObjects, "pikachuImage");
-
+        
         GameUniverse.setBackground("res/GameAssets/Background/bgplacegholder.jpg");
         InputManager.registerInputListenerObject(this);
     }
@@ -172,9 +182,7 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
         if (InputManager.isKeyDown('l')) {
                             cam1.movePostion(new Vector2D(10, 0));
         }
-        if (InputManager.isKeyDown('k')) {
-            cam1.movePostion(new Vector2D(0, 10));
-        }
+       
         if (InputManager.isKeyDown('i')) {
             cam1.movePostion(new Vector2D(0, -10));
 
@@ -198,6 +206,12 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
 //                d.destroyInstance();
 //            }
         }
+        if (InputManager.isKeyDown('q')) {
+        if (physicPikachu.getBounds().intersects(level1Boss.getBounds())) {
+            level1Boss.takeDamage(10);
+            level1Boss.leserY(new Vector2D(500,0));
+        }
+    }
         if (InputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {
             System.exit(0);
         }
