@@ -1,4 +1,6 @@
 package UniverseEngine;
+import RenderObject.Creatable.Vector2D;
+import RenderObject.Addon.touchable;
 import RenderObject.*;
 import DEVAPI.Main;
 import java.awt.geom.Rectangle2D;
@@ -26,6 +28,7 @@ public class GameManipulator {
         this.applyPhysic();
         GameUniverse.processScriptable(deltaTime);
         GameUniverse.clean();
+        AnimationManager.animateTime(deltaTime);
     }
     
     

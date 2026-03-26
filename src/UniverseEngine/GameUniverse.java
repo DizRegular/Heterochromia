@@ -1,4 +1,5 @@
 package UniverseEngine;
+import RenderObject.Addon.Scriptable;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.ArrayList;
 import RenderObject.*;

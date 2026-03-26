@@ -1,5 +1,7 @@
 package RenderObject;
 
+import RenderObject.Creatable.Vector2D;
+import RenderObject.Addon.Gravity;
 import UniverseEngine.GameManipulator;
 import UniverseEngine.GameUniverse;
 

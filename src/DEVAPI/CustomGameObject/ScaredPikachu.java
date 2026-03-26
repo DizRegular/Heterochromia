@@ -1,9 +1,9 @@
-package DEVAPI;
+package DEVAPI.CustomGameObject;
 
 import RenderObject.GameObject;
 import RenderObject.StaticObject;
-import RenderObject.Vector2D;
-import RenderObject.touchable;
+import RenderObject.Creatable.Vector2D;
+import RenderObject.Addon.touchable;
 
 public class ScaredPikachu extends StaticObject implements touchable{
     public ScaredPikachu(String name) {

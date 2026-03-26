@@ -1,8 +1,9 @@
 package RenderObject;
 
+import RenderObject.Addon.Scriptable;
 import java.awt.Color;
 
-abstract public class FadeProfile extends BaseObject {
+abstract public class FadeProfile extends BaseObject implements Scriptable {
     private Color fadeColor;
     private double lifeSpan;
     private String Interpolation = "Linear";
@@ -12,5 +13,9 @@ abstract public class FadeProfile extends BaseObject {
         super(name);
     }
     
+    @Override
+    public void process(double deltaTime) {
+        
+    }
     
 }

@@ -1,17 +1,20 @@
 package DEVAPI;
 
+import DEVAPI.CustomGameObject.Door;
+import DEVAPI.CustomGameObject.ScaredPikachu;
 import Boss1ass.Boss1;
-import RenderObject.AreaDetector;
-import RenderObject.Block;
-import RenderObject.Camera;
-import RenderObject.Decoration;
+import RenderObject.Creatable.Animator;
+import RenderObject.Creatable.AreaDetector;
+import RenderObject.Creatable.Block;
+import RenderObject.Creatable.Camera;
+import RenderObject.Creatable.Decoration;
 import RenderObject.InputListener;
 import RenderObject.InvalidGameObjectPropertyException;
 import RenderObject.KinematicObject;
 import RenderObject.ScriptSheet;
 import RenderObject.StyledObject;
-import RenderObject.Vector2D;
-import RenderObject.ViewPort;
+import RenderObject.Creatable.Vector2D;
+import RenderObject.Creatable.ViewPort;
 import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
 import java.awt.event.KeyEvent;
@@ -28,6 +31,7 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
     
     public String pikachuImage = "res/GameAssets/Textures/placeholder.jpg";
     
+    public boolean setSize = false;
     public double lf=0;
     public double fall=-1;
     public boolean added = false;
@@ -44,7 +48,16 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
     @Override
     public void onCreate() {
         GameUniverse.loadImage("pikachuImage", pikachuImage);
+        Animator idle = GameUniverse.createInstance(new Animator("idle"));
+        idle.setAnimationSheet(new Vector2D(128, 128),"res/free_sprite/individual_sheets/male_hero_template-idle.png");
+        idle.debugSpriteSheet();
+        idle.setSpeed(10);
         physicPikachu = GameUniverse.createInstance(new KinematicObject("PikachuPlayer"));
+        physicPikachu.setSize(new Vector2D(50, 50));
+        physicPikachu.setPosition(new Vector2D(0,0));
+        physicPikachu.addAnimator("idle", idle);
+        physicPikachu.setCurrentAnimator("idle");
+        idle.setEnabled(true);
         area = GameUniverse.createInstance(new AreaDetector("trampoline"));
         Door newDoor = GameUniverse.createInstance(new Door("bgtransition"));
         for (int i = 0; i < 6; i++) {
@@ -79,9 +92,6 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
 
         area.setSize(new Vector2D(50, 5000));
         area.setPosition(new Vector2D(200, 200));
-
-        physicPikachu.setSize(new Vector2D(50, 50));
-        physicPikachu.setPosition(new Vector2D(0,0));
 
         scaredpik = GameUniverse.createInstance(new ScaredPikachu("ScaredPikachu"));
         scaredpik.setSize(new Vector2D(70, 40));
@@ -129,6 +139,10 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
     
     @Override
     public void process(double deltaTime) {
+        if (setSize == false) {
+            setSize = true;
+            physicPikachu.setTextureSize(new Vector2D(500, 500));
+        }
         if (InputManager.isKeyDown('1')) {
             GameUniverse.setBackground("res/GameAssets/Background/bgplacegholder.jpg");
             try {
@@ -148,9 +162,11 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
         }
         if (InputManager.isKeyDown('d')) {
             lf=5;
+            physicPikachu.flipXTexture(false);
         }
         else if (InputManager.isKeyDown('a')) {
             lf=-5;
+            physicPikachu.flipXTexture(true);
         }
         else{
             lf=0;
@@ -200,11 +216,10 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
         }
 
         if (InputManager.isKeyDown(KeyEvent.VK_DELETE)) {
-            physicPikachu.destroyInstance();
-//            AreaDetector d = GameUniverse.getObjectByName("ExtraPlatform", AreaDetector.class);
-//            if (d != null) {
-//                d.destroyInstance();
-//            }
+            AreaDetector d = GameUniverse.getObjectByName("ExtraPlatform", AreaDetector.class);
+            if (d != null) {
+                d.destroyInstance();
+            }
         }
         if (InputManager.isKeyDown('q')) {
         if (physicPikachu.getBounds().intersects(level1Boss.getBounds())) {

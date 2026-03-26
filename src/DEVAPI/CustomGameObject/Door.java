@@ -2,14 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DEVAPI;
+package DEVAPI.CustomGameObject;
 
-import RenderObject.AreaDetector;
+import RenderObject.Creatable.AreaDetector;
 import RenderObject.GameObject;
 import RenderObject.InvalidGameObjectPropertyException;
 import RenderObject.StaticObject;
-import RenderObject.Vector2D;
-import RenderObject.touchable;
+import RenderObject.Creatable.Vector2D;
+import RenderObject.Addon.touchable;
 import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
 

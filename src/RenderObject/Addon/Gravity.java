@@ -1,4 +1,7 @@
-package RenderObject;
+package RenderObject.Addon;
+
+import RenderObject.Creatable.Vector2D;
+
 public interface Gravity {
     abstract public void addVelocity(Vector2D v);
     abstract public Vector2D getVelocity();

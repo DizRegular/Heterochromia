@@ -5,6 +5,8 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 import java.io.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 public class Fetcher {
     /** Load games assets so other game handler can use the resource.
      */
@@ -29,12 +31,20 @@ public class Fetcher {
         }
     }
     
+    public static void storeTexture(BufferedImage image, String name) {
+        texturesHolder.put(name, image);
+    }
+    
     public static BufferedImage getTextures2D(String name) {
         BufferedImage texture = texturesHolder.get(name);
         if (texture == null) {
             return texturesHolder.get("missingTexureImage");
         }
         return texture;
+    }
+    
+    public static void fixNoImageFound(String name) {
+        texturesHolder.put(name, Fetcher.getTextures2D("missingTexureImage"));
     }
     
 }

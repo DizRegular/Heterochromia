@@ -1,5 +1,7 @@
-package RenderObject;
+package RenderObject.Creatable;
 
+import RenderObject.BaseObject;
+import RenderObject.InvalidGameObjectPropertyException;
 import UniverseEngine.Game;
 import java.awt.Dimension;
 import java.awt.Insets;

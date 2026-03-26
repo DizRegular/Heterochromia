@@ -1,6 +1,6 @@
 package UniverseEngine;
 
-import RenderObject.Camera;
+import RenderObject.Creatable.Camera;
 import java.util.ArrayList;
 
 public class RenderManager {

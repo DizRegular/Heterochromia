@@ -1,5 +1,7 @@
-package RenderObject;
+package RenderObject.Creatable;
 
+import RenderObject.Creatable.Vector2D;
+import RenderObject.GameObject;
 import UniverseEngine.RenderManager;
 import UniverseEngine.Renderer;
 import java.awt.Dimension;

@@ -8,6 +8,10 @@ package Boss1ass;
  *
  * @author tin_sel
  */
+import RenderObject.Creatable.Block;
+import RenderObject.Creatable.Vector2D;
+import RenderObject.Addon.Scriptable;
+import RenderObject.Addon.touchable;
 import RenderObject.*;
 import UniverseEngine.GameUniverse;
 public class leserY extends StaticObject implements touchable,Scriptable {

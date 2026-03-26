@@ -1,4 +1,5 @@
 package UniverseEngine;
+import RenderObject.Creatable.Camera;
 import RenderObject.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -33,7 +34,12 @@ public class Renderer {
         g.translate(-XCenter, -YCenter);
         for (BaseObject object : texturedObject) {
             if (object instanceof StyledObject styled && styled.getVisibility()) {
-                g.drawImage(GameUniverse.fetchImage(styled.getTexture()), (int)styled.getPosition().getXCoord() - (int)camera.getPosition().getXCoord(), (int)styled.getPosition().getYCoord() - (int)camera.getPosition().getYCoord(), (int)styled.getSize().getXCoord(), (int)styled.getSize().getYCoord(), null); 
+                g.drawImage(GameUniverse.fetchImage(styled.getTexture()), 
+                        (int)styled.getPosition().getXCoord() + (int)styled.getSize().getXCoord()/2 - (int)styled.getTextureSize().getXCoord()/2 - (int)camera.getPosition().getXCoord(), 
+                        (int)styled.getPosition().getYCoord() + + (int)styled.getSize().getYCoord()/2 - (int)styled.getTextureSize().getYCoord()/2- (int)camera.getPosition().getYCoord(), 
+                        (int)styled.getTextureSize().getXCoord(), 
+                        (int)styled.getTextureSize().getYCoord(), 
+                        null); 
                 if (styled instanceof CollisionObject cobj && EngineSettings.SHOW_HITBOXES == true) {
                     g.drawRect((int)cobj.getBounds().getMinX() - (int)camera.getPosition().getXCoord(), (int)cobj.getBounds().getMinY()  - (int)camera.getPosition().getYCoord(), (int)cobj.getBounds().getWidth(), (int)cobj.getBounds().getHeight());
                 }

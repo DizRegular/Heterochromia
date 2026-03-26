@@ -13,8 +13,8 @@ package Boss1ass;
 import RenderObject.GameObject;
 import RenderObject.KinematicObject;
 import RenderObject.StaticObject;
-import RenderObject.Vector2D;
-import RenderObject.touchable;
+import RenderObject.Creatable.Vector2D;
+import RenderObject.Addon.touchable;
 import UniverseEngine.GameUniverse;
 
 public class Boss1 extends StaticObject implements touchable {

@@ -1,5 +1,6 @@
 package RenderObject;
 
+import RenderObject.Creatable.Vector2D;
 import UniverseEngine.GameManipulator;
 import java.awt.geom.Rectangle2D;
 
