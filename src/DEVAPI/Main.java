@@ -1,4 +1,5 @@
 package DEVAPI;
+import Boss.boss1stat;
 import UniverseEngine.Game;
 import UniverseEngine.GameUniverse;
 import RenderObject.*;
@@ -11,7 +12,6 @@ public class Main implements Runnable {
      */
     public Game gameEngine; //DO NOT REMOVE
     public ArrayList<GameObject> mustInstanceObj = new ArrayList<>();
-    
 
     public Block pikachu2;
     public KinematicObject physicPikachu;
@@ -47,6 +47,7 @@ public class Main implements Runnable {
                 floor.setPosition(new Vector2D(i*100, 500));
                 floor.setTexture("pikachuImage");
             }
+            
             for (int i = 0; i < 10; i++) {
                 Block floor = GameUniverse.createInstance(new Block("Platform"));
                 floor.setSize(new Vector2D(100,100));
@@ -194,7 +195,6 @@ public class Main implements Runnable {
                     d.destroyInstance();
                 }
             }
-            
             if (InputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {
                 System.exit(0);
             }
