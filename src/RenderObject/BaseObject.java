@@ -79,6 +79,10 @@ abstract public class BaseObject {
         //Nothing
     }
     
+    public BaseObject getParent() {
+        return this.parent;
+    }
+    
     public ArrayList<BaseObject> getConstraints() {
         return this.constraints;
     }

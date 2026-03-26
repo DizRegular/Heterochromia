@@ -88,7 +88,6 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
         scaredpikfriend.setSize(new Vector2D(50, 70));
         scaredpikfriend.setPosition(new Vector2D(0, 0));
 
-
         window = GameUniverse.createInstance(new ViewPort("Game"));
         window.setEnabled(true);
         cam1 = GameUniverse.createInstance(new Camera("GameCam"));
