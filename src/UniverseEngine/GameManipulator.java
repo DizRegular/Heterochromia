@@ -3,13 +3,14 @@ import RenderObject.*;
 import DEVAPI.Main;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 public class GameManipulator {    
     
     /** Controls physic and order of action
      */
     private Main devAPI;
     private static final ArrayList<ArrayList<CollisionObject>> quadrantContainer = new ArrayList<>();
-    private static final ArrayList<CollisionObject> physicObjects = new ArrayList<>();
+    private static final CopyOnWriteArrayList<CollisionObject> physicObjects = new CopyOnWriteArrayList<>();
     private static final int gameQuadrantWidth = 1080;
     private static  final int gameQuadrantHeight = 1920;
     

@@ -39,28 +39,34 @@ public class GameUniverse {
         if (spawnQueue.isEmpty()) {return;}
         for (BaseObject newObj : spawnQueue) {
             objectList.add(newObj);
-            newObj.onCreate();
+//            newObj.onCreate();
+            GameEventListener.handleCreate(newObj);
         }
         spawnQueue.clear();
     }
     
-    public static void cleanObj(GameObject obj) {
-        ArrayList<GameObject> constraints = obj.getConstraints();
-        if (deadObjects.contains(obj)) {return;}
-        deadObjects.add(obj);
-        obj.onDestroy();
-        if (constraints != null) {
-            for (GameObject constraint : constraints) {
-                cleanObj(constraint);
+    public static void cleanObj(BaseObject bObj) {
+        if (bObj instanceof GameObject obj) {
+            ArrayList<GameObject> constraints = obj.getConstraints();
+            if (deadObjects.contains(obj)) {return;}
+            deadObjects.add(obj);
+            GameEventListener.handleDelete(obj);
+            if (constraints != null) {
+                for (GameObject constraint : constraints) {
+                    cleanObj(constraint);
+                }
             }
+        } else {
+            deadObjects.add(bObj);
+            GameEventListener.handleDelete(bObj);
         }
     }
     
     public static void clean() {
         for (BaseObject obj : objectList) {
             if (obj.isObjAlive() == true) {continue;}
-            if (obj instanceof GameObject gObj) {
-                GameUniverse.cleanObj(gObj);
+            if (obj instanceof BaseObject bObj) {
+                GameUniverse.cleanObj(bObj);
             }
         }
         objectList.removeAll(deadObjects);

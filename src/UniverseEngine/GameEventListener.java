@@ -14,4 +14,16 @@ public class GameEventListener {
         }
     }
     
+    public static void handleDelete(BaseObject eventSource) {
+        eventPool.execute(() -> {
+                eventSource.onDestroy();
+            });
+    }
+    
+    public static void handleCreate(BaseObject eventSource) {
+        eventPool.execute(() -> {
+                eventSource.onCreate();
+            });
+    }
+    
 }

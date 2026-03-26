@@ -3,13 +3,13 @@ import RenderObject.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.JFrame;
 public class Renderer {
     /** Render every that this game is meant to see to the player
      */
     private Fetcher gameAssetsLoader;
-    private static final ArrayList<StyledObject> texturedObject = new ArrayList<>();
+    private static final CopyOnWriteArrayList<StyledObject> texturedObject = new CopyOnWriteArrayList<>();
     private static String text = ""; //use this for debugging
     
     public static void render(Camera camera, JFrame viewPort) {

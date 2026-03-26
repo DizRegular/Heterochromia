@@ -83,6 +83,7 @@ public class Camera extends GameObject {
     @Override
     public void onCreate() {
         super.onCreate();
+        System.out.println("aA");
         RenderManager.registerNewViewer(this);
     }
     
