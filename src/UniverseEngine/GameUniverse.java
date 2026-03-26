@@ -7,8 +7,9 @@ import java.io.File;
 import javax.imageio.ImageIO;
 public class GameUniverse {
     private static CopyOnWriteArrayList<BaseObject> objectList = new CopyOnWriteArrayList<>();
-    private static ArrayList<BaseObject> spawnQueue = new ArrayList<>();
-    private static ArrayList<BaseObject> deadObjects = new ArrayList<>();
+    private static CopyOnWriteArrayList<BaseObject> spawnQueue = new CopyOnWriteArrayList<>();
+    private static CopyOnWriteArrayList<BaseObject> deadObjects = new CopyOnWriteArrayList<>();
+    private static ArrayList<Scriptable> scriptableObjects = new ArrayList<>();
     private static int currentNewObjectID = -1;
     private static BufferedImage background;
     private RenderManager renderManager;
@@ -36,38 +37,38 @@ public class GameUniverse {
     }
     
     public static void processSpawningObject() {
-        if (spawnQueue.isEmpty()) {return;}
-        for (BaseObject newObj : spawnQueue) {
+        int i = 0;
+        while (!spawnQueue.isEmpty() && i < EngineSettings.SPAWN_BUFFER_QUEUE_SIZE_LIMIT) {
+            BaseObject newObj = spawnQueue.removeFirst();
             objectList.add(newObj);
-//            newObj.onCreate();
-            GameEventListener.handleCreate(newObj);
+            newObj.onCreate();
+            if (newObj instanceof Scriptable script) {
+                scriptableObjects.add(script);
+            }
+            i++;
         }
-        spawnQueue.clear();
     }
     
     public static void cleanObj(BaseObject bObj) {
-        if (bObj instanceof GameObject obj) {
-            ArrayList<GameObject> constraints = obj.getConstraints();
-            if (deadObjects.contains(obj)) {return;}
-            deadObjects.add(obj);
-            GameEventListener.handleDelete(obj);
-            if (constraints != null) {
-                for (GameObject constraint : constraints) {
-                    cleanObj(constraint);
-                }
+        ArrayList<BaseObject> constraints = bObj.getConstraints();
+        if (deadObjects.contains(bObj)) {return;}
+        deadObjects.add(bObj);
+        if (bObj instanceof Scriptable script) {
+            scriptableObjects.remove(script);
+        } 
+        GameEventListener.handleDelete(bObj);
+        if (constraints != null) {
+            for (BaseObject constraint : constraints) {
+                cleanObj(constraint);
             }
-        } else {
-            deadObjects.add(bObj);
-            GameEventListener.handleDelete(bObj);
         }
+
     }
     
     public static void clean() {
         for (BaseObject obj : objectList) {
             if (obj.isObjAlive() == true) {continue;}
-            if (obj instanceof BaseObject bObj) {
-                GameUniverse.cleanObj(bObj);
-            }
+               GameUniverse.cleanObj(obj);
         }
         objectList.removeAll(deadObjects);
         deadObjects.clear();
@@ -89,6 +90,12 @@ public class GameUniverse {
             }
         }
         return null;
+    }
+    
+    public static void processScriptable(double deltaTime) {
+        for (Scriptable script : scriptableObjects) {
+            script.process(deltaTime);
+        }
     }
     
     public static BufferedImage getBackground() {

@@ -9,7 +9,11 @@ abstract public class BaseObject {
     protected boolean Enabled = true;
     protected boolean isInstanced = false;
     protected boolean isAlive = true;
+    protected boolean isConstrained = false;
+    protected BaseObject parent = null;
     protected ArrayList<String> TagsContainer = new ArrayList<>();
+    protected ArrayList<BaseObject> constraints = new ArrayList<>();
+
     
     public BaseObject(String name) {
         this.name = name;
@@ -74,4 +78,32 @@ abstract public class BaseObject {
     public void onCreate() {
         //Nothing
     }
+    
+    public ArrayList<BaseObject> getConstraints() {
+        return this.constraints;
+    }
+    
+    public boolean hasConstrained() {
+        return this.isConstrained;
+    }
+    
+    public void setIsConstrain(boolean b) {
+        this.isConstrained = b;
+    }
+    
+    public void addConstraint(BaseObject obj) throws InvalidGameObjectPropertyException {
+        if (obj == null) {
+            throw new InvalidGameObjectPropertyException(this.ID + " : this object tries to add constraint that is \"null\"");
+        }
+        this.constraints.add(obj);
+        obj.setIsConstrain(true);
+        obj.parent = this;
+    }
+    
+    public void removeConstraint(BaseObject obj) {
+        this.constraints.remove(obj);
+        obj.setIsConstrain(false);
+        obj.parent = null;
+    }
+    
 }

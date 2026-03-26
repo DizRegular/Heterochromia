@@ -4,9 +4,7 @@ import java.util.ArrayList;
 abstract public class GameObject extends BaseObject { 
     protected Vector2D position;
     protected Vector2D size;
-    protected boolean isConstrained = false;
     protected boolean isMoving = false;
-    protected ArrayList<GameObject> constraints = new ArrayList<>();
     
     public GameObject(String name) {
         super(name);
@@ -33,10 +31,12 @@ abstract public class GameObject extends BaseObject {
     }
     
     public void updateConstraint(GameObject parent) {
-        for (GameObject constraint : this.constraints) {
-            double XCoord = parent.position.getXCoord() + parent.size.getXCoord()/2;
-            double YCoord = parent.position.getYCoord() + parent.size.getYCoord()/2;
-            constraint.movePostion(new Vector2D(XCoord, YCoord));
+        for (BaseObject constraint : this.constraints) {
+            if (constraint instanceof GameObject gConstraint) {
+                double XCoord = parent.position.getXCoord() + parent.size.getXCoord()/2;
+                double YCoord = parent.position.getYCoord() + parent.size.getYCoord()/2;
+                gConstraint.movePostion(new Vector2D(XCoord, YCoord));
+            }
         }
 
     }
@@ -57,30 +57,10 @@ abstract public class GameObject extends BaseObject {
         this.isMoving = false;
     } 
     
-    public ArrayList<GameObject> getConstraints() {
-        return this.constraints;
-    }
-    
-    public boolean hasConstrained() {
-        return this.isConstrained;
-    }
-    
-    public void setIsConstrain(boolean b) {
-        this.isConstrained = b;
-    }
-    
-    public void addConstraint(GameObject obj) throws InvalidGameObjectPropertyException {
-        if (obj == null) {
-            throw new InvalidGameObjectPropertyException(this.ID + " : this object tries to add constraint that is \"null\"");
-        }
-        this.constraints.add(obj);
-        obj.setIsConstrain(true);
+    @Override
+    public void addConstraint(BaseObject obj) throws InvalidGameObjectPropertyException {
+        super.addConstraint(obj);
         this.movePostion(new Vector2D(0,0));
-    }
-    
-    public void removeConstraint(GameObject obj) {
-        this.constraints.remove(obj);
-        obj.setIsConstrain(false);
     }
     
     @Override

@@ -23,8 +23,8 @@ public class GameManipulator {
     
     public void tick(double deltaTime) {
         GameUniverse.processSpawningObject();
-        devAPI.process(deltaTime);
         this.applyPhysic();
+        GameUniverse.processScriptable(deltaTime);
         GameUniverse.clean();
     }
     

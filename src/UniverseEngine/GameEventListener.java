@@ -1,6 +1,7 @@
 package UniverseEngine;
 
 import RenderObject.*;
+import java.util.ArrayList;
 import java.util.concurrent.*;
 
 public class GameEventListener {
@@ -23,6 +24,14 @@ public class GameEventListener {
     public static void handleCreate(BaseObject eventSource) {
         eventPool.execute(() -> {
                 eventSource.onCreate();
+            });
+    }
+    
+    public static void handleInput(ArrayList<InputListener> inputListenersObject) {
+        eventPool.execute(() -> {
+            for (InputListener listener : inputListenersObject) {
+                listener.onInput();
+            }
             });
     }
     
