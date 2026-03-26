@@ -27,7 +27,7 @@ public class Animator extends BaseObject{
         return SpriteImages[currFrameIndex];
     }
     
-    public void setAnimationSheet(Vector2D spriteSize, String pathfile) {
+    public void createAnimationSheet(Vector2D spriteSize, String pathfile) {
         this.spriteSize = spriteSize;
         try (FileInputStream fin = new FileInputStream(pathfile)) {
             BufferedImage image = ImageIO.read(fin);

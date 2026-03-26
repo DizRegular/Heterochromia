@@ -49,11 +49,11 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
     public void onCreate() {
         GameUniverse.loadImage("pikachuImage", pikachuImage);
         Animator idle = GameUniverse.createInstance(new Animator("idle"));
-        idle.setAnimationSheet(new Vector2D(128, 128),"res/free_sprite/individual_sheets/male_hero_template-idle.png");
+        idle.createAnimationSheet(new Vector2D(128, 128),"res/free_sprite/individual_sheets/male_hero_template-idle.png");
         idle.debugSpriteSheet();
         idle.setSpeed(10);
         physicPikachu = GameUniverse.createInstance(new KinematicObject("PikachuPlayer"));
-        physicPikachu.setSize(new Vector2D(50, 50));
+        physicPikachu.setSize(new Vector2D(70, 120));
         physicPikachu.setPosition(new Vector2D(0,0));
         physicPikachu.addAnimator("idle", idle);
         physicPikachu.setCurrentAnimator("idle");
