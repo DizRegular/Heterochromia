@@ -82,19 +82,19 @@ public class Boss1 extends StaticObject implements touchable {
     public void onTouched(GameObject obj) {
     }
     public void leserY(Vector2D leserposition) {
-    laserwaringY warning = GameUniverse.createInstance(new laserwaringY(name, leserposition));
+    laserwaringY warning = GameUniverse.createInstance(new laserwaringY("laser", leserposition));
     warning.setPosition(leserposition);  
     warning.setSize(new Vector2D(66,10000));
     
     }
     public void leserX(Vector2D leserposition) {
-    laserwaringY warning = GameUniverse.createInstance(new laserwaringY(name, leserposition));
+    laserwaringY warning = GameUniverse.createInstance(new laserwaringY("laser", leserposition));
     warning.setPosition(leserposition);  
     warning.setSize(new Vector2D(10000,66));
     
     }
     public void shooting(Vector2D st){
-        HomingOrb bul=GameUniverse.createInstance(new HomingOrb(name));
+        HomingOrb bul=GameUniverse.createInstance(new HomingOrb("bullet"));
         bul.setPosition(st);
     }
 }

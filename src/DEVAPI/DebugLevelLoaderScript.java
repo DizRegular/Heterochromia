@@ -52,6 +52,7 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
         idle.createAnimationSheet(new Vector2D(128, 128),"res/free_sprite/individual_sheets/male_hero_template-idle.png");
         idle.debugSpriteSheet();
         idle.setSpeed(10);
+        //-----------------------------------------------------------------------------------------------------------
         GameUniverse.loadImage("redWarning", "res/GameAssets/Textures/red_warning.jpg");
         physicPikachu = GameUniverse.createInstance(new KinematicObject("PikachuPlayer"));
         physicPikachu.setSize(new Vector2D(70, 120));
@@ -59,6 +60,7 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
         physicPikachu.addAnimator("idle", idle);
         physicPikachu.setCurrentAnimator("idle");
         idle.setEnabled(true);
+        //------------------------------------------------------------------------------------------------------------
         area = GameUniverse.createInstance(new AreaDetector("trampoline"));
         Door newDoor = GameUniverse.createInstance(new Door("bgtransition"));
         for (int i = 0; i < 6; i++) {
