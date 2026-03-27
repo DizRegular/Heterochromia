@@ -14,16 +14,18 @@ import RenderObject.Addon.Scriptable;
 import RenderObject.Addon.touchable;
 import RenderObject.*;
 import UniverseEngine.GameUniverse;
-public class leserY extends StaticObject implements touchable,Scriptable {
+import java.util.logging.Level;
+import java.util.logging.Logger;
+public class laserwaringY extends StaticObject implements touchable,Scriptable {
     private double timer = 0;
     private double delaydestroy=0;
     private int blinkCount = 0;
-    private double blinkInterval = 15;
-    private double destroy=40; 
-    public leserY(String name , Vector2D pos) {
+    private final double blinkInterval = 15;
+    private final double destroy=70; 
+    public laserwaringY(String name , Vector2D pos) {
         super(name);
         
-//        this.setTexture("redWarning");
+        this.setTexture("redWarning");
     }
     @Override
     public void process(double deltaTime) {
@@ -32,15 +34,22 @@ public class leserY extends StaticObject implements touchable,Scriptable {
         if (timer >= blinkInterval) {
             timer = 0;
             blinkCount++;
-
+ 
             this.setVisibility(!this.getVisibility());
 
             if (blinkCount >= 4) {
                 spawnRealLaser();
-                GameUniverse.cleanObj(this); 
+                blinkCount=0;
+                try {
+                                  
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                }
+                
             }}
-        if(destroy<delaydestroy){
-            this.destroyInstance();
+        if(destroy<delaydestroy){ 
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            GameUniverse.getObjectByName("RealLaserBeam", Block.class).destroyInstance();
             }
         
     }
@@ -57,6 +66,7 @@ public class leserY extends StaticObject implements touchable,Scriptable {
 
     @Override
     public void onTouched(GameObject obj) {
+        System.out.println("hitlaser");
     }
 
     

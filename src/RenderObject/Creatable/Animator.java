@@ -87,7 +87,7 @@ public class Animator extends BaseObject{
     @Override
     public void onCreate() {
         super.onCreate();
-        this.Enabled = false;
+        this.Enabled = true;
         AnimationManager.registerStyledObject(this);
     }
     
