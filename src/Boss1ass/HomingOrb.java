@@ -46,19 +46,19 @@ public class HomingOrb extends StaticObject implements touchable,Scriptable {
         build=true;
         }
         if(this.getPosition().getXCoord()<player.getPosition().getXCoord()){
-            tx=1;
+            tx=2;
         }
         else if(this.getPosition().getXCoord()>player.getPosition().getXCoord()){
-            tx=-1;
+            tx=-2;
         }
         else{
             tx=0;
         }
         if(this.getPosition().getYCoord()<player.getPosition().getYCoord()){
-            ty=1;
+            ty=2;
         }
         else if(this.getPosition().getYCoord()>player.getPosition().getYCoord()){
-            ty=-1;
+            ty=-2;
         }
         else{
             ty=0;

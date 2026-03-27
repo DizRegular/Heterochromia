@@ -16,6 +16,7 @@ import RenderObject.StaticObject;
  */
 public class bullet extends StaticObject implements touchable,Scriptable {
     private int destroytime=0;
+    
     public bullet(String name) {
         super(name);
     }

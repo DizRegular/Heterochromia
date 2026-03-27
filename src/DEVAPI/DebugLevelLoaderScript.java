@@ -3,6 +3,7 @@ package DEVAPI;
 import DEVAPI.CustomGameObject.Door;
 import DEVAPI.CustomGameObject.ScaredPikachu;
 import Boss1ass.Boss1;
+import Boss2ass.Boss2;
 import RenderObject.Creatable.Animator;
 import RenderObject.Creatable.AreaDetector;
 import RenderObject.Creatable.Block;
@@ -39,7 +40,7 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
     public int maxjump=3;
     public boolean jumping=false;
     
-    public Boss1 level1Boss;
+    public Boss2 level1Boss;
     
     public DebugLevelLoaderScript(String name) {
         super(name);
@@ -119,7 +120,7 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
         } catch (InvalidGameObjectPropertyException e) {
             e.printStackTrace();
         }
-        level1Boss = GameUniverse.createInstance(new Boss1("ArtilleryBoss"));
+        level1Boss = GameUniverse.createInstance(new Boss2("ArtilleryBoss"));
     
     // ตั้งค่าขนาดและตำแหน่งบนหน้าจอ
         level1Boss.setSize(new Vector2D(150, 150)); // บอสตัวใหญ่หน่อย
@@ -227,7 +228,7 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
         if (InputManager.isKeyDown('q')) {
         if (physicPikachu.getBounds().intersects(level1Boss.getBounds())) {
             level1Boss.takeDamage(10);
-            level1Boss.leserY(new Vector2D(500,-350));
+//            level1Boss.leserY(new Vector2D(500,-350));
         }
     }
         if (InputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {

@@ -121,4 +121,19 @@ abstract public class StyledObject extends GameObject {
         super.onDestroy();
         Renderer.unregisterStyledObject(this);
     }
+     public int getDirectionX() {
+        if (this.getTextureSize().getXCoord() >= 0) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+
+    public int getDirectionY() {
+        if (this.getTextureSize().getYCoord() >= 0) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
 }
