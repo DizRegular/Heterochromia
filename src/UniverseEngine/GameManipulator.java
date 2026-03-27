@@ -112,7 +112,7 @@ public class GameManipulator {
     private void setXCollsion(double XIntersect, KinematicObject k, CollisionObject otherObj, double XAxis) {
         if (XIntersect <= 0) { return; }
         if (XAxis >= 0) {
-            k.getPosition().setX((otherObj.getBounds().getMinX() - k.getSize().getYCoord()));
+            k.getPosition().setX((otherObj.getBounds().getMinX() - k.getSize().getXCoord()));
         } else {
             k.getPosition().setX((otherObj.getBounds().getMaxX()));
         }
@@ -147,8 +147,7 @@ public class GameManipulator {
                         double YOverlap = collidedArea.getHeight();
                         double XAxis = otherObj.getBounds().getCenterX() - k.getBounds().getCenterX();
                         double YAxis = otherObj.getBounds().getCenterY() - k.getBounds().getCenterY();
-                        if (Math.abs(XAxis) < Math.abs(YAxis) 
-                                || (XOverlap > YOverlap)) {
+                        if (XOverlap > YOverlap){
                             setYCollsion(YOverlap, k, otherObj, YAxis);
                         } else {
                             setXCollsion(XOverlap, k, otherObj, XAxis);
