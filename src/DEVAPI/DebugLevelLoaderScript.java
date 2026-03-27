@@ -225,7 +225,7 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
         if (InputManager.isKeyDown('q')) {
         if (physicPikachu.getBounds().intersects(level1Boss.getBounds())) {
             level1Boss.takeDamage(10);
-            level1Boss.leserY(new Vector2D(500,0));
+            level1Boss.leserY(new Vector2D(500,-350));
         }
     }
         if (InputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {

@@ -21,7 +21,8 @@ public class laserwaringY extends StaticObject implements touchable,Scriptable {
     private double delaydestroy=0;
     private int blinkCount = 0;
     private final double blinkInterval = 15;
-    private final double destroy=70; 
+    private final double destroy=100; 
+    private boolean havelaser=true;
     public laserwaringY(String name , Vector2D pos) {
         super(name);
         
@@ -40,16 +41,13 @@ public class laserwaringY extends StaticObject implements touchable,Scriptable {
             if (blinkCount >= 4) {
                 spawnRealLaser();
                 blinkCount=0;
-                try {
-                                  
-                    Thread.sleep(100);
-                } catch (InterruptedException ex) {
-                }
                 
             }}
-        if(destroy<delaydestroy){ 
+        if(destroy<delaydestroy&&havelaser){ 
             System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
             GameUniverse.getObjectByName("RealLaserBeam", Block.class).destroyInstance();
+            havelaser=false;
+            this.destroyInstance();
             }
         
     }
