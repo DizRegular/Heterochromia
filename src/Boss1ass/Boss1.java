@@ -16,11 +16,15 @@ import RenderObject.StaticObject;
 import RenderObject.Creatable.Vector2D;
 import RenderObject.Addon.touchable;
 import UniverseEngine.GameUniverse;
+import java.util.Random;
 
 public class Boss1 extends StaticObject implements touchable {
     
     private boss1stat stats;
-    
+    int shootTimer = 0;
+    int shootCooldown = 180;
+    int randomskill=0;
+    Random rand = new Random();
     public Boss1(String name) {
         super(name);
         this.stats = new boss1stat();
@@ -33,17 +37,44 @@ public class Boss1 extends StaticObject implements touchable {
 
     public void takeDamage(double damage) {
         stats.boss1takedamage(damage);
-        System.out.println("Boss HP: " + stats.getHp());
-        
         if (stats.getHp() <= 0) {
-            System.out.println("Boss Defeated!");
             this.destroyInstance();
         }
     }
 
-    public void updateBossAI(double deltaTime, Vector2D playerPos) {
+    public void updateBossAI(double deltaTime){
+        
+        KinematicObject player=GameUniverse.getObjectByName("PikachuPlayer", KinematicObject.class);
+        shootTimer++;
+        if (shootTimer>=shootCooldown){
+            randomskill=rand.nextInt(4) + 1;
+            shootTimer=0;
+        }
+        if(randomskill==1){
+            for (int i=0 ;i<5;i++){
+                leserY(new Vector2D(this.getPosition().getXCoord()-500+(i*250), -350));
+            }
+            randomskill=0;
+        }
+        if(randomskill==2){
+            for (int i=0 ;i<5;i++){
+                leserX(new Vector2D(-1000, this.getPosition().getYCoord()-500+(i*250)));
+            }
+            randomskill=0;
+        }
+        if(randomskill==3){
+            for (int i=0 ;i<3;i++){
+                shooting(new Vector2D(this.getPosition().getXCoord()-100+(i*100),this.getPosition().getYCoord()));
+            }
+            randomskill=0;
+        }
+        if(randomskill==4){
+            leserY(new Vector2D(player.getPosition().getXCoord(), -350));
+            randomskill=0;
+        }
         if (stats.isPhase2()) {
             
+            randomskill=0;
         }
     }
 
@@ -55,5 +86,15 @@ public class Boss1 extends StaticObject implements touchable {
     warning.setPosition(leserposition);  
     warning.setSize(new Vector2D(66,10000));
     
+    }
+    public void leserX(Vector2D leserposition) {
+    laserwaringY warning = GameUniverse.createInstance(new laserwaringY(name, leserposition));
+    warning.setPosition(leserposition);  
+    warning.setSize(new Vector2D(10000,66));
+    
+    }
+    public void shooting(Vector2D st){
+        HomingOrb bul=GameUniverse.createInstance(new HomingOrb(name));
+        bul.setPosition(st);
     }
 }

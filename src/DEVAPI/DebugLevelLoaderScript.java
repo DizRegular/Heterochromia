@@ -231,6 +231,15 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
         if (InputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {
             System.exit(0);
         }
+        //---------------------------------------------------------------------
+        
+        level1Boss.updateBossAI(deltaTime);
+
+//        if (InputManager.isKeyDown('z')) {
+//                level1Boss.leserY(new Vector2D(physicPikachu.getPosition().getXCoord(), 0));
+//        }
+        
+        
     }
 
     @Override
