@@ -59,6 +59,7 @@ public class laserwaringY extends StaticObject implements touchable,Scriptable {
         realLaser.setPosition(this.getPosition());
         realLaser.setSize(this.getSize());
         realLaser.setTexture("realLaserImage");
+        realLaser.setCollision(false);
         
     }
 
