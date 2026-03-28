@@ -41,7 +41,11 @@ public class GameManipulator {
     }
     
     public boolean notifyGameEventListener(GameObject eventSource, GameObject eventCause) {
-        if (eventSource instanceof touchable) {
+        if (eventSource instanceof touchable && eventSource instanceof StaticObject){
+            GameEventListener.handleTouch(eventSource, eventCause, "");
+            return false;
+        }
+        if (eventSource instanceof touchable && eventSource instanceof KinematicObject){
             GameEventListener.handleTouch(eventSource, eventCause, "");
             return true;
         }
@@ -147,8 +151,7 @@ public class GameManipulator {
                         double YOverlap = collidedArea.getHeight();
                         double XAxis = otherObj.getBounds().getCenterX() - k.getBounds().getCenterX();
                         double YAxis = otherObj.getBounds().getCenterY() - k.getBounds().getCenterY();
-                        if (Math.abs(XAxis) < Math.abs(YAxis) 
-                                || (XOverlap > YOverlap)) {
+                        if (XOverlap > YOverlap){
                             setYCollsion(YOverlap, k, otherObj, YAxis);
                         } else {
                             setXCollsion(XOverlap, k, otherObj, XAxis);
