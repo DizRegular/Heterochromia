@@ -165,8 +165,4 @@ public class NewClass {
     private void exitGame() {
         System.exit(0);
     }
-
-    public static void main(String[] args) {
-        new NewClass();
-    }
 }
