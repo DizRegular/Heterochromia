@@ -23,13 +23,13 @@ public class bullet extends StaticObject implements touchable,Scriptable {
 
     @Override
     public void onTouched(GameObject obj) {
-        System.out.println("hee");
+        
     }
 
     @Override
     public void process(double deltaTime) {
         destroytime++;
-        if (destroytime>=300){
+        if (destroytime>=150){
             this.destroyInstance();
         }
     }

@@ -40,7 +40,7 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
     public int maxjump=3;
     public boolean jumping=false;
     
-    public Boss2 level1Boss;
+    public Boss1 level1Boss;
     
     public DebugLevelLoaderScript(String name) {
         super(name);
@@ -49,6 +49,8 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
     @Override
     public void onCreate() {
         GameUniverse.loadImage("pikachuImage", pikachuImage);
+        GameUniverse.loadImage("realLaserImage", "res/Boss1/Skill 1/reallaser.png");
+        GameUniverse.loadImage("realLaserXImage", "res/Boss1/Skill 1/reallaser X.png");
         Animator idle = GameUniverse.createInstance(new Animator("idle"));
         idle.createAnimationSheet(new Vector2D(128, 128),"res/free_sprite/individual_sheets/male_hero_template-idle.png");
         idle.debugSpriteSheet();
@@ -120,12 +122,11 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
         } catch (InvalidGameObjectPropertyException e) {
             e.printStackTrace();
         }
-        level1Boss = GameUniverse.createInstance(new Boss2("ArtilleryBoss"));
+        level1Boss = GameUniverse.createInstance(new Boss1("ArtilleryBoss"));
     
-    // ตั้งค่าขนาดและตำแหน่งบนหน้าจอ
-        level1Boss.setSize(new Vector2D(150, 150)); // บอสตัวใหญ่หน่อย
-        level1Boss.setPosition(new Vector2D(800, 350)); // วางไว้ด้านขวาของด่าน
-        level1Boss.setTexture("boss1Texture"); // ใส่รูป
+        level1Boss.setSize(new Vector2D(150, 150));
+        level1Boss.setPosition(new Vector2D(800, 350));
+        level1Boss.setTexture("boss1Texture");
         
         StyledObject[] textureObjects = {
             physicPikachu, area, Flyingfloor, 

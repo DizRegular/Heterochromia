@@ -90,7 +90,7 @@ public class Boss1 extends StaticObject implements touchable {
     
     }
     public void leserX(Vector2D leserposition) {
-    laserwaringY warning = GameUniverse.createInstance(new laserwaringY("laser", leserposition));
+    laserwaringX1 warning = GameUniverse.createInstance(new laserwaringX1("laser", leserposition));
     warning.setPosition(leserposition);  
     warning.setSize(new Vector2D(10000,66));
     
