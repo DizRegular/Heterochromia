@@ -6,6 +6,7 @@ package DEVAPI;
 
 import DEVAPI.CustomGameObject.Door;
 import DEVAPI.CustomGameObject.OneWayPlatform;
+
 import RenderObject.Creatable.Animator;
 import RenderObject.Creatable.AreaDetector;
 import RenderObject.Creatable.Block;
@@ -71,6 +72,7 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
         GameUniverse.loadImage("fenceImage", fenceImage);
         GameUniverse.loadImage("blankImage", blankImage);
         GameUniverse.loadImage("Trashcan", dumpster);
+        
         
         //floor 1,4,7,10
         for (int i = 0; i < 4; i++) {

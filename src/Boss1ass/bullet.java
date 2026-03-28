@@ -29,7 +29,7 @@ public class bullet extends StaticObject implements touchable,Scriptable {
     @Override
     public void process(double deltaTime) {
         destroytime++;
-        if (destroytime>=150){
+        if (destroytime>=100){
             this.destroyInstance();
         }
     }

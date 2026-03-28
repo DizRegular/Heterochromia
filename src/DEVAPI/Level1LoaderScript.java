@@ -4,6 +4,7 @@
  */
 package DEVAPI;
 
+import Boss1ass.Boss1;
 import DEVAPI.CustomGameObject.Door;
 import DEVAPI.CustomGameObject.OneWayPlatform;
 import RenderObject.Creatable.Animator;
@@ -17,6 +18,7 @@ import RenderObject.InputListener;
 import RenderObject.InvalidGameObjectPropertyException;
 import RenderObject.KinematicObject;
 import RenderObject.ScriptSheet;
+import RenderObject.StaticObject;
 import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
 import java.awt.event.KeyEvent;
@@ -40,6 +42,8 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
     public int maxjump=3;
     public boolean jumping=false;
     public Camera cam1;
+    public Animator frieanim;
+    public Boss1 level1Boss; 
     public Level1LoaderScript(String name) {
         super(name);
     }
@@ -50,7 +54,14 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
         GameUniverse.loadImage("wallImage", wallImage);
         GameUniverse.loadImage("platformImage", platformImage);
         GameUniverse.loadImage("shelfImage", shelfImage);
-        
+        GameUniverse.loadImage("realLaserImage", "res/Boss1/Skill 1/reallaser.png");
+        GameUniverse.loadImage("realLaserXImage", "res/Boss1/Skill 1/reallaser X.png");
+        GameUniverse.loadImage("redWarning", "res/waring.png");
+        GameUniverse.loadImage("boss1Texture", "res/Boss1/Boss1_Idel.png");
+        frieanim=GameUniverse.createInstance(new Animator("frie"));
+        frieanim.createAnimationSheet(new Vector2D(1024, 1024), "res/Boss1/Skill 2/2/animfire.png");
+        frieanim.setSpeed(10);
+        GameUniverse.loadImage("sniperimage", "res/Boss1/Skill 2/IMG_4167.png");
         //floor
         for (int i = 0; i < 12; i++) {
             Block floor = GameUniverse.createInstance(new Block("Floor"));
@@ -105,7 +116,21 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
         rightPlatform2.setSize(new Vector2D(400,10));
         rightPlatform2.setPosition(new Vector2D(800,350));
         rightPlatform2.setTexture("platformImage");
-          
+        
+        //boss
+        level1Boss = GameUniverse.createInstance(new Boss1("ArtilleryBoss"));
+    
+        level1Boss.setSize(new Vector2D(200, 300));
+        level1Boss.setTextureSize(new Vector2D(300,300));
+        level1Boss.setPosition(new Vector2D(500, 250));
+        level1Boss.setTexture("boss1Texture");
+        level1Boss.setCollision(false);
+        
+//        StaticObject door=GameUniverse.createInstance(new StaticObject(name) {
+//        });
+//        door.setCollision(false);
+//        door.setSize(new Vector2D(100,100));
+//        door.setPosition(new Vector2D(200,350));
         //player 
         Animator idle = GameUniverse.createInstance(new Animator("idle"));
         idle.createAnimationSheet(new Vector2D(128, 128),"res/free_sprite/individual_sheets/male_hero_template-idle.png");
@@ -172,6 +197,7 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
             jumping=false;
             startjump=0;
         }
+        level1Boss.updateBossAI(deltaTime);
         if (InputManager.isKeyDown(KeyEvent.VK_SPACE)) {
             if (player.getTouchedFloor()) {
                 player.setVelocity(new Vector2D(0, -5));

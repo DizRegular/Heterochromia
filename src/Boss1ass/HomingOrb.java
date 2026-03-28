@@ -10,6 +10,7 @@ package Boss1ass;
  */
 import RenderObject.Addon.Scriptable;
 import RenderObject.Addon.touchable;
+import RenderObject.Creatable.Animator;
 import RenderObject.GameObject;
 import RenderObject.KinematicObject;
 import RenderObject.Creatable.Vector2D;
@@ -29,7 +30,12 @@ public class HomingOrb extends StaticObject implements touchable,Scriptable {
         super(name);
     }
     
-        
+//    @Override
+//    public void onCreate(){
+//        super.onCreate();
+//        this.addAnimator("frie", GameUniverse.getObjectByName("frie", Animator.class));
+//        this.setCurrentAnimator("frie");
+//    }
 
     @Override
     public void onTouched(GameObject obj) {
@@ -40,10 +46,12 @@ public class HomingOrb extends StaticObject implements touchable,Scriptable {
     @Override
     public void process(double deltaTime) {
         destroytime++;
-        KinematicObject player=GameUniverse.getObjectByName("PikachuPlayer", KinematicObject.class);
+        KinematicObject player=GameUniverse.getObjectByName("player", KinematicObject.class);
         if(!build){
         this.bu=GameUniverse.createInstance(new bullet("sniper"));
+        bu.setCollision(false);
         bu.setPosition(this.position);
+        bu.setTexture("sniperimage");
         bu.setSize(new Vector2D(50,50));
         build=true;
         }

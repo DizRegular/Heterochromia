@@ -100,13 +100,13 @@ public class Boss2 extends StaticObject implements touchable {
         
     }
     public void leserX(Vector2D leserposition) {
-    laserwaringY warning = GameUniverse.createInstance(new laserwaringY("skill4boss2", leserposition));
+    laserwaringX2 warning = GameUniverse.createInstance(new laserwaringX2("skill4boss2", leserposition));
     warning.setPosition(leserposition);  
     warning.setSize(new Vector2D(10000,100));
     
     }
     public void funna(Vector2D taget){
-        areasey fun=GameUniverse.createInstance(new areasey(name));
+        areasey fun=GameUniverse.createInstance(new areasey("funkun"));
         fun.setPosition(taget);
         fun.setSize(new Vector2D(300,500));
     } 

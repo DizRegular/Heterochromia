@@ -41,14 +41,27 @@ public class GameManipulator {
     }
     
     public boolean notifyGameEventListener(GameObject eventSource, GameObject eventCause) {
-        if (eventSource instanceof touchable && eventSource instanceof StaticObject){
+        if(eventSource instanceof CollisionObject col &&eventSource instanceof touchable ){
+            if ( eventSource instanceof KinematicObject){
             GameEventListener.handleTouch(eventSource, eventCause, "");
-            return false;
-        }
-        if (eventSource instanceof touchable && eventSource instanceof KinematicObject){
+            return true;
+        }if( col.getCollision()==false){
             GameEventListener.handleTouch(eventSource, eventCause, "");
             return true;
         }
+        }
+//        if (eventSource instanceof touchable && eventSource instanceof StaticObject){
+//            GameEventListener.handleTouch(eventSource, eventCause, "");
+//            return false;
+//        }
+//        if (eventSource instanceof touchable && eventSource instanceof KinematicObject){
+//            GameEventListener.handleTouch(eventSource, eventCause, "");
+//            return true;
+//        }
+//        if(eventSource instanceof  touchable&& eventSource instanceof StaticObject sto && sto.getCollision()==false){
+//            GameEventListener.handleTouch(eventSource, eventCause, "");
+//            return true;
+//        }
         return false;
     } 
     
@@ -142,7 +155,7 @@ public class GameManipulator {
                 for (int quadrant : IsInside) {
                     if (quadrant == -1) { break;}
                     for (CollisionObject otherObj : GameManipulator.quadrantContainer.get(quadrant)) {
-                        if (k.equals(otherObj) || otherObj.getCollision() == false) {continue;}
+                        if (k.equals(otherObj) ) {continue;}
                         Rectangle2D collidedArea = k.getBounds().createIntersection(otherObj.getBounds());
                         if (collidedArea.isEmpty()) {continue;}
                         boolean skip = notifyGameEventListener(otherObj, k);

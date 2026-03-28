@@ -39,15 +39,15 @@ public class laserwaringX1 extends StaticObject implements touchable,Scriptable 
  
             this.setVisibility(!this.getVisibility());
 
-            if (blinkCount >= 4) {
+            if (blinkCount >= 6) {
                 this.real = GameUniverse.createInstance(new spawnRealLaser("reallaser"));
                 real.setPosition(this.getPosition());
                 real.setSize(this.getSize());
                 real.setTexture("realLaserXImage");
-                real.setCollision(true);
+                real.setCollision(false);
                 real.setPosition(this.getPosition());
                 blinkCount=0;
-                
+                System.out.println(real.getCollision());
             }}
             
         if(destroy<delaydestroy){ 
