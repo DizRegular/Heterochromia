@@ -20,7 +20,7 @@ import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
 import java.awt.event.KeyEvent;
 
-public class DebugLevelLoaderScript extends  ScriptSheet implements InputListener {
+public class DebugLevelLoaderScript extends ScriptSheet implements InputListener {
     public Block pikachu2;
     public KinematicObject physicPikachu;
     public Camera cam1;
@@ -29,19 +29,19 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
     public AreaDetector area;
     public Block Flyingfloor;
     public ScaredPikachu scaredpik;
-    
+
     public String pikachuImage = "res/GameAssets/Textures/placeholder.jpg";
-    
+
     public boolean setSize = false;
-    public double lf=0;
-    public double fall=-1;
+    public double lf = 0;
+    public double fall = -1;
     public boolean added = false;
-    public int startjump=0;
-    public int maxjump=3;
-    public boolean jumping=false;
-    
+    public int startjump = 0;
+    public int maxjump = 3;
+    public boolean jumping = false;
+
     public Boss1 level1Boss;
-    
+
     public DebugLevelLoaderScript(String name) {
         super(name);
     }
@@ -52,48 +52,49 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
         GameUniverse.loadImage("realLaserImage", "res/Boss1/Skill 1/reallaser.png");
         GameUniverse.loadImage("realLaserXImage", "res/Boss1/Skill 1/reallaser X.png");
         Animator idle = GameUniverse.createInstance(new Animator("idle"));
-        idle.createAnimationSheet(new Vector2D(128, 128),"res/free_sprite/individual_sheets/male_hero_template-idle.png");
+        idle.createAnimationSheet(new Vector2D(128, 128), "res/free_sprite/individual_sheets/male_hero_template-idle.png");
         idle.debugSpriteSheet();
         idle.setSpeed(10);
         //-----------------------------------------------------------------------------------------------------------
         GameUniverse.loadImage("redWarning", "res/GameAssets/Textures/red_warning.jpg");
         physicPikachu = GameUniverse.createInstance(new KinematicObject("PikachuPlayer"));
         physicPikachu.setSize(new Vector2D(70, 120));
-        physicPikachu.setPosition(new Vector2D(0,0));
+        physicPikachu.setPosition(new Vector2D(0, 0));
         physicPikachu.addAnimator("idle", idle);
         physicPikachu.setCurrentAnimator("idle");
         idle.setEnabled(true);
         //------------------------------------------------------------------------------------------------------------
         area = GameUniverse.createInstance(new AreaDetector("trampoline"));
         Door newDoor = GameUniverse.createInstance(new Door("bgtransition"));
+
         for (int i = 0; i < 6; i++) {
             Block floor = GameUniverse.createInstance(new Block("Platform"));
-            floor.setSize(new Vector2D(100,100));
-            floor.setPosition(new Vector2D(i*100, 500));
+            floor.setSize(new Vector2D(100, 100));
+            floor.setPosition(new Vector2D(i * 100, 500));
             floor.setTexture("pikachuImage");
         }
-
         for (int i = 0; i < 10; i++) {
             Block floor = GameUniverse.createInstance(new Block("Platform"));
-            floor.setSize(new Vector2D(100,100));
-            floor.setPosition(new Vector2D(700+i*50, 500-i*3));
+            floor.setSize(new Vector2D(100, 100));
+            floor.setPosition(new Vector2D(700 + i * 50, 500 - i * 3));
             floor.setTexture("pikachuImage");
         }
         for (int i = 0; i < 40; i++) {
             Block floor = GameUniverse.createInstance(new Block("Platform"));
-            floor.setSize(new Vector2D(100,100));
-            floor.setPosition(new Vector2D(1000+i, 500-i*4));
+            floor.setSize(new Vector2D(100, 100));
+            floor.setPosition(new Vector2D(1000 + i, 500 - i * 4));
             floor.setTexture("pikachuImage");
         }
+
         Flyingfloor = GameUniverse.createInstance(new Block("FlyingPlatform"));
-        Flyingfloor.setSize(new Vector2D(100,50));
+        Flyingfloor.setSize(new Vector2D(100, 50));
         Flyingfloor.setPosition(new Vector2D(100, 220));
 
         newDoor.setSize(new Vector2D(50, 50));
         newDoor.setPosition(new Vector2D(100, 100));
 
         Block LongPlatform = GameUniverse.createInstance(new Block("LongPlatform"));
-        LongPlatform.setSize(new Vector2D(500,150));
+        LongPlatform.setSize(new Vector2D(500, 150));
         LongPlatform.setPosition(new Vector2D(251, -200));
 
         area.setSize(new Vector2D(50, 5000));
@@ -115,6 +116,7 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
         cam2 = GameUniverse.createInstance(new Camera("GameCam2"));
         cam2.setSize(new Vector2D(1400, 500));
         cam2.setPosition(new Vector2D(0, 0));
+
         try {
             scaredpik.addConstraint(scaredpikfriend);
             window.setCamera(cam1);
@@ -122,6 +124,7 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
         } catch (InvalidGameObjectPropertyException e) {
             e.printStackTrace();
         }
+
         level1Boss = GameUniverse.createInstance(new Boss1("ArtilleryBoss"));
     
         level1Boss.setSize(new Vector2D(150, 150));
@@ -129,19 +132,21 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
         level1Boss.setTexture("boss1Texture");
         
         StyledObject[] textureObjects = {
-            physicPikachu, area, Flyingfloor, 
-        LongPlatform, scaredpik, scaredpikfriend};
+            physicPikachu, area, Flyingfloor,
+            LongPlatform, scaredpik, scaredpikfriend
+        };
         StyledObject.setTextureAll(textureObjects, "pikachuImage");
-        
+
         GameUniverse.setBackground("res/GameAssets/Background/bgplacegholder.jpg");
         InputManager.registerInputListenerObject(this);
     }
-    
+
     @Override
     public void onDestroy() {
-        InputManager.registerInputListenerObject(this);
+        // FIX: เคย register ซ้ำ แก้เป็น unregister ให้ถูกต้อง
+        InputManager.unregisterInputListenerObject(this);
     }
-    
+
     @Override
     public void process(double deltaTime) {
         if (setSize == false) {
@@ -153,7 +158,7 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
             try {
                 Camera a = GameUniverse.getObjectByName("GameCam", Camera.class);
                 window.setCamera(a);
-            } catch (InvalidGameObjectPropertyException e ) {
+            } catch (InvalidGameObjectPropertyException e) {
                 e.printStackTrace();
             }
         }
@@ -166,33 +171,30 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
             }
         }
         if (InputManager.isKeyDown('d')) {
-            lf=5;
+            lf = 5;
             physicPikachu.flipXTexture(false);
-        }
-        else if (InputManager.isKeyDown('a')) {
-            lf=-5;
+        } else if (InputManager.isKeyDown('a')) {
+            lf = -5;
             physicPikachu.flipXTexture(true);
-        }
-        else{
-            lf=0;
+        } else {
+            lf = 0;
         }
         if (InputManager.isKeyDown(KeyEvent.VK_SPACE)) {
-            if(!jumping&&physicPikachu.getTouchedFloor()){//add chack is tuch ground after addhitbox
-                startjump=maxjump;
-                jumping=true;
+            if (!jumping && physicPikachu.getTouchedFloor()) {
+                startjump = maxjump;
+                jumping = true;
             }
         }
-        if(jumping&&startjump>0){
-            fall=-1;
+        if (jumping && startjump > 0) {
+            fall = -1;
             physicPikachu.addAcceleration(new Vector2D(0, fall));
             startjump--;
+        } else {
+            fall = 1;
         }
-        else{
-            fall=1;
-        }
-        if(jumping&&startjump<=0){
-            jumping=false;
-            startjump=0;
+        if (jumping && startjump <= 0) {
+            jumping = false;
+            startjump = 0;
         }
         physicPikachu.movePostion(new Vector2D(lf, 0));
 
@@ -201,12 +203,10 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
             cam1.movePostion(new Vector2D(-10, 0));
         }
         if (InputManager.isKeyDown('l')) {
-                            cam1.movePostion(new Vector2D(10, 0));
+            cam1.movePostion(new Vector2D(10, 0));
         }
-       
         if (InputManager.isKeyDown('i')) {
             cam1.movePostion(new Vector2D(0, -10));
-
         }
         if (InputManager.isKeyDown('=')) {
             cam1.setZoomFactor(cam1.getZoomFactor() + 0.01);
@@ -219,7 +219,6 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
                 physicPikachu.setVelocity(new Vector2D(0, -5));
             }
         }
-
         if (InputManager.isKeyDown(KeyEvent.VK_DELETE)) {
             AreaDetector d = GameUniverse.getObjectByName("ExtraPlatform", AreaDetector.class);
             if (d != null) {
@@ -231,7 +230,6 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
             level1Boss.takeDamage(10);
 //            level1Boss.leserY(new Vector2D(500,-350));
         }
-    }
         if (InputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {
             System.exit(0);
         }
@@ -248,6 +246,5 @@ public class DebugLevelLoaderScript extends  ScriptSheet implements InputListene
 
     @Override
     public void onInput() {
-
     }
 }
