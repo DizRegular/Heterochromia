@@ -59,7 +59,7 @@ public class Ladder extends AreaDetector implements touchable,Scriptable{
             playerObj.setVelocity(new Vector2D(playerObj.getVelocity().getXCoord(), 3));
         } else if (!playerObj.getTouchedFloor()) {
             // make it so you doesn't fall instantly when still climbing the ladder
-            playerObj.setVelocity(new Vector2D(playerObj.getVelocity().getXCoord(), 0));
+            playerObj.setVelocity(new Vector2D(playerObj.getVelocity().getXCoord(), -0.15));
         }
     }
 }
