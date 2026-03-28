@@ -19,8 +19,10 @@ import RenderObject.InputListener;
 import RenderObject.InvalidGameObjectPropertyException;
 import RenderObject.KinematicObject;
 import RenderObject.ScriptSheet;
+import UI.Pause;
 import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
 /**
@@ -44,6 +46,7 @@ public class Level3LoaderScript extends ScriptSheet implements InputListener {
     public boolean jumping=false;
     public Camera cam1;
     public Boss3 level1Boss;
+    private Pause pauseUI;
     public Level3LoaderScript(String name) {
         super(name);
     }
@@ -57,6 +60,7 @@ public class Level3LoaderScript extends ScriptSheet implements InputListener {
         GameUniverse.loadImage("ladderImage", ladderImage);
         GameUniverse.loadImage("tub", "res/waring.png");
         //floor
+        pauseUI =GameUniverse.createInstance(new Pause("PauseScreen", 0, 0, 1280, 720));
         for (int i = 0; i < 12; i++) {
             Block floor = GameUniverse.createInstance(new Block("Platform"));
             floor.setSize(new Vector2D(100,100));
