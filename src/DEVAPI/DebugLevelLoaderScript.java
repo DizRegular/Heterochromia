@@ -3,6 +3,7 @@ package DEVAPI;
 import DEVAPI.CustomGameObject.Door;
 import DEVAPI.CustomGameObject.ScaredPikachu;
 import Boss1ass.Boss1;
+import Boss2ass.Boss2;
 import RenderObject.Creatable.Animator;
 import RenderObject.Creatable.AreaDetector;
 import RenderObject.Creatable.Block;
@@ -48,18 +49,21 @@ public class DebugLevelLoaderScript extends ScriptSheet implements InputListener
     @Override
     public void onCreate() {
         GameUniverse.loadImage("pikachuImage", pikachuImage);
+        GameUniverse.loadImage("realLaserImage", "res/Boss1/Skill 1/reallaser.png");
+        GameUniverse.loadImage("realLaserXImage", "res/Boss1/Skill 1/reallaser X.png");
         Animator idle = GameUniverse.createInstance(new Animator("idle"));
         idle.createAnimationSheet(new Vector2D(128, 128), "res/free_sprite/individual_sheets/male_hero_template-idle.png");
         idle.debugSpriteSheet();
         idle.setSpeed(10);
-
+        //-----------------------------------------------------------------------------------------------------------
+        GameUniverse.loadImage("redWarning", "res/GameAssets/Textures/red_warning.jpg");
         physicPikachu = GameUniverse.createInstance(new KinematicObject("PikachuPlayer"));
         physicPikachu.setSize(new Vector2D(70, 120));
         physicPikachu.setPosition(new Vector2D(0, 0));
         physicPikachu.addAnimator("idle", idle);
         physicPikachu.setCurrentAnimator("idle");
         idle.setEnabled(true);
-
+        //------------------------------------------------------------------------------------------------------------
         area = GameUniverse.createInstance(new AreaDetector("trampoline"));
         Door newDoor = GameUniverse.createInstance(new Door("bgtransition"));
 
@@ -122,10 +126,11 @@ public class DebugLevelLoaderScript extends ScriptSheet implements InputListener
         }
 
         level1Boss = GameUniverse.createInstance(new Boss1("ArtilleryBoss"));
+    
         level1Boss.setSize(new Vector2D(150, 150));
         level1Boss.setPosition(new Vector2D(800, 350));
         level1Boss.setTexture("boss1Texture");
-
+        
         StyledObject[] textureObjects = {
             physicPikachu, area, Flyingfloor,
             LongPlatform, scaredpik, scaredpikfriend
@@ -221,14 +226,22 @@ public class DebugLevelLoaderScript extends ScriptSheet implements InputListener
             }
         }
         if (InputManager.isKeyDown('q')) {
-            if (physicPikachu.getBounds().intersects(level1Boss.getBounds())) {
-                level1Boss.takeDamage(10);
-                level1Boss.leserY(new Vector2D(500, 0));
-            }
+        if (physicPikachu.getBounds().intersects(level1Boss.getBounds())) {
+            level1Boss.takeDamage(10);
+//            level1Boss.leserY(new Vector2D(500,-350));
         }
         if (InputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {
             System.exit(0);
         }
+        //---------------------------------------------------------------------
+        
+        level1Boss.updateBossAI(deltaTime);
+
+//        if (InputManager.isKeyDown('z')) {
+//                level1Boss.leserY(new Vector2D(physicPikachu.getPosition().getXCoord(), 0));
+//        }
+        
+        
     }
 
     @Override

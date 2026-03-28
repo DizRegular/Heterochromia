@@ -40,10 +40,27 @@ public class GameManipulator {
     }
 
     public boolean notifyGameEventListener(GameObject eventSource, GameObject eventCause) {
-        if (eventSource instanceof touchable) {
+        if(eventSource instanceof CollisionObject col &&eventSource instanceof touchable ){
+            if ( eventSource instanceof KinematicObject){
+            GameEventListener.handleTouch(eventSource, eventCause, "");
+            return true;
+        }if( col.getCollision()==false){
             GameEventListener.handleTouch(eventSource, eventCause, "");
             return true;
         }
+        }
+//        if (eventSource instanceof touchable && eventSource instanceof StaticObject){
+//            GameEventListener.handleTouch(eventSource, eventCause, "");
+//            return false;
+//        }
+//        if (eventSource instanceof touchable && eventSource instanceof KinematicObject){
+//            GameEventListener.handleTouch(eventSource, eventCause, "");
+//            return true;
+//        }
+//        if(eventSource instanceof  touchable&& eventSource instanceof StaticObject sto && sto.getCollision()==false){
+//            GameEventListener.handleTouch(eventSource, eventCause, "");
+//            return true;
+//        }
         return false;
     }
 
@@ -132,7 +149,7 @@ public class GameManipulator {
                 for (int quadrant : IsInside) {
                     if (quadrant == -1) { break; }
                     for (CollisionObject otherObj : GameManipulator.quadrantContainer.get(quadrant)) {
-                        if (k.equals(otherObj) || otherObj.getCollision() == false) { continue; }
+                        if (k.equals(otherObj) ) {continue;}
                         Rectangle2D collidedArea = k.getBounds().createIntersection(otherObj.getBounds());
                         if (collidedArea.isEmpty()) { continue; }
                         boolean skip = notifyGameEventListener(otherObj, k);
@@ -141,7 +158,7 @@ public class GameManipulator {
                         double YOverlap = collidedArea.getHeight();
                         double XAxis = otherObj.getBounds().getCenterX() - k.getBounds().getCenterX();
                         double YAxis = otherObj.getBounds().getCenterY() - k.getBounds().getCenterY();
-                        if (Math.abs(XAxis) < Math.abs(YAxis) || (XOverlap > YOverlap)) {
+                        if (XOverlap > YOverlap){
                             setYCollsion(YOverlap, k, otherObj, YAxis);
                         } else {
                             setXCollsion(XOverlap, k, otherObj, XAxis);

@@ -54,6 +54,19 @@ public class Vector2D {
     /** print (x, y) for easier reading
      * @return 
      */
+    public double length() {
+    return Math.sqrt(x * x + y * y);
+}
+
+    public Vector2D subtract(Vector2D v) {
+        return new Vector2D(this.x - v.getXCoord(), this.y - v.getYCoord());
+    }
+    
+    public Vector2D normalize() {
+        double len = length();
+        if (len == 0) return new Vector2D(0, 0); // กัน Error หารด้วย 0
+        return new Vector2D(this.x / len, this.y / len);
+    }
     @Override
     public String toString() {
         return "("+ this.x + ", " +this.y + ")";

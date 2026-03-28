@@ -55,7 +55,6 @@ public class boss1stat {
         if (hp <= maxhp / 2 && !phase2) {
             phase2 = true;
             atk = 30;
-            System.out.println("Boss Phase 2 Activated!");
         }
     }
     
