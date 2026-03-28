@@ -18,7 +18,7 @@ import RenderObject.Creatable.Vector2D;
 import RenderObject.Addon.touchable;
 import UniverseEngine.GameUniverse;
 import java.util.Random;
-public class Boss3 extends StaticObject implements touchable,Scriptable {
+public class Boss3 extends StaticObject implements touchable {
     private boss2stat stats;
     int shootTimer = 0;
     int shootCooldown = 180;
@@ -28,6 +28,7 @@ public class Boss3 extends StaticObject implements touchable,Scriptable {
     boolean skill1useing=false;
     double dashSpeed = 20.0;
     boolean lef=false;
+    boolean havelife=true;
     int dashtime=0;
     Vector2D taget;
     Random rand = new Random();
@@ -45,13 +46,14 @@ public class Boss3 extends StaticObject implements touchable,Scriptable {
         stats.boss1takedamage(damage);
         if (stats.getHp() <= 0) {
             this.destroyInstance();
+            havelife=false;
         }
     }
 
     public void updateBossAI(double deltaTime){
         KinematicObject player=GameUniverse.getObjectByName("PikachuPlayer", KinematicObject.class);
         shootTimer++;
-        if (shootTimer>=shootCooldown){
+        if (shootTimer>=shootCooldown&&havelife){
             randomskill=rand.nextInt(3) + 1;
             shootTimer=0;
         }
@@ -67,6 +69,12 @@ public class Boss3 extends StaticObject implements touchable,Scriptable {
             randomskill=0;
         }}
         if(randomskill==2){
+             if(this.getPosition().getXCoord()>player.getPosition().getXCoord()){
+                funna(new Vector2D(this.getPosition().getXCoord()-300,this.getPosition().getYCoord()-200));
+            }
+            else{
+                funna(new Vector2D(this.getPosition().getXCoord()+100,this.getPosition().getYCoord()-200));
+            }
             randomskill=0;
         }
         if(randomskill==3){
@@ -116,10 +124,12 @@ public class Boss3 extends StaticObject implements touchable,Scriptable {
         }
         }
 
-    @Override
-    public void process(double deltaTime) {
-    }
-
+   
+     public void funna(Vector2D taget){
+        areasey fun=GameUniverse.createInstance(new areasey(name));
+        fun.setPosition(taget);
+        fun.setSize(new Vector2D(300,500));
+    } 
     
     }
 

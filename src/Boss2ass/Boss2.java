@@ -22,6 +22,7 @@ public class Boss2 extends StaticObject implements touchable {
     int shootCooldown = 180;
     int randomskill=0;
     int speed=1;
+    boolean havelife=true;
     boolean skillchage=false;
     boolean skill1useing=false;
     double dashSpeed = 30.0;
@@ -42,13 +43,14 @@ public class Boss2 extends StaticObject implements touchable {
         stats.boss1takedamage(damage);
         if (stats.getHp() <= 0) {
             this.destroyInstance();
+            havelife=false;
         }
     }
 
     public void updateBossAI(double deltaTime){
         KinematicObject player=GameUniverse.getObjectByName("PikachuPlayer", KinematicObject.class);
         shootTimer++;
-        if (shootTimer>=shootCooldown){
+        if (shootTimer>=shootCooldown &&havelife){
             randomskill=rand.nextInt(3) + 1;
             shootTimer=0;
         }

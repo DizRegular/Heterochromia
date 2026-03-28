@@ -24,6 +24,7 @@ public class Boss1 extends StaticObject implements touchable {
     int shootTimer = 0;
     int shootCooldown = 180;
     int randomskill=0;
+    boolean havelife=true;
     Random rand = new Random();
     public Boss1(String name) {
         super(name);
@@ -39,6 +40,7 @@ public class Boss1 extends StaticObject implements touchable {
         stats.boss1takedamage(damage);
         if (stats.getHp() <= 0) {
             this.destroyInstance();
+            havelife=false;
         }
     }
 
@@ -46,7 +48,7 @@ public class Boss1 extends StaticObject implements touchable {
         
         KinematicObject player=GameUniverse.getObjectByName("PikachuPlayer", KinematicObject.class);
         shootTimer++;
-        if (shootTimer>=shootCooldown){
+        if (shootTimer>=shootCooldown&&havelife){
             randomskill=rand.nextInt(4) + 1;
             shootTimer=0;
         }
