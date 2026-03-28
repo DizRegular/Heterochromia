@@ -2,13 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Boss2ass;
+package Boss3ass;
 
 /**
  *
  * @author tin_sel
  */
+import Boss2ass.*;
 import Boss1ass.laserwaringY;
+import RenderObject.Addon.Scriptable;
 import RenderObject.GameObject;
 import RenderObject.KinematicObject;
 import RenderObject.StaticObject;
@@ -16,7 +18,7 @@ import RenderObject.Creatable.Vector2D;
 import RenderObject.Addon.touchable;
 import UniverseEngine.GameUniverse;
 import java.util.Random;
-public class Boss2 extends StaticObject implements touchable {
+public class Boss3 extends StaticObject implements touchable,Scriptable {
     private boss2stat stats;
     int shootTimer = 0;
     int shootCooldown = 180;
@@ -24,11 +26,12 @@ public class Boss2 extends StaticObject implements touchable {
     int speed=1;
     boolean skillchage=false;
     boolean skill1useing=false;
-    double dashSpeed = 30.0;
+    double dashSpeed = 20.0;
+    boolean lef=false;
     int dashtime=0;
     Vector2D taget;
     Random rand = new Random();
-    public Boss2(String name) {
+    public Boss3(String name) {
         super(name);
         this.stats = new boss2stat();
     }
@@ -53,30 +56,27 @@ public class Boss2 extends StaticObject implements touchable {
             shootTimer=0;
         }
         if(randomskill==1){
-            
             if (!skill1useing) {
                 skill1useing = true; 
+                if(this.getPosition().getXCoord()>player.getPosition().getXCoord()){
+                    lef=true;
+                }
+                else{
+                    lef=false;
             }
             randomskill=0;
-        }
+        }}
         if(randomskill==2){
-            leserX(new Vector2D(-1000, this.getPosition().getYCoord()));
             randomskill=0;
         }
         if(randomskill==3){
-            if(this.getPosition().getXCoord()>player.getPosition().getXCoord()){
-                funna(new Vector2D(this.getPosition().getXCoord()-300,this.getPosition().getYCoord()-200));
-            }
-            else{
-                funna(new Vector2D(this.getPosition().getXCoord()+100,this.getPosition().getYCoord()-200));
-            }
+           
             randomskill=0;
         }
-        
-        if(skill1useing&&this.getPosition().getXCoord()<player.getPosition().getXCoord()){
+         if(skill1useing&&!!lef){
             this.movePostion(new Vector2D(dashSpeed,0));
         }
-        else if(skill1useing&&this.getPosition().getXCoord()>player.getPosition().getXCoord()){
+        else if(skill1useing&&lef){
             this.movePostion(new Vector2D((dashSpeed*(-1)),0));
         }
         else if(this.getPosition().getXCoord()>player.getPosition().getXCoord()&&this.getPosition().getXCoord()-player.getPosition().getXCoord()>100){
@@ -85,16 +85,19 @@ public class Boss2 extends StaticObject implements touchable {
         else if (this.getPosition().getXCoord()<player.getPosition().getXCoord()&&player.getPosition().getXCoord()-this.getPosition().getXCoord()>200){
             this.movePostion(new Vector2D(speed,0));
         }
-        
         if(skill1useing){
             dashtime++;
         }
         if(dashtime>=30){
             dashtime=0;
             skill1useing=false;
-            
-        }
 
+        }
+        if(this.getPosition().getXCoord()>=1200 ||this.getPosition().getXCoord()<=-100){
+            dashtime=0;
+            skill1useing=false;
+        }
+            
         
     }
     public void leserX(Vector2D leserposition) {
@@ -103,11 +106,7 @@ public class Boss2 extends StaticObject implements touchable {
     warning.setSize(new Vector2D(10000,100));
     
     }
-    public void funna(Vector2D taget){
-        areasey fun=GameUniverse.createInstance(new areasey(name));
-        fun.setPosition(taget);
-        fun.setSize(new Vector2D(300,500));
-    } 
+    
     @Override
     public void onTouched(GameObject obj) {
         if(skill1useing){
@@ -115,5 +114,12 @@ public class Boss2 extends StaticObject implements touchable {
             skill1useing=false;
             //set anim defalse
         }
+        }
+
+    @Override
+    public void process(double deltaTime) {
     }
-}
+
+    
+    }
+
