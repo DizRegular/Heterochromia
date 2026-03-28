@@ -78,13 +78,7 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener {
         rightWall.setPosition(new Vector2D(1200, i*100));
         rightWall.setTexture("wallImage");
         }
-        
-        // Left Shelf
-        Decoration leftShelf = GameUniverse.createInstance(new Decoration("ShelfL"));
-        leftShelf.setSize(new Vector2D(200, 200));
-        leftShelf.setPosition(new Vector2D(0,500));
-        leftShelf.setTexture("shelfImage");
-        
+               
         //player 
         Animator idle = GameUniverse.createInstance(new Animator("idle"));
         idle.createAnimationSheet(new Vector2D(128, 128),"res/free_sprite/individual_sheets/male_hero_template-idle.png");
@@ -102,7 +96,7 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener {
         cam1.setPosition(new Vector2D(0, 0));
         ViewPort window1 = GameUniverse.createInstance(new ViewPort("window1"));
         window1.setEnabled(true);
-        GameUniverse.setBackground("res/GameAssets/Background/bgplacegholder.jpg");
+        GameUniverse.setBackground("res/GameAssets/Background/Stage2Placeholder.jpg");
         try {
             window1.setCamera(cam1);
         } catch (InvalidGameObjectPropertyException e) {

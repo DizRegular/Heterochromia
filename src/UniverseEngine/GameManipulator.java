@@ -41,7 +41,11 @@ public class GameManipulator {
     }
     
     public boolean notifyGameEventListener(GameObject eventSource, GameObject eventCause) {
-        if (eventSource instanceof touchable) {
+        if (eventSource instanceof touchable && eventSource instanceof StaticObject){
+            GameEventListener.handleTouch(eventSource, eventCause, "");
+            return false;
+        }
+        if (eventSource instanceof touchable && eventSource instanceof KinematicObject){
             GameEventListener.handleTouch(eventSource, eventCause, "");
             return true;
         }

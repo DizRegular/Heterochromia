@@ -5,6 +5,7 @@
 package DEVAPI;
 
 import DEVAPI.CustomGameObject.Door;
+import DEVAPI.CustomGameObject.OneWayPlatform;
 import RenderObject.Creatable.Animator;
 import RenderObject.Creatable.AreaDetector;
 import RenderObject.Creatable.Block;
@@ -27,6 +28,7 @@ import java.awt.event.KeyEvent;
 public class Level1LoaderScript extends ScriptSheet implements InputListener {
     public String floorImage = "res/GameAssets/Textures/Grass1.jpg";
     public String wallImage = "res/GameAssets/Textures/Cobblestone.png";
+    public String platformImage = "res/GameAssets/Textures/Platform.png";
     public String shelfImage = "res/GameAssets/Textures/Shelf.jpg";
     public KinematicObject player;
     public KinematicObject ball;
@@ -46,18 +48,19 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
     public void onCreate(){
         GameUniverse.loadImage("floorImage", floorImage);
         GameUniverse.loadImage("wallImage", wallImage);
+        GameUniverse.loadImage("platformImage", platformImage);
         GameUniverse.loadImage("shelfImage", shelfImage);
         
         //floor
         for (int i = 0; i < 12; i++) {
-            Block floor = GameUniverse.createInstance(new Block("Platform"));
+            Block floor = GameUniverse.createInstance(new Block("Floor"));
             floor.setSize(new Vector2D(100,100));
             floor.setPosition(new Vector2D(i*100, 700));
             floor.setTexture("floorImage");
         }
         //roof
         for (int i = 0; i < 12; i++) {
-            Block floor = GameUniverse.createInstance(new Block("Platform"));
+            Block floor = GameUniverse.createInstance(new Block("Roof"));
             floor.setSize(new Vector2D(100,100));
             floor.setPosition(new Vector2D(i*100, -100));
             floor.setTexture("floorImage");
@@ -79,12 +82,30 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
         rightWall.setTexture("wallImage");
         }
         
-        // Left Shelf
-        Decoration leftShelf = GameUniverse.createInstance(new Decoration("ShelfL"));
-        leftShelf.setSize(new Vector2D(200, 200));
-        leftShelf.setPosition(new Vector2D(0,500));
-        leftShelf.setTexture("shelfImage");
+        // Left platform1
+        OneWayPlatform leftPlatform1 = GameUniverse.createInstance(new OneWayPlatform("platformL"));
+        leftPlatform1.setSize(new Vector2D(400,10));
+        leftPlatform1.setPosition(new Vector2D(0,525));
+        leftPlatform1.setTexture("platformImage");
         
+        // Left platform2
+        OneWayPlatform leftPlatform2 = GameUniverse.createInstance(new OneWayPlatform("platformL"));
+        leftPlatform2.setSize(new Vector2D(400,10));
+        leftPlatform2.setPosition(new Vector2D(0,350));
+        leftPlatform2.setTexture("platformImage");
+        
+        // Right platform1
+        OneWayPlatform rightPlatform1 = GameUniverse.createInstance(new OneWayPlatform("platformL"));
+        rightPlatform1.setSize(new Vector2D(400,10));
+        rightPlatform1.setPosition(new Vector2D(800,525));
+        rightPlatform1.setTexture("platformImage");
+        
+        // Right platform2
+        OneWayPlatform rightPlatform2 = GameUniverse.createInstance(new OneWayPlatform("platformL"));
+        rightPlatform2.setSize(new Vector2D(400,10));
+        rightPlatform2.setPosition(new Vector2D(800,350));
+        rightPlatform2.setTexture("platformImage");
+          
         //player 
         Animator idle = GameUniverse.createInstance(new Animator("idle"));
         idle.createAnimationSheet(new Vector2D(128, 128),"res/free_sprite/individual_sheets/male_hero_template-idle.png");
@@ -102,7 +123,7 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
         cam1.setPosition(new Vector2D(0, 0));
         ViewPort window1 = GameUniverse.createInstance(new ViewPort("window1"));
         window1.setEnabled(true);
-        GameUniverse.setBackground("res/GameAssets/Background/bgplacegholder.jpg");
+        GameUniverse.setBackground("res/GameAssets/Background/Stage1Placeholder.jpg");
         try {
             window1.setCamera(cam1);
         } catch (InvalidGameObjectPropertyException e) {

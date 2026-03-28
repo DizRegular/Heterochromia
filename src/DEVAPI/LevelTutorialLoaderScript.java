@@ -27,7 +27,7 @@ import java.awt.event.KeyEvent;
 public class LevelTutorialLoaderScript extends ScriptSheet implements InputListener {
     public String floorImage = "res/GameAssets/Textures/Grass1.jpg";
     public String wallImage = "res/GameAssets/Textures/Cobblestone.png";
-    public String shelfImage = "res/GameAssets/Textures/Shelf.jpg";
+    public String controlImage = "res/GameAssets/Textures/ControlGuide.jpg";
     public KinematicObject player;
     public KinematicObject ball;
     public boolean setSize = false;
@@ -46,7 +46,7 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
     public void onCreate(){
         GameUniverse.loadImage("floorImage", floorImage);
         GameUniverse.loadImage("wallImage", wallImage);
-        GameUniverse.loadImage("shelfImage", shelfImage);
+        GameUniverse.loadImage("controlImage", controlImage);
         
         //floor
         for (int i = 0; i < 12; i++) {
@@ -79,7 +79,7 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
         rightWall.setTexture("wallImage");
         }
         
-        // Left Shelf
+        //ControlGuide
         Decoration leftShelf = GameUniverse.createInstance(new Decoration("ShelfL"));
         leftShelf.setSize(new Vector2D(200, 200));
         leftShelf.setPosition(new Vector2D(0,500));
