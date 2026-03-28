@@ -28,7 +28,7 @@ public class laserwaringX3 extends StaticObject implements touchable,Scriptable 
     public laserwaringX3(String name , Vector2D pos) {
         super(name);
         
-        this.setTexture("redWarning");
+        this.setTexture("tub");
     }
     @Override
     public void process(double deltaTime) {
@@ -45,7 +45,7 @@ public class laserwaringX3 extends StaticObject implements touchable,Scriptable 
                 real.setPosition(this.getPosition());
                 real.setSize(this.getSize());
                 real.setTexture("golemtub");
-                real.setCollision(true);
+                real.setCollision(false);
                 real.setPosition(this.getPosition());
                 blinkCount=0;
                 

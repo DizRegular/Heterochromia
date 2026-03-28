@@ -4,6 +4,7 @@
  */
 package DEVAPI;
 
+import Boss2ass.Boss2;
 import DEVAPI.CustomGameObject.Door;
 import RenderObject.Creatable.Animator;
 import RenderObject.Creatable.AreaDetector;
@@ -38,6 +39,7 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener {
     public int maxjump=3;
     public boolean jumping=false;
     public Camera cam1;
+    public Boss2 level1Boss;
     public Level2LoaderScript(String name) {
         super(name);
     }
@@ -47,7 +49,7 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener {
         GameUniverse.loadImage("floorImage", floorImage);
         GameUniverse.loadImage("wallImage", wallImage);
         GameUniverse.loadImage("shelfImage", shelfImage);
-        
+        GameUniverse.loadImage("samuwarning", "res/waring.png");
         //floor
         for (int i = 0; i < 12; i++) {
             Block floor = GameUniverse.createInstance(new Block("Platform"));
@@ -78,6 +80,23 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener {
         rightWall.setPosition(new Vector2D(1200, i*100));
         rightWall.setTexture("wallImage");
         }
+        
+         //boss
+        level1Boss = GameUniverse.createInstance(new Boss2("ArtilleryBoss"));
+        level1Boss.setSize(new Vector2D(150, 200));
+        level1Boss.setPosition(new Vector2D(800, 500));
+        level1Boss.setTexture("boss1Texture");
+        level1Boss.setCollision(false);
+        Animator run=GameUniverse.createInstance(new Animator("samurun"));
+        run.createAnimationSheet(new Vector2D(96, 96), "res/betasamu/a/b/RUN.png");
+        run.setSpeed(10);
+        run.setEnabled(true);
+        level1Boss.addAnimator("samurun", run);
+        Animator yeen=GameUniverse.createInstance(new Animator("sumumairun"));
+        yeen.createAnimationSheet(new Vector2D(96, 96), "res/betasamu/a/b/IDLE.png");
+        yeen.setSpeed(10);
+        yeen.setEnabled(true);
+        level1Boss.addAnimator("samumairun",yeen) ;
                
         //player 
         Animator idle = GameUniverse.createInstance(new Animator("idle"));
@@ -106,6 +125,7 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener {
     }
     @Override
     public void process(double deltaTime) {
+        level1Boss.updateBossAI(deltaTime);
         if (setSize == false) {
             setSize = true;
             player.setTextureSize(new Vector2D(500, 500));

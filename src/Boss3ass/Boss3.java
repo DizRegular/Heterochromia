@@ -51,7 +51,7 @@ public class Boss3 extends StaticObject implements touchable {
     }
 
     public void updateBossAI(double deltaTime){
-        KinematicObject player=GameUniverse.getObjectByName("PikachuPlayer", KinematicObject.class);
+        KinematicObject player=GameUniverse.getObjectByName("player", KinematicObject.class);
         shootTimer++;
         if (shootTimer>=shootCooldown&&havelife){
             randomskill=rand.nextInt(3) + 1;
@@ -78,20 +78,31 @@ public class Boss3 extends StaticObject implements touchable {
             randomskill=0;
         }
         if(randomskill==3){
-           
+            leserX(new Vector2D(-1000, this.getPosition().getYCoord()+100));
             randomskill=0;
         }
-         if(skill1useing&&!!lef){
+         if(skill1useing&&!lef){
             this.movePostion(new Vector2D(dashSpeed,0));
+            this.setCurrentAnimator("samurun");
+            this.flipXTexture(true);
         }
         else if(skill1useing&&lef){
             this.movePostion(new Vector2D((dashSpeed*(-1)),0));
+            this.setCurrentAnimator("samurun");
+            this.flipXTexture(false);
         }
         else if(this.getPosition().getXCoord()>player.getPosition().getXCoord()&&this.getPosition().getXCoord()-player.getPosition().getXCoord()>100){
             this.movePostion(new Vector2D((speed*(-1)),0));
+            this.setCurrentAnimator("samurun");
+            this.flipXTexture(true);
         }
         else if (this.getPosition().getXCoord()<player.getPosition().getXCoord()&&player.getPosition().getXCoord()-this.getPosition().getXCoord()>200){
             this.movePostion(new Vector2D(speed,0));
+            this.setCurrentAnimator("samurun");
+            this.flipXTexture(false);
+        }
+        else{
+            this.setCurrentAnimator("samumairun");
         }
         if(skill1useing){
             dashtime++;
@@ -112,6 +123,7 @@ public class Boss3 extends StaticObject implements touchable {
     laserwaringX3 warning = GameUniverse.createInstance(new laserwaringX3("skill4boss2", leserposition));
     warning.setPosition(leserposition);  
     warning.setSize(new Vector2D(10000,100));
+    warning.setCollision(false);
     
     }
     
@@ -128,6 +140,7 @@ public class Boss3 extends StaticObject implements touchable {
      public void funna(Vector2D taget){
         areasey fun=GameUniverse.createInstance(new areasey("sey"));
         fun.setPosition(taget);
+        fun.setCollision(false);
         fun.setSize(new Vector2D(300,500));
     } 
     
