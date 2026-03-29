@@ -105,36 +105,16 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener, Sc
         level2Boss.addAnimator("samumairun",yeen);
         level2Boss.addTags("boss");
         
-        //player 
-        Animator idle = GameUniverse.createInstance(new Animator("idle"));
-        idle.createAnimationSheet(new Vector2D(128, 128),"res/free_sprite/individual_sheets/male_hero_template-idle.png");
-        idle.setSpeed(10);
-        player = GameUniverse.createInstance(new KinematicObject("player"));
-        player.setSize(new Vector2D(70, 120));
-        player.setPosition(new Vector2D(0,500));
-        player.addAnimator("idle", idle);
-        player.setCurrentAnimator("idle", 0);
-        idle.setEnabled(true);
-        
-        //camera settings
-        cam1 = GameUniverse.createInstance(new Camera("cam1"));
-        cam1.setSize(new Vector2D(1200, 800));
-        cam1.setPosition(new Vector2D(0, 0));
-        ViewPort window1 = GameUniverse.createInstance(new ViewPort("window1"));
-        window1.setEnabled(true);
         GameUniverse.setBackground("res/GameAssets/Background/Stage2Placeholder.jpg");
-        try {
-            window1.setCamera(cam1);
-        } catch (InvalidGameObjectPropertyException e) {
-            e.printStackTrace();
-        }
-        InputManager.registerInputListenerObject(this);
+         InputManager.registerInputListenerObject(this);
     }
     @Override
     public void process(double deltaTime) {
         level2Boss.updateBossAI(deltaTime);
         if(boss2die){
             PortalObj = GameUniverse.createInstance(new Portal3("PortalObj"));
+            PortalObj.addAnimator("portalAnim", GameUniverse.getObjectByName("portalAnim", Animator.class));
+            PortalObj.setCurrentAnimator("portalAnim", 0);
             PortalObj.setSize(new Vector2D(200, 300));
             PortalObj.setPosition(new Vector2D(1000, 350));
             itemInScene.add(PortalObj);

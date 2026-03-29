@@ -19,6 +19,7 @@ public class GameLoaderScript extends ScriptSheet{
     public PlayerObject player;
     public ViewPort window;
     public Camera playerCamera;
+    public String portalPathfile = "res/PixelPortal/OrangePortal.png";
     
     public GameLoaderScript() {
         super(null);
@@ -37,6 +38,10 @@ public class GameLoaderScript extends ScriptSheet{
         playerCamera.setSize(new Vector2D(1200, 800));
         playerCamera.setPosition(new Vector2D(0, 0));
         window.setEnabled(true);
+        
+        Animator portalAnim = GameUniverse.createInstance(new Animator("portalAnim"));
+        portalAnim.createAnimationSheet(new Vector2D(320, 320), portalPathfile);
+        portalAnim.setSpeed(3);
         try {
             window.setCamera(playerCamera);
         } catch (InvalidGameObjectPropertyException e) {

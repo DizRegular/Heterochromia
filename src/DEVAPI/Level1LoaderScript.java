@@ -224,6 +224,8 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener, Sc
         level1Boss.updateBossAI(deltaTime);
         if(boss1die){
             PortalObj = GameUniverse.createInstance(new Portal2("PortalObj"));
+            PortalObj.addAnimator("portalAnim", GameUniverse.getObjectByName("portalAnim", Animator.class));
+            PortalObj.setCurrentAnimator("portalAnim", 0);
             PortalObj.setSize(new Vector2D(200, 300));
             PortalObj.setPosition(new Vector2D(1000, 350));
             itemInScene.add(PortalObj);

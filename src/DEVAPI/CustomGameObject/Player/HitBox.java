@@ -38,7 +38,7 @@ public class HitBox extends KinematicObject implements Scriptable, touchable{
         if (obj.getTags().contains("boss")) {
             if (obj instanceof Damagable d && !hasHit) {
                 hasHit = true;
-                d.takeDamage(this.getDealDamge(), d);
+                d.takeDamage(this.getDealDamge()*100, d);
             }
         }
     }

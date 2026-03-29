@@ -13,7 +13,7 @@ public class EngineSettings {
     
     public static double GRAVITY_CONSTANT = 9.8;
     
-    public static boolean SHOW_HITBOXES = true;
+    public static boolean SHOW_HITBOXES = false;
     
     public static int SPAWN_BUFFER_QUEUE_SIZE_LIMIT = 1000;
     

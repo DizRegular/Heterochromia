@@ -180,6 +180,8 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
         this.portalObj = GameUniverse.createInstance(new Portal1("PortalObj"));
         this.portalObj.setSize(new Vector2D(200, 300));
         this.portalObj.setPosition(new Vector2D(1000, 400));
+        portalObj.addAnimator("portalAnim", GameUniverse.getObjectByName("portalAnim", Animator.class));
+        portalObj.setCurrentAnimator("portalAnim", 0);
         itemInScene.add(portalObj);
         
         //camera settings

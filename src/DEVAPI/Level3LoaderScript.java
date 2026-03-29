@@ -196,29 +196,7 @@ public class Level3LoaderScript extends ScriptSheet implements InputListener {
         level1Boss.addAnimator("nomalatk",nomal) ;
         level1Boss.addTags("boss");
         
-        //player 
-        Animator idle = GameUniverse.createInstance(new Animator("idle"));
-        idle.createAnimationSheet(new Vector2D(128, 128),"res/free_sprite/individual_sheets/male_hero_template-idle.png");
-        idle.setSpeed(10);
-        player = GameUniverse.createInstance(new KinematicObject("player"));
-        player.setSize(new Vector2D(70, 120));
-        player.setPosition(new Vector2D(0,500));
-        player.addAnimator("idle", idle);
-        player.setCurrentAnimator("idle", 0);
-        idle.setEnabled(true);
-        
-        //camera settings
-        cam1 = GameUniverse.createInstance(new Camera("cam1"));
-        cam1.setSize(new Vector2D(1200, 800));
-        cam1.setPosition(new Vector2D(0, 0));
-        ViewPort window1 = GameUniverse.createInstance(new ViewPort("window1"));
-        window1.setEnabled(true);
         GameUniverse.setBackground("res/GameAssets/Background/Stage3Placeholder.png");
-        try {
-            window1.setCamera(cam1);
-        } catch (InvalidGameObjectPropertyException e) {
-            e.printStackTrace();
-        }
         InputManager.registerInputListenerObject(this);
         
         
