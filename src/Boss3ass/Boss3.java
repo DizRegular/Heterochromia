@@ -10,6 +10,7 @@ package Boss3ass;
  */
 import Boss2ass.*;
 import Boss1ass.laserwaringY;
+import DEVAPI.CustomGameObject.Damagable;
 import RenderObject.Addon.Scriptable;
 import RenderObject.GameObject;
 import RenderObject.KinematicObject;
@@ -19,7 +20,7 @@ import RenderObject.Addon.touchable;
 import UniverseEngine.GameUniverse;
 import java.util.Random;
 
-public class Boss3 extends StaticObject implements touchable {
+public class Boss3 extends StaticObject implements touchable, Damagable {
     private boss3stat stats;
     boolean skill2=false;
     int animing=0;
@@ -44,15 +45,15 @@ public class Boss3 extends StaticObject implements touchable {
         return stats;
     }
 
-
-    public void takeDamage(double damage) {
+//-----------------------------------------------------------------------------------------------------------------
+    public void takeDamage(double damage, Damagable culprit) {
         stats.boss1takedamage(damage);
         if (stats.getHp() <= 0) {
             this.destroyInstance();
             havelife=false;
         }
     }
-
+//------------------------------------------------------------------------------------------------------------------
     public void updateBossAI(double deltaTime){
         KinematicObject player=GameUniverse.getObjectByName("ThePlayer", KinematicObject.class);
         shootTimer++;
@@ -162,6 +163,7 @@ public class Boss3 extends StaticObject implements touchable {
         fun.setSize(new Vector2D(150,150));
         fun.setVisibility(false);
     } 
+
     
     }
 

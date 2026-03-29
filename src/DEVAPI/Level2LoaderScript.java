@@ -40,7 +40,7 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener, Sc
     public int maxjump=3;
     public boolean jumping=false;
     public Camera cam1;
-    public Boss2 level1Boss;
+    public Boss2 level2Boss;
     public static boolean boss2die=false;
     public ArrayList<BaseObject> itemInScene = new ArrayList<>();
     private Portal3 PortalObj;
@@ -88,22 +88,22 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener, Sc
         }
         
          //boss
-        level1Boss = GameUniverse.createInstance(new Boss2("ArtilleryBoss"));
-        level1Boss.setSize(new Vector2D(150, 200));
-        level1Boss.setPosition(new Vector2D(800, 450));
-        level1Boss.setTexture("boss1Texture");
-        level1Boss.setCollision(false);
+        level2Boss = GameUniverse.createInstance(new Boss2("ArtilleryBoss"));
+        level2Boss.setSize(new Vector2D(150, 200));
+        level2Boss.setPosition(new Vector2D(800, 450));
+        level2Boss.setTexture("boss1Texture");
+        level2Boss.setCollision(false);
         Animator run=GameUniverse.createInstance(new Animator("samurun"));
         run.createAnimationSheet(new Vector2D(1024, 1024), "res/Boss 2/Dash/realdash.png");
         run.setSpeed(10);
         run.setEnabled(true);
-        level1Boss.addAnimator("samurun", run);
+        level2Boss.addAnimator("samurun", run);
         Animator yeen=GameUniverse.createInstance(new Animator("sumumairun"));
         yeen.createAnimationSheet(new Vector2D(1024, 1024), "res/Boss 2/IMG_4173.png");
         yeen.setSpeed(10);
         yeen.setEnabled(true);
-        level1Boss.addAnimator("samumairun",yeen);
-        level1Boss.addTags("boss");
+        level2Boss.addAnimator("samumairun",yeen);
+        level2Boss.addTags("boss");
         
         //player 
         Animator idle = GameUniverse.createInstance(new Animator("idle"));
@@ -132,7 +132,7 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener, Sc
     }
     @Override
     public void process(double deltaTime) {
-        level1Boss.updateBossAI(deltaTime);
+        level2Boss.updateBossAI(deltaTime);
         if(boss2die){
             PortalObj = GameUniverse.createInstance(new Portal3("PortalObj"));
             PortalObj.setSize(new Vector2D(200, 300));
