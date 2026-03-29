@@ -1,0 +1,57 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package DEVAPI;
+
+import DEVAPI.CustomGameObject.Player.PlayerLoaderScript;
+import DEVAPI.CustomGameObject.Player.PlayerObject;
+import RenderObject.Creatable.*;
+import RenderObject.ScriptSheet;
+import RenderObject.InvalidGameObjectPropertyException;
+import UniverseEngine.GameUniverse;
+
+/**
+ *
+ * @author disk1
+ */
+public class GameLoaderScript extends ScriptSheet{
+    public PlayerObject player;
+    public ViewPort window;
+    public Camera playerCamera;
+    
+    public GameLoaderScript() {
+        super(null);
+    }
+
+    
+    public GameLoaderScript(String name) {
+        super(name);
+    }
+
+    @Override
+    public void onCreate() {
+
+        window = GameUniverse.createInstance(new ViewPort("DisplayPort"));
+        playerCamera = GameUniverse.createInstance(new Camera("PlayerCamera"));
+        playerCamera.setSize(new Vector2D(1200, 800));
+        playerCamera.setPosition(new Vector2D(0, 0));
+
+        try {
+            window.setCamera(playerCamera);
+        } catch (InvalidGameObjectPropertyException e) {
+            e.printStackTrace();
+        }
+        window.setEnabled(true);
+        
+        GameUniverse.createInstance(new DebugLevelLoaderScript("DebugLevelLoaderScript"));
+        GameUniverse.createInstance(new PlayerLoaderScript("PlayerLoaderScript"));
+
+    }
+    
+    @Override
+    public void process(double deltaTime) {
+
+    }
+    
+}

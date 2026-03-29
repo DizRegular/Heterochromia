@@ -10,6 +10,7 @@
  */
 package Boss1ass;
 
+import DEVAPI.CustomGameObject.Damagable;
 import RenderObject.GameObject;
 import RenderObject.KinematicObject;
 import RenderObject.StaticObject;
@@ -19,7 +20,7 @@ import RenderObject.Creatable.Animator;
 import UniverseEngine.GameUniverse;
 import java.util.Random;
 
-public class Boss1 extends StaticObject implements touchable {
+public class Boss1 extends StaticObject implements touchable, Damagable {
     
     private boss1stat stats;
     int shootTimer = 0;
@@ -38,8 +39,9 @@ public class Boss1 extends StaticObject implements touchable {
     }
 
 
-    public void takeDamage(double damage) {
-        stats.boss1takedamage(damage);
+    @Override
+    public void takeDamage(double damagePoint, Damagable culprit) {
+        stats.boss1takedamage(damagePoint);
         if (stats.getHp() <= 0) {
             this.destroyInstance();
             havelife=false;
@@ -110,6 +112,6 @@ public class Boss1 extends StaticObject implements touchable {
         bul.setTextureSize(new Vector2D(200,200));
         bul.setCollision(false);
         bul.addAnimator("frie",GameUniverse.getObjectByName("frie",Animator.class ) );
-        bul.setCurrentAnimator("frie");
+        bul.setCurrentAnimator("frie", 0); //ABCED
     }
 }

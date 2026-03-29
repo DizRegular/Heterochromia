@@ -24,11 +24,12 @@ public class GameManipulator {
     }
 
     public void tick(double deltaTime) {
+        double modifiedDeltaTime = deltaTime*EngineSettings.time_scale;
         GameUniverse.processSpawningObject();
-        this.applyPhysic();
-        GameUniverse.processScriptable(deltaTime);
+        this.applyPhysic(modifiedDeltaTime);
+        GameUniverse.processScriptable(modifiedDeltaTime);
         GameUniverse.clean();
-        AnimationManager.animateTime(deltaTime);
+        AnimationManager.animateTime(modifiedDeltaTime);
     }
 
     public static void registerPhysicObject(CollisionObject obj) {
@@ -42,12 +43,21 @@ public class GameManipulator {
     public boolean notifyGameEventListener(GameObject eventSource, GameObject eventCause) {
         if(eventSource instanceof CollisionObject col &&eventSource instanceof touchable ){
             if ( eventSource instanceof KinematicObject){
+                GameEventListener.handleTouch(eventSource, eventCause, "");
+                return true;
+            }
+            if ( eventCause instanceof KinematicObject){
+                GameEventListener.handleTouch(eventCause, eventSource, "");
+                return true;
+            }
+            if( col.getCollision()==false){
             GameEventListener.handleTouch(eventSource, eventCause, "");
             return true;
-        }if( col.getCollision()==false){
+            }
+            if(eventSource instanceof KinematicObject ){
             GameEventListener.handleTouch(eventSource, eventCause, "");
             return true;
-        }
+            }
         }
 //        if (eventSource instanceof touchable && eventSource instanceof StaticObject){
 //            GameEventListener.handleTouch(eventSource, eventCause, "");
@@ -132,7 +142,8 @@ public class GameManipulator {
         k.getVelocity().setX(0);
     }
 
-    public void applyPhysic() {
+    public void applyPhysic(double deltaTime) {
+        deltaTime = 1;
         for (ArrayList quadrant : GameManipulator.quadrantContainer) {
             quadrant.clear();
         }
@@ -141,9 +152,14 @@ public class GameManipulator {
         }
         for (CollisionObject obj : physicObjects) {
             if (obj instanceof KinematicObject k) {
-                k.addVelocity(k.getAcceleration());
-                k.movePostion(k.getVelocity());
-                k.setAcceleration(new Vector2D(0, EngineSettings.GRAVITY_CONSTANT / 60));
+                if (k.getGravity()) {
+                    k.addVelocity(k.getAcceleration());
+                    k.movePostion(k.getVelocity());
+//                    k.addVelocity(new Vector2D(k.getAcceleration().getXCoord(), k.getAcceleration().getYCoord()).multiply(deltaTime/2));
+//                    k.movePostion(new Vector2D(k.getVelocity().getXCoord(), k.getVelocity().getYCoord()).multiply(deltaTime/2));
+                    k.setAcceleration(new Vector2D(0, EngineSettings.GRAVITY_CONSTANT / 60));
+                }
+
                 int[] IsInside = k.getQuadrants();
                 boolean touchedFloor = false;
                 for (int quadrant : IsInside) {

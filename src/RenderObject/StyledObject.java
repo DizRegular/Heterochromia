@@ -11,10 +11,12 @@ abstract public class StyledObject extends GameObject {
     protected double textureScale = 1;
     protected boolean visibility = true;
     protected HashMap<String, Animator> animations = new HashMap<>();
-    protected String currentAnim = "";
+    protected String currentAnim = "none";
+    protected int currPriority = 0;
     
     public StyledObject(String name) {
         super(name);
+        animations.put("none", new Animator("placeholder"));
     }
     
     public void setTexture(String imageName) {
@@ -22,7 +24,7 @@ abstract public class StyledObject extends GameObject {
     }
     
     public String getTexture() {
-        if (!animations.isEmpty() && (animations.get(currentAnim) != null)) {
+        if (!animations.isEmpty() && (animations.get(currentAnim) != null) && (animations.get(currentAnim).isCreate())) {
              return animations.get(currentAnim).getCurrentFrameImage();
         } else {
             return this.imageName;
@@ -47,23 +49,41 @@ abstract public class StyledObject extends GameObject {
     public void getAnimationsName() {
         this.animations.keySet();
     }
+
+    public int getCurrPriority() {
+        return currPriority;
+    }
+
+    public void setCurrPriority(int currPriority) {
+        this.currPriority = currPriority;
+    }
     
     public void addAnimator(String animName, Animator animation) {
+        animation.parent = this;
         this.animations.put(animName, animation);
     }
     
     public void removeAnimator(String animName, Animator animation) {
         animations.get(currentAnim).setEnabled(false);
-        this.animations.remove(animName);
+        Animator animator = this.animations.remove(animName);
+        animator.parent = null;
     }
     
     public Animator getCurrentAnimator() {
         return animations.get(currentAnim);
     }
     
-    public void setCurrentAnimator(String animName) {
+    public void setCurrentAnimator(String animName, int IncomingPriority) {
+        if (this.getCurrentAnimator().isLocked() == true) {return;}
+        if (animName.equals(this.getCurrentAnimator().getName())) {return;}
+        if (currPriority > IncomingPriority) {return;}
+        this.getCurrentAnimator().setEnabled(false);
+        this.currPriority = IncomingPriority;
         this.currentAnim = animName;
-        this.setSize(this.getSize().multiply(textureScale));
+        System.out.println(this.getCurrentAnimator() + "," + this.name + "," + animName);
+        this.getCurrentAnimator().setFinished(false);
+        this.getCurrentAnimator().setCurrentFrame(0);
+        this.getCurrentAnimator().setEnabled(true);
     }
     
     public void setRunAnimator(Boolean b) {
@@ -109,6 +129,22 @@ abstract public class StyledObject extends GameObject {
         }
     }
     
+    public int getDirectionX() {
+        if (this.getTextureSize().getXCoord() >= 0) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+    
+    public int getDirectionY() {
+        if (this.getTextureSize().getYCoord() >= 0) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+    
     @Override
     public void onCreate() {
         super.onCreate();
@@ -120,20 +156,5 @@ abstract public class StyledObject extends GameObject {
      public void onDestroy() {
         super.onDestroy();
         Renderer.unregisterStyledObject(this);
-    }
-     public int getDirectionX() {
-        if (this.getTextureSize().getXCoord() >= 0) {
-            return 1;
-        } else {
-            return -1;
-        }
-    }
-
-    public int getDirectionY() {
-        if (this.getTextureSize().getYCoord() >= 0) {
-            return 1;
-        } else {
-            return -1;
-        }
     }
 }

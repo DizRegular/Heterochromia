@@ -16,4 +16,6 @@ public class EngineSettings {
     public static boolean SHOW_HITBOXES = true;
     
     public static int SPAWN_BUFFER_QUEUE_SIZE_LIMIT = 1000;
+    
+    public static double time_scale = 1;
 }

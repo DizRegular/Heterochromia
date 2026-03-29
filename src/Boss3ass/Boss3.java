@@ -75,12 +75,12 @@ public class Boss3 extends StaticObject implements touchable {
             skill2=true;
              if(this.getPosition().getXCoord()>player.getPosition().getXCoord()){
                 funna(new Vector2D(this.getPosition().getXCoord()-100,this.getPosition().getYCoord()));
-                this.setCurrentAnimator("nomalatk");
+                this.setCurrentAnimator("nomalatk",0);
                 this.flipXTexture(false);
             }
             else{
                 funna(new Vector2D(this.getPosition().getXCoord()+100,this.getPosition().getYCoord()));
-                this.setCurrentAnimator("nomalatk");
+                this.setCurrentAnimator("nomalatk",0);
                 this.flipXTexture(true);
             }
             randomskill=0;
@@ -91,29 +91,30 @@ public class Boss3 extends StaticObject implements touchable {
         }
          if(skill1useing&&!lef){
             this.movePostion(new Vector2D(dashSpeed,0));
-            this.setCurrentAnimator("samurun");
+            this.setCurrentAnimator("samurun", 0);
             this.flipXTexture(true);
         }
         else if(skill1useing&&lef){
             this.movePostion(new Vector2D((dashSpeed*(-1)),0));
-            this.setCurrentAnimator("samurun");
+            this.setCurrentAnimator("samurun", 0);
             this.flipXTexture(false);
         }
         else if (skill2){
-            this.setCurrentAnimator("nomalatk");
+            this.setCurrentAnimator("nomalatk",0);
         }
         else if(this.getPosition().getXCoord()>player.getPosition().getXCoord()&&this.getPosition().getXCoord()-player.getPosition().getXCoord()>100){
             this.movePostion(new Vector2D((speed*(-1)),0));
-            this.setCurrentAnimator("samumairun");
-            this.flipXTexture(false);
+
+            this.setCurrentAnimator("samurun", 0);
+            this.flipXTexture(true);
         }
         else if (this.getPosition().getXCoord()<player.getPosition().getXCoord()&&player.getPosition().getXCoord()-this.getPosition().getXCoord()>200){
             this.movePostion(new Vector2D(speed,0));
-            this.setCurrentAnimator("samumairun");
-            this.flipXTexture(true);
+            this.setCurrentAnimator("samurun", 0);
+            this.flipXTexture(false);
         }
         else{
-            this.setCurrentAnimator("samumairun");
+            this.setCurrentAnimator("samumairun", 0);
         }
         if(skill1useing){
             dashtime++;

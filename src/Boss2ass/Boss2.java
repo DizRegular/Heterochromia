@@ -84,26 +84,26 @@ public class Boss2 extends StaticObject implements touchable {
         
         if(skill1useing&&this.getPosition().getXCoord()<player.getPosition().getXCoord()){
             this.movePostion(new Vector2D(dashSpeed,0));
-            this.setCurrentAnimator("samurun");
+            this.setCurrentAnimator("samurun", 0);
             this.flipXTexture(false);
         }
         else if(skill1useing&&this.getPosition().getXCoord()>player.getPosition().getXCoord()){
             this.movePostion(new Vector2D((dashSpeed*(-1)),0));
-            this.setCurrentAnimator("samurun");
+            this.setCurrentAnimator("samurun", 0);
             this.flipXTexture(true);
         }
         else if(this.getPosition().getXCoord()>player.getPosition().getXCoord()&&this.getPosition().getXCoord()-player.getPosition().getXCoord()>100){
             this.movePostion(new Vector2D((speed*(-1)),0));
-            this.setCurrentAnimator("samurun");
+            this.setCurrentAnimator("samurun", 0);
             this.flipXTexture(false);
         }
         else if (this.getPosition().getXCoord()<player.getPosition().getXCoord()&&player.getPosition().getXCoord()-this.getPosition().getXCoord()>200){
             this.movePostion(new Vector2D(speed,0));
-            this.setCurrentAnimator("samurun");
+            this.setCurrentAnimator("samurun", 0);
             this.flipXTexture(true);
         }
         else{
-            this.setCurrentAnimator("samumairun");
+            this.setCurrentAnimator("samumairun", 0);
         }
         
         if(skill1useing){

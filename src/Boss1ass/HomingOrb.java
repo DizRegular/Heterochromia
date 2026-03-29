@@ -17,8 +17,6 @@ import RenderObject.Creatable.Vector2D;
 import RenderObject.StaticObject;
 import UniverseEngine.GameUniverse;
 
-
-
 public class HomingOrb extends StaticObject implements touchable,Scriptable {
 
     bullet bu;
@@ -80,4 +78,3 @@ public class HomingOrb extends StaticObject implements touchable,Scriptable {
     }
 
 }
-

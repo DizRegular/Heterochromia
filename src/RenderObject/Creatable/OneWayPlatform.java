@@ -1,8 +1,7 @@
-package DEVAPI.CustomGameObject;
+package RenderObject.Creatable;
 
 import RenderObject.Addon.Scriptable;
 import RenderObject.Creatable.Block;
-import RenderObject.Creatable.Vector2D;
 import RenderObject.GameObject;
 import RenderObject.KinematicObject;
 import RenderObject.Addon.touchable;

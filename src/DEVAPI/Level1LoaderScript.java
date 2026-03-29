@@ -6,7 +6,7 @@ package DEVAPI;
 
 import Boss1ass.Boss1;
 import DEVAPI.CustomGameObject.Door;
-import DEVAPI.CustomGameObject.OneWayPlatform;
+import RenderObject.Creatable.OneWayPlatform;
 import RenderObject.Creatable.Animator;
 import RenderObject.Creatable.AreaDetector;
 import RenderObject.Creatable.Block;
@@ -188,7 +188,7 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
         player.setSize(new Vector2D(70, 120));
         player.setPosition(new Vector2D(0,500));
         player.addAnimator("idle", idle);
-        player.setCurrentAnimator("idle");
+        player.setCurrentAnimator("idle", 0);
         idle.setEnabled(true);
         
         //camera settings

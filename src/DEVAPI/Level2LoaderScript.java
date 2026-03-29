@@ -108,7 +108,7 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener {
         player.setSize(new Vector2D(70, 120));
         player.setPosition(new Vector2D(0,500));
         player.addAnimator("idle", idle);
-        player.setCurrentAnimator("idle");
+        player.setCurrentAnimator("idle", 0);
         idle.setEnabled(true);
         
         //camera settings

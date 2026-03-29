@@ -3,6 +3,7 @@ package RenderObject.Creatable;
 import RenderObject.BaseObject;
 import RenderObject.Creatable.Decoration;
 import RenderObject.Creatable.Vector2D;
+import RenderObject.StyledObject;
 import UniverseEngine.AnimationManager;
 import UniverseEngine.Fetcher;
 import UniverseEngine.GameUniverse;
@@ -18,13 +19,30 @@ public class Animator extends BaseObject{
     int currFrameIndex = 0;
     double speed = 1;
     double accumulateTime = 0;
+    private boolean isLocked = false;
+    private boolean loopable = true;
+    private boolean finished = false;
     
     public Animator(String name) {
         super(name);
     }
     
+    
+    public int getCurrentFrame() {
+        return currFrameIndex;
+    }
+    
+    public void setCurrentFrame(int frame) {
+        this.currFrameIndex = frame;
+    }
+    
     public String getCurrentFrameImage() {
         return SpriteImages[currFrameIndex];
+    }
+    
+    public void stopAnimation() {
+        this.currFrameIndex = 0;
+        this.setEnabled(false);
     }
     
     public void createAnimationSheet(Vector2D spriteSize, String pathfile) {
@@ -72,11 +90,53 @@ public class Animator extends BaseObject{
         this.speed = speed;
     }
     
+    public boolean isLoopable() {
+        return this.loopable;
+    }
+    
+    public void setloopable() {
+        this.loopable = true;
+    }
+    
+    public void setUnloopable() {
+        this.loopable = false;
+    }
+    
+    public void setLocked() {
+        this.isLocked = true;
+    }
+    
+    public void setUnlocked() {
+        this.isLocked = false;
+    }
+    
+    public boolean isLocked() {
+        return this.isLocked;
+    }
+    
+    public boolean hasFinished() {
+        return currFrameIndex == SpriteImages.length-1;
+    }
+    
+    public void setFinished(boolean b) {
+        this.finished = true;
+    }
+    
     public void animate(double deltaTime) {
+
         this.accumulateTime += deltaTime;
         if (this.accumulateTime >= speed) {
-            if (SpriteImages.length-1 <= currFrameIndex) {
+            if (SpriteImages.length-1 <= currFrameIndex && this.isLoopable() == true) {
                 currFrameIndex = 0;
+                this.finished = false;
+            } else if (this.loopable == false && (currFrameIndex == SpriteImages.length-1)) {
+                this.setUnlocked();
+                if (this.parent != null) {
+                    this.finished = true;
+                    if (this.parent instanceof StyledObject sty) {
+                        sty.setCurrPriority(0);
+                    }
+                }
             } else {
                 currFrameIndex++;
             }
@@ -87,7 +147,7 @@ public class Animator extends BaseObject{
     @Override
     public void onCreate() {
         super.onCreate();
-        this.Enabled = true;
+        this.Enabled = false;
         AnimationManager.registerStyledObject(this);
     }
     
