@@ -217,7 +217,7 @@ public class PlayerLoaderScript extends ScriptSheet {
     
     @Override
     public void process(double deltaTime) {
-        if (player.isDeath()) {
+        if (player.getHealthPoint()<=0) {
             player.setVisibility(true);
             System.exit(0);
         }

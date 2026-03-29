@@ -88,7 +88,7 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener, Sc
         }
         
          //boss
-        level2Boss = GameUniverse.createInstance(new Boss2("ArtilleryBoss"));
+        level2Boss = GameUniverse.createInstance(new Boss2("samurai"));
         level2Boss.setSize(new Vector2D(150, 200));
         level2Boss.setPosition(new Vector2D(800, 450));
         level2Boss.setTexture("boss1Texture");
