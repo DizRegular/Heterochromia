@@ -128,7 +128,7 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener {
     }
     @Override
     public void process(double deltaTime) {
-
+        level1Boss.updateBossAI(deltaTime);
     }
 
     @Override
