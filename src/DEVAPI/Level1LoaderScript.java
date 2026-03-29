@@ -188,6 +188,7 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
         level1Boss.setPosition(new Vector2D(500, 250));
         level1Boss.setTexture("boss1Texture");
         level1Boss.setCollision(false);
+        level1Boss.addTags("boss");
         
 //        StaticObject door=GameUniverse.createInstance(new StaticObject(name) {
 //        });
@@ -213,6 +214,7 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
     }
     @Override
     public void process(double deltaTime) {
+        level1Boss.updateBossAI(deltaTime);
     }
 
     public void deleteScene() {

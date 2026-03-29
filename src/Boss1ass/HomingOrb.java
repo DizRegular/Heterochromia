@@ -44,7 +44,7 @@ public class HomingOrb extends StaticObject implements touchable,Scriptable {
     @Override
     public void process(double deltaTime) {
         destroytime++;
-        KinematicObject player=GameUniverse.getObjectByName("player", KinematicObject.class);
+        KinematicObject player=GameUniverse.getObjectByName("ThePlayer", KinematicObject.class);
         if(!build){
         this.bu=GameUniverse.createInstance(new bullet("sniper"));
         bu.setCollision(false);
