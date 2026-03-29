@@ -24,7 +24,7 @@ public class laserwaringX3 extends StaticObject implements touchable,Scriptable 
     private final double blinkInterval = 15;
     private final double destroy=100; 
     private boolean havelaser=true;
-    private spawnRealLaser real;
+    private funtung2 real;
     public laserwaringX3(String name , Vector2D pos) {
         super(name);
         
@@ -41,10 +41,10 @@ public class laserwaringX3 extends StaticObject implements touchable,Scriptable 
             this.setVisibility(!this.getVisibility());
 
             if (blinkCount >= 4) {
-                this.real = GameUniverse.createInstance(new spawnRealLaser("reallaser"));
+                this.real = GameUniverse.createInstance(new funtung2("golemtub"));
                 real.setPosition(this.getPosition());
                 real.setSize(this.getSize());
-                real.setTexture("golemtub");
+                real.setTexture("AAA");
                 real.setCollision(false);
                 real.setPosition(this.getPosition());
                 blinkCount=0;

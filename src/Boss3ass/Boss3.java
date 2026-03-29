@@ -18,8 +18,11 @@ import RenderObject.Creatable.Vector2D;
 import RenderObject.Addon.touchable;
 import UniverseEngine.GameUniverse;
 import java.util.Random;
+
 public class Boss3 extends StaticObject implements touchable {
-    private boss2stat stats;
+    private boss3stat stats;
+    boolean skill2=false;
+    int animing=0;
     int shootTimer = 0;
     int shootCooldown = 180;
     int randomskill=0;
@@ -34,10 +37,10 @@ public class Boss3 extends StaticObject implements touchable {
     Random rand = new Random();
     public Boss3(String name) {
         super(name);
-        this.stats = new boss2stat();
+        this.stats = new boss3stat();
     }
 
-    public boss2stat getStats() {
+    public boss3stat getStats() {
         return stats;
     }
 
@@ -69,11 +72,16 @@ public class Boss3 extends StaticObject implements touchable {
             randomskill=0;
         }}
         if(randomskill==2){
+            skill2=true;
              if(this.getPosition().getXCoord()>player.getPosition().getXCoord()){
-                funna(new Vector2D(this.getPosition().getXCoord()-300,this.getPosition().getYCoord()-200));
+                funna(new Vector2D(this.getPosition().getXCoord()-100,this.getPosition().getYCoord()));
+                this.setCurrentAnimator("nomalatk");
+                this.flipXTexture(false);
             }
             else{
-                funna(new Vector2D(this.getPosition().getXCoord()+100,this.getPosition().getYCoord()-200));
+                funna(new Vector2D(this.getPosition().getXCoord()+100,this.getPosition().getYCoord()));
+                this.setCurrentAnimator("nomalatk");
+                this.flipXTexture(true);
             }
             randomskill=0;
         }
@@ -91,15 +99,18 @@ public class Boss3 extends StaticObject implements touchable {
             this.setCurrentAnimator("samurun");
             this.flipXTexture(false);
         }
+        else if (skill2){
+            this.setCurrentAnimator("nomalatk");
+        }
         else if(this.getPosition().getXCoord()>player.getPosition().getXCoord()&&this.getPosition().getXCoord()-player.getPosition().getXCoord()>100){
             this.movePostion(new Vector2D((speed*(-1)),0));
-            this.setCurrentAnimator("samurun");
-            this.flipXTexture(true);
+            this.setCurrentAnimator("samumairun");
+            this.flipXTexture(false);
         }
         else if (this.getPosition().getXCoord()<player.getPosition().getXCoord()&&player.getPosition().getXCoord()-this.getPosition().getXCoord()>200){
             this.movePostion(new Vector2D(speed,0));
-            this.setCurrentAnimator("samurun");
-            this.flipXTexture(false);
+            this.setCurrentAnimator("samumairun");
+            this.flipXTexture(true);
         }
         else{
             this.setCurrentAnimator("samumairun");
@@ -116,7 +127,13 @@ public class Boss3 extends StaticObject implements touchable {
             dashtime=0;
             skill1useing=false;
         }
-            
+        if(skill2){
+            animing++;
+        }
+       if (animing>=60){
+           skill2=false;
+           animing=0;
+       }    
         
     }
     public void leserX(Vector2D leserposition) {
@@ -141,7 +158,8 @@ public class Boss3 extends StaticObject implements touchable {
         areasey fun=GameUniverse.createInstance(new areasey("sey"));
         fun.setPosition(taget);
         fun.setCollision(false);
-        fun.setSize(new Vector2D(300,500));
+        fun.setSize(new Vector2D(150,150));
+        fun.setVisibility(false);
     } 
     
     }
