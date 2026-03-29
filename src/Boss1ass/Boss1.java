@@ -11,6 +11,7 @@
 package Boss1ass;
 
 import DEVAPI.CustomGameObject.Damagable;
+import DEVAPI.Level1LoaderScript;
 import RenderObject.GameObject;
 import RenderObject.KinematicObject;
 import RenderObject.StaticObject;
@@ -43,6 +44,7 @@ public class Boss1 extends StaticObject implements touchable, Damagable {
     public void takeDamage(double damagePoint, Damagable culprit) {
         stats.boss1takedamage(damagePoint);
         if (stats.getHp() <= 0) {
+             Level1LoaderScript.boss1die=true;
             this.destroyInstance();
             havelife=false;
         }

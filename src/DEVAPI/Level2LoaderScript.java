@@ -40,6 +40,7 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener {
     public boolean jumping=false;
     public Camera cam1;
     public Boss2 level1Boss;
+    public static boolean boss2die=false;
     public Level2LoaderScript(String name) {
         super(name);
     }
@@ -129,6 +130,10 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener {
     @Override
     public void process(double deltaTime) {
         level1Boss.updateBossAI(deltaTime);
+        if(boss2die){
+            //plase potal this
+            boss2die=false;
+        }
     }
 
     @Override

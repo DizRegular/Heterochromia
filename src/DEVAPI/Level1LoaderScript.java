@@ -59,6 +59,7 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
     public Ladder RightLadder1;
     public Ladder RightLadder2;
     public Ladder RightLadder3;
+    public static boolean boss1die=false;
     public Level1LoaderScript(String name) {
         super(name);
     }

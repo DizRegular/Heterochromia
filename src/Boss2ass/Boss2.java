@@ -9,6 +9,7 @@ package Boss2ass;
  * @author tin_sel
  */
 import Boss1ass.laserwaringY;
+import DEVAPI.Level2LoaderScript;
 import RenderObject.GameObject;
 import RenderObject.KinematicObject;
 import RenderObject.StaticObject;
@@ -44,6 +45,7 @@ public class Boss2 extends StaticObject implements touchable {
     public void takeDamage(double damage) {
         stats.boss1takedamage(damage);
         if (stats.getHp() <= 0) {
+             Level2LoaderScript.boss2die=true;
             this.destroyInstance();
             havelife=false;
         }
