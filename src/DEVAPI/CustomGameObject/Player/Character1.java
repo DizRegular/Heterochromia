@@ -26,9 +26,8 @@ public class Character1 extends  CharacterSet {
 
     @Override
     public void useSkill(PlayerObject player) {
-        if (player instanceof Damagable d) {
-            d.takeDamage(-10, player);
-        } 
+            player.takeDamage(-10, player);
+        
     }
 
     @Override
