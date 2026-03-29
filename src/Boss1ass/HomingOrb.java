@@ -38,6 +38,7 @@ public class HomingOrb extends StaticObject implements touchable,Scriptable {
     @Override
     public void onTouched(GameObject obj) {
         System.out.println("heeyai");
+        
         this.destroyInstance();
     }
 

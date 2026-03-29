@@ -54,7 +54,7 @@ public class Boss3 extends StaticObject implements touchable {
     }
 
     public void updateBossAI(double deltaTime){
-        KinematicObject player=GameUniverse.getObjectByName("player", KinematicObject.class);
+        KinematicObject player=GameUniverse.getObjectByName("ThePlayer", KinematicObject.class);
         shootTimer++;
         if (shootTimer>=shootCooldown&&havelife){
             randomskill=rand.nextInt(3) + 1;

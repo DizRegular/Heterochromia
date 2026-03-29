@@ -194,6 +194,7 @@ public class Level3LoaderScript extends ScriptSheet implements InputListener {
         nomal.setSpeed(10);
         nomal.setEnabled(true);
         level1Boss.addAnimator("nomalatk",nomal) ;
+        level1Boss.addTags("boss");
         
         //player 
         Animator idle = GameUniverse.createInstance(new Animator("idle"));

@@ -99,6 +99,7 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener {
         yeen.setSpeed(10);
         yeen.setEnabled(true);
         level1Boss.addAnimator("samumairun",yeen);
+        level1Boss.addTags("boss");
         
         //player 
         Animator idle = GameUniverse.createInstance(new Animator("idle"));
