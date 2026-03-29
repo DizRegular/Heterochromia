@@ -45,6 +45,7 @@ public class laserwaringX2 extends StaticObject implements touchable,Scriptable 
                 real.setPosition(this.getPosition());
                 real.setSize(this.getSize());
                 real.setTexture("slashsamurai");
+                real.setTextureSize(new Vector2D(this.getSize().getXCoord(),this.getSize().getYCoord()*3));
                 real.setCollision(false);
                 real.setPosition(this.getPosition());
                 blinkCount=0;
