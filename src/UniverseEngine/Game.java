@@ -3,6 +3,8 @@ import java.awt.*;
 import javax.swing.*;
 import DEVAPI.Main;
 import java.util.ArrayList;
+import UI.*;
+
 public class Game implements Runnable {
     private boolean running = false;
     private static ArrayList<JFrame> windowsHolder = new ArrayList<>();
@@ -18,29 +20,36 @@ public class Game implements Runnable {
     private static double tickPerSec = 0;
     private static double fps = 0;
     
-    private Game() {
+    public Game() {
         
     }
 
     public void start() {
+        if (running) return;
         running = true;
         Fetcher.initiate();
         devAPI = new Main();
         Thread processAPI = new Thread(devAPI);
         gameManipulator = new GameManipulator(devAPI);
-        devAPI.initialize();
+        devAPI.initialize();   
         game = new Thread(this);
         game.start();
         processAPI.start();
     }
-
+    
+    public void stop() {
+        running = false;
+        if (game != null) {
+            game.interrupt();
+        }
+    }
+    
     @Override
     public void run() {
         long lastTime = System.nanoTime();
         double nsPerTick = 1000000000D / 60D;
         long lasTimer = System.currentTimeMillis();
         
-
         while (running) {
             long now = System.nanoTime();
             deltaTime += (now - lastTime) / nsPerTick;
@@ -48,7 +57,7 @@ public class Game implements Runnable {
 
             while (deltaTime >= 1) {
                 ticks++;
-                gameManipulator.tick(deltaTime);
+                    gameManipulator.tick(deltaTime);
                 deltaTime -= 1;
             }
             frames++;
@@ -72,7 +81,7 @@ public class Game implements Runnable {
         Game.windowsHolder.add(window);
         JPanel screenDisplay = new JPanel();
         screenDisplay.setBackground(EngineSettings.LOADING_BACKGROUND_COLOR);
-        
+
         JLabel label = new JLabel("Loading...");
         screenDisplay.add(label, BorderLayout.CENTER);
         window.add(screenDisplay);
@@ -101,9 +110,6 @@ public class Game implements Runnable {
     }
     
     public static void main(String[] args) {
-        new Game().start();
-
+        new MainMenuGUI();
     }
-    
-    
 }

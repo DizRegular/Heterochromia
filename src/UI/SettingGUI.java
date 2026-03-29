@@ -1,15 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package UI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
-public class SettingGUI {
+public class SettingGUI implements ActionListener{
     
-    private JDialog dialog;
     private JPanel p1;
     private JPanel p2;
     private JPanel p3;
@@ -20,28 +16,28 @@ public class SettingGUI {
     private JLabel l3;
     private JLabel l4;
     private JLabel l5;
-    private JLabel value1; // Value label for master volume
-    private JLabel value2; // Value label for SFX volume
-    private JLabel value3; // Value label for music volume
+    private JLabel value1;
+    private JLabel value2;
+    private JLabel value3;
     private JSlider sl1;
     private JSlider sl2;
     private JSlider sl3;
     private JButton b1;
     private JButton b2;
+    private JDialog d;
     private JComboBox combo;
     private JCheckBox check;
-    private NewClass mainMenu;
+    private MainMenuGUI mainMenu;
     
-    // Static variables to store settings
-    public static int masterVolume = 70;
-    public static int sfxVolume = 70;
-    public static int musicVolume = 70;
+    public static int masterVolume = 100;
+    public static int sfxVolume = 100;
+    public static int musicVolume = 100;
     public static String resolution = "1920x1080";
     public static boolean fullscreen = false;
     
-    public SettingGUI(NewClass mainMenuRef) {
+    public SettingGUI(MainMenuGUI mainMenuRef) {
         this.mainMenu = mainMenuRef;
-        dialog = new JDialog(mainMenuRef.getFrame(), "Settings", true);
+        d = new JDialog(mainMenuRef.getFrame(), "Settings", true);
         
         p1 = new JPanel();
         p2 = new JPanel();
@@ -54,8 +50,7 @@ public class SettingGUI {
         l3 = new JLabel("SFX Volume");
         l4 = new JLabel("Music Volume");
         l5 = new JLabel("Resolution");
-        
-        // Value labels for volume numbers
+
         value1 = new JLabel(masterVolume + "%");
         value2 = new JLabel(sfxVolume + "%");
         value3 = new JLabel(musicVolume + "%");
@@ -68,31 +63,27 @@ public class SettingGUI {
         b2 = new JButton("CANCEL");
         
         combo = new JComboBox();
-        check = new JCheckBox("Fullscreen");
+        check = new JCheckBox("Borderless Fullscreen");
         
-        // Set layouts
-        dialog.setLayout(new BorderLayout());
+        d.setLayout(new BorderLayout());
         p1.setLayout(new BorderLayout());
-        p2.setLayout(new GridLayout(6, 3, 15, 25)); // Changed to 3 columns for label, slider, value
+        p2.setLayout(new GridLayout(6, 3, 15, 25));
         p3.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 25));
         p4.setLayout(new BorderLayout());
         p5.setLayout(new BorderLayout());
         
-        // Set fonts
         l1.setFont(new Font("Arial", Font.BOLD, 32));
-        l1.setHorizontalAlignment(JLabel.CENTER);
-        
         l2.setFont(new Font("Arial", Font.BOLD, 18));
         l3.setFont(new Font("Arial", Font.BOLD, 18));
         l4.setFont(new Font("Arial", Font.BOLD, 18));
         l5.setFont(new Font("Arial", Font.BOLD, 18));
         
+        l1.setHorizontalAlignment(JLabel.CENTER);
         l2.setHorizontalAlignment(SwingConstants.RIGHT);
         l3.setHorizontalAlignment(SwingConstants.RIGHT);
         l4.setHorizontalAlignment(SwingConstants.RIGHT);
         l5.setHorizontalAlignment(SwingConstants.RIGHT);
         
-        // Set value label fonts
         value1.setFont(new Font("Arial", Font.BOLD, 16));
         value2.setFont(new Font("Arial", Font.BOLD, 16));
         value3.setFont(new Font("Arial", Font.BOLD, 16));
@@ -100,13 +91,11 @@ public class SettingGUI {
         value2.setForeground(Color.DARK_GRAY);
         value3.setForeground(Color.DARK_GRAY);
         
-        // Set slider sizes
         Dimension sliderSize = new Dimension(250, 45);
         sl1.setPreferredSize(sliderSize);
         sl2.setPreferredSize(sliderSize);
         sl3.setPreferredSize(sliderSize);
         
-        // Set slider ticks
         sl1.setMajorTickSpacing(25);
         sl1.setMinorTickSpacing(5);
         sl1.setPaintTicks(true);
@@ -122,7 +111,6 @@ public class SettingGUI {
         sl3.setPaintTicks(true);
         sl3.setPaintLabels(true);
         
-        // Add change listeners to update value labels
         sl1.addChangeListener(e -> {
             value1.setText(sl1.getValue() + "%");
         });
@@ -135,21 +123,16 @@ public class SettingGUI {
             value3.setText(sl3.getValue() + "%");
         });
         
-        // Set combo box
         combo.addItem("1920x1080");
-        combo.addItem("1600x900");
         combo.addItem("1280x720");
-        combo.addItem("1024x768");
         combo.setPreferredSize(new Dimension(180, 40));
         combo.setFont(new Font("Arial", Font.PLAIN, 16));
         combo.setSelectedItem(mainMenu.getCurrentResolution());
         
-        // Set checkbox
         check.setFont(new Font("Arial", Font.BOLD, 18));
         check.setSelected(mainMenu.isFullscreen());
         check.setBackground(new Color(238, 238, 238));
         
-        // Add action listener to lock/unlock resolution
         check.addActionListener(e -> {
             if (check.isSelected()) {
                 combo.setEnabled(false);
@@ -160,7 +143,6 @@ public class SettingGUI {
             }
         });
         
-        // Set buttons
         b1.setFont(new Font("Arial", Font.BOLD, 18));
         b2.setFont(new Font("Arial", Font.BOLD, 18));
         b1.setPreferredSize(new Dimension(120, 45));
@@ -174,44 +156,36 @@ public class SettingGUI {
         b1.setFocusPainted(false);
         b2.setFocusPainted(false);
         
-        // Add action listeners
-        b1.addActionListener(e -> saveSettings());
-        b2.addActionListener(e -> dialog.dispose());
+        b1.addActionListener(this);
+        b2.addActionListener(this);
         
-        // Add components to p2 (GridLayout with 6 rows, 3 columns)
-        // Row 1: Master Volume
         p2.add(l2);
         p2.add(sl1);
         p2.add(value1);
         
-        // Row 2: SFX Volume
         p2.add(l3);
         p2.add(sl2);
         p2.add(value2);
         
-        // Row 3: Music Volume
         p2.add(l4);
         p2.add(sl3);
         p2.add(value3);
         
-        // Row 4: Resolution
         p2.add(l5);
         JPanel resPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         resPanel.setBackground(new Color(238, 238, 238));
         resPanel.add(combo);
         p2.add(resPanel);
-        p2.add(new JLabel("")); // Empty cell for alignment
+        p2.add(new JLabel(""));
         
-        // Row 5: Fullscreen
         JLabel emptyLabel = new JLabel("");
         p2.add(emptyLabel);
         JPanel checkPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         checkPanel.setBackground(new Color(238, 238, 238));
         checkPanel.add(check);
         p2.add(checkPanel);
-        p2.add(new JLabel("")); // Empty cell for alignment
+        p2.add(new JLabel(""));
         
-        // Row 6: Empty row for spacing
         JLabel emptyLabel2 = new JLabel("");
         p2.add(emptyLabel2);
         JLabel emptyLabel3 = new JLabel("");
@@ -219,65 +193,48 @@ public class SettingGUI {
         JLabel emptyLabel4 = new JLabel("");
         p2.add(emptyLabel4);
         
-        // Add buttons to p3
         p3.add(b1);
         p3.add(b2);
         
-        // Add title with spacing
         p4.add(l1, BorderLayout.NORTH);
         p4.add(Box.createVerticalStrut(15), BorderLayout.CENTER);
         
-        // Add padding around p2
         p2.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
-        
-        // Add spacing around p1
         p1.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         
-        // Set initial state of resolution dropdown based on fullscreen
         if (mainMenu.isFullscreen()) {
             combo.setEnabled(false);
             combo.setBackground(Color.LIGHT_GRAY);
         }
         
-        // Assemble everything
         p1.add(p4, BorderLayout.NORTH);
         p1.add(p2, BorderLayout.CENTER);
         p1.add(p3, BorderLayout.SOUTH);
         
-        dialog.add(p1);
+        d.add(p1);
         
-        // Set dialog size
-        dialog.setSize(800, 650);
-        dialog.setLocationRelativeTo(mainMenuRef.getFrame());
-        dialog.setResizable(false);
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        dialog.setVisible(true);
+        d.setSize(800, 650);
+        d.setLocationRelativeTo(mainMenuRef.getFrame());
+        d.setResizable(false);
+        d.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        d.setVisible(true);
     }
-    
-    private void saveSettings() {
-        // Save to static variables
-        masterVolume = sl1.getValue();
-        sfxVolume = sl2.getValue();
-        musicVolume = sl3.getValue();
-        
-        // Get the new settings
-        boolean newFullscreen = check.isSelected();
-        String newResolution = (String) combo.getSelectedItem();
-        
-        // Apply settings through main menu
-        mainMenu.saveAndApplySettings(newResolution, newFullscreen);
-        
-        // Show confirmation
-        String message = "Settings Saved!\n\n" +
-                         "Master Volume: " + masterVolume + "%\n" +
-                         "SFX Volume: " + sfxVolume + "%\n" +
-                         "Music Volume: " + musicVolume + "%\n" +
-                         "Resolution: " + newResolution + "\n" +
-                         "Fullscreen: " + (newFullscreen ? "ON" : "OFF");
-        
-        JOptionPane.showMessageDialog(dialog, message, "Settings Saved", JOptionPane.INFORMATION_MESSAGE);
-        
-        // Close the settings window
-        dialog.dispose();
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == b1){
+            masterVolume = sl1.getValue();
+            sfxVolume = sl2.getValue();
+            musicVolume = sl3.getValue();
+
+            boolean newFullscreen = check.isSelected();
+            String newResolution = (String) combo.getSelectedItem();
+
+            mainMenu.saveAndApplySettings(newResolution, newFullscreen);
+
+            d.dispose();
+        }
+        if (e.getSource() == b2){
+            d.dispose();
+        }
     }
 }

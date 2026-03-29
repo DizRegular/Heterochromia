@@ -1,13 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package UI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
+import UniverseEngine.Game;
 
-public class NewClass {
+public class MainMenuGUI implements ActionListener{
 
     private JFrame fr;
     private JPanel p1;
@@ -21,14 +20,13 @@ public class NewClass {
     private boolean isFullscreen = false;
     private String currentResolution = "1920x1080";
 
-    public NewClass() {
-        // Load saved settings
+    public MainMenuGUI(){
         isFullscreen = SettingGUI.fullscreen;
         currentResolution = SettingGUI.resolution;
         createAndShowGUI();
     }
     
-    private void createAndShowGUI() {
+    private void createAndShowGUI(){
         fr = new JFrame("Heterochromia");
         p1 = new JPanel();
         p2 = new JPanel();
@@ -47,35 +45,30 @@ public class NewClass {
         l1.setFont(new Font("Arial", Font.BOLD, 70));
         l1.setHorizontalAlignment(JLabel.CENTER);
 
-        // Set button sizes
         Dimension buttonSize = new Dimension(200, 70);
         b1.setPreferredSize(buttonSize);
         b2.setPreferredSize(buttonSize);
         b3.setPreferredSize(buttonSize);
 
-        // Set button font
         Font buttonFont = new Font("Arial", Font.BOLD, 18);
         b1.setFont(buttonFont);
         b2.setFont(buttonFont);
         b3.setFont(buttonFont);
         
-        // Add action listeners to buttons
-        b1.addActionListener(e -> startGame());
-        b2.addActionListener(e -> openSettings());
-        b3.addActionListener(e -> exitGame());
+        b1.addActionListener(this);
+        b2.addActionListener(this);
+        b3.addActionListener(this);
 
         p2.add(b1);
         p2.add(b2);
         p2.add(b3);
 
-        // Center the label with top spacing
         JPanel labelWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
         labelWrapper.setOpaque(false);
         labelWrapper.add(Box.createVerticalStrut(150));
         labelWrapper.add(l1);
         p3.add(labelWrapper, BorderLayout.NORTH);
 
-        // Center the buttons
         JPanel buttonWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonWrapper.setOpaque(false);
         buttonWrapper.add(p2);
@@ -86,7 +79,6 @@ public class NewClass {
         p1.add(p4, BorderLayout.SOUTH);
         fr.add(p1);
         
-        // Apply the saved settings
         applyWindowSettings();
     }
     
@@ -106,17 +98,19 @@ public class NewClass {
     }
     
     public void saveAndApplySettings(String newResolution, boolean newFullscreen) {
-        // Save to static variables
         SettingGUI.resolution = newResolution;
         SettingGUI.fullscreen = newFullscreen;
         
-        // Update local variables
         isFullscreen = newFullscreen;
         currentResolution = newResolution;
         
         if (newFullscreen) {
+            fr.dispose();
+            fr.setUndecorated(true);
             fr.setExtendedState(JFrame.MAXIMIZED_BOTH);
         } else {
+            fr.dispose();
+            fr.setUndecorated(false);
             fr.setExtendedState(JFrame.NORMAL);
             
             String[] res = newResolution.split("x");
@@ -140,29 +134,20 @@ public class NewClass {
     public String getCurrentResolution() {
         return currentResolution;
     }
-    
-    private void startGame() {
-    String message = "=== GAME STARTING ===\n\n" +
-                     "AUDIO SETTINGS:\n" +
-                     "• Master Volume: " + SettingGUI.masterVolume + "%\n" +
-                     "• SFX Volume: " + SettingGUI.sfxVolume + "%\n" +
-                     "• Music Volume: " + SettingGUI.musicVolume + "%\n\n" +
-                     "VIDEO SETTINGS:\n" +
-                     "• Resolution: " + SettingGUI.resolution + "\n" +
-                     "• Fullscreen: " + (SettingGUI.fullscreen ? "ON" : "OFF") + "\n\n" +
-                     "Click OK to start the game!";
-    
-    JOptionPane.showMessageDialog(fr, message, "Launching Heterochromia", JOptionPane.INFORMATION_MESSAGE);
-    
-    // Here you will add your friend's game code later
-    // fr.setVisible(false); // Uncomment to hide menu when game starts
-}
-    
-    private void openSettings() {
-        new SettingGUI(this);
-    }
-    
-    private void exitGame() {
-        System.exit(0);
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        //start game here
+        if (e.getSource() == b1){
+            fr.dispose();
+            new PrologueGUI();
+        }
+        //open setting
+        if (e.getSource() == b2){
+            new SettingGUI(this);
+        }
+        //close the game
+        if (e.getSource() == b3) {
+            System.exit(0);
+        }
     }
 }
