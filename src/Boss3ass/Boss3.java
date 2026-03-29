@@ -48,6 +48,7 @@ public class Boss3 extends StaticObject implements touchable, Damagable {
 //-----------------------------------------------------------------------------------------------------------------
     public void takeDamage(double damage, Damagable culprit) {
         stats.boss1takedamage(damage);
+        //rammus
         if (stats.getHp() <= 0) {
             this.destroyInstance();
             havelife=false;

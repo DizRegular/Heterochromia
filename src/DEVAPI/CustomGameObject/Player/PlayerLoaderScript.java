@@ -219,6 +219,7 @@ public class PlayerLoaderScript extends ScriptSheet {
     public void process(double deltaTime) {
         if (player.isDeath()) {
             player.setVisibility(true);
+            System.exit(0);
         }
         
         if (created == false) {
