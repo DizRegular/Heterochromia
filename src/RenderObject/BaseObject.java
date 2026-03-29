@@ -10,10 +10,12 @@ abstract public class BaseObject {
     protected boolean isInstanced = false;
     protected boolean isAlive = true;
     protected boolean isConstrained = false;
+    protected boolean hasCreate = false;
     protected BaseObject parent = null;
     protected ArrayList<String> TagsContainer = new ArrayList<>();
     protected ArrayList<BaseObject> constraints = new ArrayList<>();
 
+    protected DataModifier extraData;
     
     public BaseObject(String name) {
         this.name = name;
@@ -75,8 +77,12 @@ abstract public class BaseObject {
         this.isInstanced = true;
     }
     
+    public boolean isCreate() {
+        return this.hasCreate;
+    }
+    
     public void onCreate() {
-        //Nothing
+        this.hasCreate = true;
     }
     
     public BaseObject getParent() {
@@ -110,4 +116,11 @@ abstract public class BaseObject {
         obj.parent = null;
     }
     
+    public DataModifier getDataModifier() {
+        return this.extraData;
+    }
+    
+    public void setDataModifier(DataModifier data) {
+        this.extraData = data;
+    }
 }

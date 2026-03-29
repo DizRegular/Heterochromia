@@ -23,6 +23,7 @@ public class laserwaringY extends StaticObject implements touchable,Scriptable {
     private final double blinkInterval = 15;
     private final double destroy=100; 
     private boolean havelaser=true;
+    private spawnRealLaser real;
     public laserwaringY(String name , Vector2D pos) {
         super(name);
         
@@ -39,33 +40,39 @@ public class laserwaringY extends StaticObject implements touchable,Scriptable {
             this.setVisibility(!this.getVisibility());
 
             if (blinkCount >= 4) {
-                spawnRealLaser();
+                this.real = GameUniverse.createInstance(new spawnRealLaser("reallaser"));
+                real.setPosition(this.getPosition());
+                real.setSize(this.getSize());
+                real.setTexture("realLaserImage");
+                real.setCollision(false);
+                real.setPosition(this.getPosition());
                 blinkCount=0;
                 
             }}
-        if(destroy<delaydestroy&&havelaser){ 
-            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            GameUniverse.getObjectByName("RealLaserBeam", Block.class).destroyInstance();
-            havelaser=false;
+            
+        if(destroy<delaydestroy){ 
+//             GameUniverse.getObjectByName("reallaser", spawnRealLaser.class).destroyInstance();
             this.destroyInstance();
             }
         
     }
 
-    private void spawnRealLaser() {
-        System.out.println("BAM!!");
-        
-        Block realLaser = GameUniverse.createInstance(new Block("RealLaserBeam"));
-        realLaser.setPosition(this.getPosition());
-        realLaser.setSize(this.getSize());
-        realLaser.setTexture("realLaserImage");
-        realLaser.setCollision(false);
-        
+//    private void spawnRealLaser() {
+//        
+//        Block realLaser = GameUniverse.createInstance(new Block("RealLaserBeam"));
+//        realLaser.setPosition(this.getPosition());
+//        realLaser.setSize(new Vector2D(66,10000));
+//        realLaser.setTexture("realLaserImage");
+//        realLaser.setCollision(false);
+//        
+//    }
+    
+    @Override
+    public void onCreate() {
+        super.onCreate();
     }
-
     @Override
     public void onTouched(GameObject obj) {
-        System.out.println("hitlaser");
     }
 
     

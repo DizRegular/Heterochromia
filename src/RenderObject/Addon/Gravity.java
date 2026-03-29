@@ -10,6 +10,9 @@ public interface Gravity {
     abstract public void addAcceleration(Vector2D v);
     abstract public Vector2D getAcceleration();
     abstract public void setAcceleration(Vector2D v);
+    abstract public boolean getGravity();
+    abstract public void setGravity(boolean b);
     
     abstract public void showPhysicProperties();
+    
 }

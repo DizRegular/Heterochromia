@@ -9,6 +9,7 @@ public class KinematicObject extends CollisionObject implements Gravity {
     protected Vector2D acceleration = new Vector2D(0,0);
     protected Vector2D velocity = new Vector2D(0,0);
     protected boolean touchedFloor = false;
+    protected boolean hasGravity = false;
     
     public KinematicObject(String name) {
         super(name);
@@ -62,5 +63,23 @@ public class KinematicObject extends CollisionObject implements Gravity {
     
     public void setTouchedFloor(boolean t) {
         this.touchedFloor = t;
+    }
+
+    @Override
+    public boolean getGravity() {
+        return this.hasGravity;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        this.setGravity(true);
+    }
+
+    
+    
+    @Override
+    public void setGravity(boolean b) {
+        this.hasGravity = b;
     }
 }

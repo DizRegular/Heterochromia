@@ -11,7 +11,7 @@ public class Main implements Runnable {
     /** run  once when the game runs, mainly use for script
      */
     public void initialize() {
-        GameUniverse.createInstance(new DebugLevelLoaderScript("DebugLevelLoaderScript"));
+        GameUniverse.createInstance(new GameLoaderScript("GameLoaderScript"));
     }
     
     /** run every tick when the game is running
