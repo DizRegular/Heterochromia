@@ -62,29 +62,33 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener, Sc
             floor.setSize(new Vector2D(100,150));
             floor.setPosition(new Vector2D(i*100, 650));
             floor.setTexture("floorImage");
+            itemInScene.add(floor);
         }
         //roof
         for (int i = 0; i < 12; i++) {
-            Block floor = GameUniverse.createInstance(new Block("Platform"));
-            floor.setSize(new Vector2D(100,100));
-            floor.setPosition(new Vector2D(i*100, -100));
-            floor.setTexture("floorImage");
+            Block roof = GameUniverse.createInstance(new Block("Platform"));
+            roof.setSize(new Vector2D(100,100));
+            roof.setPosition(new Vector2D(i*100, -100));
+            roof.setTexture("floorImage");
+            itemInScene.add(roof);
         }
         
         // Left Wall
         for (int i = 0; i < 8; i++) {
-        Block leftWall = GameUniverse.createInstance(new Block("WallL"));
-        leftWall.setSize(new Vector2D(100, 100));
-        leftWall.setPosition(new Vector2D(-100, i*100));
-        leftWall.setTexture("wallImage");
+            Block leftWall = GameUniverse.createInstance(new Block("WallL"));
+            leftWall.setSize(new Vector2D(100, 100));
+            leftWall.setPosition(new Vector2D(-100, i*100));
+            leftWall.setTexture("wallImage");
+            itemInScene.add(leftWall);
         }
         
         // Right Wall
         for (int i = 0; i < 8; i++) {
-        Block rightWall = GameUniverse.createInstance(new Block("WallR"));
-        rightWall.setSize(new Vector2D(100, 100));
-        rightWall.setPosition(new Vector2D(1200, i*100));
-        rightWall.setTexture("wallImage");
+            Block rightWall = GameUniverse.createInstance(new Block("WallR"));
+            rightWall.setSize(new Vector2D(100, 100));
+            rightWall.setPosition(new Vector2D(1200, i*100));
+            rightWall.setTexture("wallImage");
+            itemInScene.add(rightWall);
         }
         
          //boss
