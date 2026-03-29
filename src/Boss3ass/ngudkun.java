@@ -9,21 +9,28 @@ package Boss3ass;
  * @author tin_sel
  */
 import Boss2ass.*;
+import DEVAPI.CustomGameObject.Damagable;
 import RenderObject.Addon.Scriptable;
 import RenderObject.Addon.touchable;
 import RenderObject.Creatable.Vector2D;
 import RenderObject.GameObject;
 import RenderObject.StaticObject;
+import UniverseEngine.GameUniverse;
 
 public class ngudkun  extends StaticObject implements touchable,Scriptable {
     int destroytime=0;
+    boolean hit=false;
     public ngudkun(String name) {
         super(name);
     }
 
     @Override
     public void onTouched(GameObject obj) {
-        System.out.println("hitplayer");
+       if(obj instanceof Damagable d){
+           if(!hit){
+            d.takeDamage(40,GameUniverse.getObjectByName("rock", Boss3.class) );
+           hit=true;}
+        }
     }
 
     @Override

@@ -6,6 +6,8 @@ package DEVAPI;
 
 import Boss1ass.Boss1;
 import DEVAPI.CustomGameObject.Door;
+import DEVAPI.CustomGameObject.SceneController;
+import RenderObject.BaseObject;
 import RenderObject.Creatable.OneWayPlatform;
 import RenderObject.Creatable.Animator;
 import RenderObject.Creatable.AreaDetector;
@@ -13,6 +15,7 @@ import RenderObject.Creatable.Block;
 import RenderObject.Creatable.Camera;
 import RenderObject.Creatable.Decoration;
 import RenderObject.Creatable.Ladder;
+import RenderObject.Creatable.Portal2;
 import RenderObject.Creatable.Vector2D;
 import RenderObject.Creatable.ViewPort;
 import RenderObject.InputListener;
@@ -23,12 +26,13 @@ import RenderObject.StaticObject;
 import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  *
  * @author asiau
  */
-public class Level1LoaderScript extends ScriptSheet implements InputListener {
+public class Level1LoaderScript extends ScriptSheet implements InputListener, SceneController {
     public String floorImage1 = "res/GameAssets/Textures/Blank.png";
     public String wallImage1 = "res/GameAssets/Textures/Cobblestone.png";
     public String platformImage1 = "res/GameAssets/Textures/Platform.png";
@@ -59,6 +63,8 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
     public Ladder RightLadder1;
     public Ladder RightLadder2;
     public Ladder RightLadder3;
+    public ArrayList<BaseObject> itemInScene = new ArrayList<>();
+    private Portal2 PortalObj;
     public static boolean boss1die=false;
     public Level1LoaderScript(String name) {
         super(name);
@@ -84,13 +90,15 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
             floor.setSize(new Vector2D(100,150));
             floor.setPosition(new Vector2D(i*100, 650));
             floor.setTexture("floorImage");
+            itemInScene.add(floor);
         }
         //roof
         for (int i = 0; i < 12; i++) {
-            Block floor = GameUniverse.createInstance(new Block("Roof"));
-            floor.setSize(new Vector2D(100,100));
-            floor.setPosition(new Vector2D(i*100, -100));
-            floor.setTexture("floorImage");
+            Block Roof = GameUniverse.createInstance(new Block("Roof"));
+            Roof.setSize(new Vector2D(100,100));
+            Roof.setPosition(new Vector2D(i*100, -100));
+            Roof.setTexture("floorImage");
+            itemInScene.add(Roof);
         }
         
         // Left Wall
@@ -99,6 +107,7 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
         leftWall.setSize(new Vector2D(100, 100));
         leftWall.setPosition(new Vector2D(-100, i*100));
         leftWall.setTexture("wallImage");
+        itemInScene.add(leftWall);
         }
         
         // Right Wall
@@ -107,6 +116,7 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
         rightWall.setSize(new Vector2D(100, 100));
         rightWall.setPosition(new Vector2D(1200, i*100));
         rightWall.setTexture("wallImage");
+        itemInScene.add(rightWall);
         }
         
         // Left platform1
@@ -114,72 +124,84 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
         leftPlatform1.setSize(new Vector2D(325,10));
         leftPlatform1.setPosition(new Vector2D(70,455));
         leftPlatform1.setTexture("platformImage");
+        itemInScene.add(leftPlatform1);
         
         // Left platform2
         leftPlatform2 = GameUniverse.createInstance(new OneWayPlatform("platformL"));
         leftPlatform2.setSize(new Vector2D(325,10));
         leftPlatform2.setPosition(new Vector2D(70,350));
         leftPlatform2.setTexture("platformImage");
+        itemInScene.add(leftPlatform2);
         
         // Left platform3
         leftPlatform3 = GameUniverse.createInstance(new OneWayPlatform("platformL"));
         leftPlatform3.setSize(new Vector2D(325,10));
         leftPlatform3.setPosition(new Vector2D(70,235));
         leftPlatform3.setTexture("platformImage");
+        itemInScene.add(leftPlatform3);
         
         // Right platform1
         rightPlatform1 = GameUniverse.createInstance(new OneWayPlatform("platformR"));
         rightPlatform1.setSize(new Vector2D(325,10));
         rightPlatform1.setPosition(new Vector2D(800,455));
         rightPlatform1.setTexture("platformImage");
+        itemInScene.add(rightPlatform1);
         
         // Right platform2
         rightPlatform2 = GameUniverse.createInstance(new OneWayPlatform("platformR"));
         rightPlatform2.setSize(new Vector2D(325,10));
         rightPlatform2.setPosition(new Vector2D(800,350));
         rightPlatform2.setTexture("platformImage");
+        itemInScene.add(rightPlatform2);
         
         // Right platform3
         rightPlatform3 = GameUniverse.createInstance(new OneWayPlatform("platformR"));
         rightPlatform3.setSize(new Vector2D(325,10));
         rightPlatform3.setPosition(new Vector2D(800,235));
         rightPlatform3.setTexture("platformImage");
+        itemInScene.add(rightPlatform3);
         
         //1st floor ladder L
         LeftLadder1 = GameUniverse.createInstance(new Ladder("trussRight"));
         LeftLadder1.setSize(new Vector2D(100,200));
         LeftLadder1.setPosition(new Vector2D(275,460));
         LeftLadder1.setTexture("floorImage");
+        itemInScene.add(LeftLadder1);
         
         //2nd floor ladder L
         LeftLadder2 = GameUniverse.createInstance(new Ladder("trussRight"));
         LeftLadder2.setSize(new Vector2D(75,100));
         LeftLadder2.setPosition(new Vector2D(200,360));
         LeftLadder2.setTexture("floorImage");
+        itemInScene.add(LeftLadder2);
         
         //3rd floor ladder L
         LeftLadder3 = GameUniverse.createInstance(new Ladder("trussRight"));
         LeftLadder3.setSize(new Vector2D(75,110));
         LeftLadder3.setPosition(new Vector2D(255,230));
         LeftLadder3.setTexture("floorImage");
+        itemInScene.add(LeftLadder3);
         
         //1st floor ladder R
         RightLadder1 = GameUniverse.createInstance(new Ladder("trussRight"));
         RightLadder1.setSize(new Vector2D(100,200));
         RightLadder1.setPosition(new Vector2D(825,460));
         RightLadder1.setTexture("floorImage");
+        itemInScene.add(RightLadder1);
         
         //2nd floor ladder R
         RightLadder2 = GameUniverse.createInstance(new Ladder("trussRight"));
         RightLadder2.setSize(new Vector2D(75,100));
         RightLadder2.setPosition(new Vector2D(900,360));
         RightLadder2.setTexture("floorImage");
+        itemInScene.add(RightLadder2);
         
         //3rd floor ladder R
         RightLadder3 = GameUniverse.createInstance(new Ladder("trussRight"));
         RightLadder3.setSize(new Vector2D(75,110));
         RightLadder3.setPosition(new Vector2D(825,230));
         RightLadder3.setTexture("floorImage");
+        itemInScene.add(RightLadder3);
         
         //boss
         level1Boss = GameUniverse.createInstance(new Boss1("ArtilleryBoss"));
@@ -191,22 +213,6 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
         level1Boss.setCollision(false);
         level1Boss.addTags("boss");
         
-//        StaticObject door=GameUniverse.createInstance(new StaticObject(name) {
-//        });
-//        door.setCollision(false);
-//        door.setSize(new Vector2D(100,100));
-//        door.setPosition(new Vector2D(200,350));
-        //player 
-        Animator idle = GameUniverse.createInstance(new Animator("idle"));
-        idle.createAnimationSheet(new Vector2D(128, 128),"res/free_sprite/individual_sheets/male_hero_template-idle.png");
-        idle.setSpeed(10);
-        player = GameUniverse.createInstance(new KinematicObject("player"));
-        player.setSize(new Vector2D(70, 120));
-        player.setPosition(new Vector2D(0,500));
-        player.addAnimator("idle", idle);
-        player.setCurrentAnimator("idle", 0);
-        idle.setEnabled(true);
-        
         //camera settings
 
         GameUniverse.setBackground("res/GameAssets/Background/Stage1Placeholder.jpg");
@@ -216,33 +222,21 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
     @Override
     public void process(double deltaTime) {
         level1Boss.updateBossAI(deltaTime);
+        if(boss1die){
+            PortalObj = GameUniverse.createInstance(new Portal2("PortalObj"));
+            PortalObj.setSize(new Vector2D(200, 300));
+            PortalObj.setPosition(new Vector2D(1000, 350));
+            itemInScene.add(PortalObj);
+            boss1die=false;
     }
-
-    public void deleteScene() {
-    // Destroying specific wall instances
-    leftWall.destroyInstance();
-    rightWall.destroyInstance();
-
-    // Destroying Left Platforms
-    leftPlatform1.destroyInstance();
-    leftPlatform2.destroyInstance();
-    leftPlatform3.destroyInstance();
-
-    // Destroying Right Platforms
-    rightPlatform1.destroyInstance();
-    rightPlatform2.destroyInstance();
-    rightPlatform3.destroyInstance();
-
-    // Destroying Left Ladders
-    LeftLadder1.destroyInstance();
-    LeftLadder2.destroyInstance();
-    LeftLadder3.destroyInstance();
-
-    // Destroying Right Ladders
-    RightLadder1.destroyInstance();
-    RightLadder2.destroyInstance();
-    RightLadder3.destroyInstance();
-
+    }
+    @Override
+    public void deleteSceneItem() {
+    for (BaseObject obj : itemInScene) {
+        obj.destroyInstance();
+    }
+    itemInScene.clear(); // Good practice to empty the list
+    
     }
     
     @Override

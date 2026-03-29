@@ -5,6 +5,7 @@
 package Boss2ass;
 
 import Boss1ass.*;
+import DEVAPI.CustomGameObject.Damagable;
 import RenderObject.Addon.Scriptable;
 import RenderObject.Addon.touchable;
 import RenderObject.Creatable.Block;
@@ -19,6 +20,7 @@ import UniverseEngine.GameUniverse;
  */
 public class funtung extends StaticObject implements touchable,Scriptable {
      private double delaydestroy=0;
+     boolean hit=false;
     public funtung(String name) {
         super(name);
     }
@@ -32,8 +34,10 @@ public class funtung extends StaticObject implements touchable,Scriptable {
 
     @Override
     public void onTouched(GameObject obj) {
-                        System.out.println("kuyyyyyyyyy");
-
+                       if(obj instanceof Damagable d){
+                           if(!hit){
+            d.takeDamage(70,GameUniverse.getObjectByName("samurai", Boss2.class) );hit=true;}
+        }
     }
 
     @Override

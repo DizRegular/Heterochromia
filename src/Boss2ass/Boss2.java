@@ -9,6 +9,7 @@ package Boss2ass;
  * @author tin_sel
  */
 import Boss1ass.laserwaringY;
+import DEVAPI.CustomGameObject.Damagable;
 import DEVAPI.Level2LoaderScript;
 import RenderObject.GameObject;
 import RenderObject.KinematicObject;
@@ -18,7 +19,7 @@ import RenderObject.Addon.touchable;
 import RenderObject.Creatable.Animator;
 import UniverseEngine.GameUniverse;
 import java.util.Random;
-public class Boss2 extends StaticObject implements touchable {
+public class Boss2 extends StaticObject implements touchable, Damagable {
     private boss2stat stats;
     int shootTimer = 0;
     int shootCooldown = 180;
@@ -42,10 +43,11 @@ public class Boss2 extends StaticObject implements touchable {
     }
 
 
-    public void takeDamage(double damage) {
+    public void takeDamage(double damage, Damagable culprit) {
         stats.boss1takedamage(damage);
+        System.out.println("ngsaejklrhfiopqahfpiourahweewfgpiuhasdioufghgqapi");
         if (stats.getHp() <= 0) {
-             Level2LoaderScript.boss2die=true;
+            Level2LoaderScript.boss2die=true;
             this.destroyInstance();
             havelife=false;
         }

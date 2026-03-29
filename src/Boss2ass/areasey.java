@@ -8,21 +8,28 @@ package Boss2ass;
  *
  * @author tin_sel
  */
+import Boss1ass.Boss1;
+import DEVAPI.CustomGameObject.Damagable;
 import RenderObject.Addon.Scriptable;
 import RenderObject.Addon.touchable;
 import RenderObject.Creatable.Vector2D;
 import RenderObject.GameObject;
 import RenderObject.StaticObject;
+import UniverseEngine.GameUniverse;
 
 public class areasey  extends StaticObject implements touchable,Scriptable {
     int destroytime=0;
+    boolean hit=false;
     public areasey(String name) {
         super(name);
     }
 
     @Override
     public void onTouched(GameObject obj) {
-        System.out.println("hitplayer");
+        if(obj instanceof Damagable d){
+            if(!hit){
+            d.takeDamage(30,GameUniverse.getObjectByName("samurai", Boss2.class) );hit=true;}
+        }
     }
 
     @Override

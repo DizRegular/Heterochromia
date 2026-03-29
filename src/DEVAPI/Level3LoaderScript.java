@@ -174,7 +174,7 @@ public class Level3LoaderScript extends ScriptSheet implements InputListener {
         Plat1.setTexture("platformImage");
         
         //boss
-        level1Boss = GameUniverse.createInstance(new Boss3("ArtilleryBoss"));
+        level1Boss = GameUniverse.createInstance(new Boss3("rock"));
         level1Boss.setSize(new Vector2D(150, 200));
         level1Boss.setPosition(new Vector2D(800, 450));
         level1Boss.setTexture("boss1Texture");
