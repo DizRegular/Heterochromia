@@ -23,10 +23,9 @@ public class Pause extends UiItem {
         int btnWidth = 200;
         int btnHeight = 50;
         
-        int centerX = x + (width - btnWidth) / 2;
+        int centerX = x + width  / 2;
         
-        btnResume = new Rectangle(centerX, y + (height / 2) - 30, btnWidth, btnHeight);
-        btnQuit = new Rectangle(centerX, y + (height / 2) + 40, btnWidth, btnHeight);
+        
     }
 
     @Override
@@ -41,24 +40,10 @@ public class Pause extends UiItem {
         int titleX = x + (width - fmTitle.stringWidth("PAUSED")) / 2;
         g.drawString("PAUSED", titleX, y + (height / 3));
 
-        drawButton(g, btnResume, "Resume", new Color(70, 130, 180));
-
-        drawButton(g, btnQuit, "Quit", new Color(200, 50, 50));
+        
     }
 
-    private void drawButton(Graphics2D g, Rectangle rect, String text, Color bgColor) {
-        g.setColor(bgColor);
-        g.fillRoundRect(rect.x, rect.y, rect.width, rect.height, 15, 15);
-        g.setColor(Color.WHITE);
-        g.drawRoundRect(rect.x, rect.y, rect.width, rect.height, 15, 15);
-
-        g.setFont(new Font("Arial", Font.BOLD, 20));
-        FontMetrics fm = g.getFontMetrics();
-        int textX = rect.x + (rect.width - fm.stringWidth(text)) / 2;
-        int textY = rect.y + ((rect.height - fm.getHeight()) / 2) + fm.getAscent();
-        g.drawString(text, textX, textY);
-    }
-
+    
     public String checkMouseClick(int mouseX, int mouseY) {
         if (btnResume.contains(mouseX, mouseY)) {
             return "RESUME";
