@@ -105,13 +105,13 @@ public class Boss3 extends StaticObject implements touchable {
         else if(this.getPosition().getXCoord()>player.getPosition().getXCoord()&&this.getPosition().getXCoord()-player.getPosition().getXCoord()>100){
             this.movePostion(new Vector2D((speed*(-1)),0));
 
-            this.setCurrentAnimator("samurun", 0);
-            this.flipXTexture(true);
+            this.setCurrentAnimator("samumairun", 0);
+            this.flipXTexture(false);
         }
         else if (this.getPosition().getXCoord()<player.getPosition().getXCoord()&&player.getPosition().getXCoord()-this.getPosition().getXCoord()>200){
             this.movePostion(new Vector2D(speed,0));
-            this.setCurrentAnimator("samurun", 0);
-            this.flipXTexture(false);
+            this.setCurrentAnimator("samumairun", 0);
+            this.flipXTexture(true);
         }
         else{
             this.setCurrentAnimator("samumairun", 0);
