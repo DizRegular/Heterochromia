@@ -7,7 +7,7 @@ package DEVAPI;
 import DEVAPI.CustomGameObject.Player.PlayerLoaderScript;
 import DEVAPI.CustomGameObject.Player.PlayerObject;
 import RenderObject.Creatable.*;
-import RenderObject.Creatable.ScriptSheet;
+import RenderObject.ScriptSheet;
 import RenderObject.InvalidGameObjectPropertyException;
 import UniverseEngine.GameUniverse;
 

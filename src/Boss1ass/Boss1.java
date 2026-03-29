@@ -112,6 +112,6 @@ public class Boss1 extends StaticObject implements touchable, Damagable {
         bul.setTextureSize(new Vector2D(200,200));
         bul.setCollision(false);
         bul.addAnimator("frie",GameUniverse.getObjectByName("frie",Animator.class ) );
-        bul.setCurrentAnimator("frie", 0);
+        bul.setCurrentAnimator("frie", 0); //ABCED
     }
 }

@@ -3,7 +3,7 @@ package DEVAPI.CustomGameObject.Player;
 import DEVAPI.CustomGameObject.Player.PlayerObject;
 import RenderObject.Creatable.Animator;
 import RenderObject.Creatable.Camera;
-import RenderObject.Creatable.ScriptSheet;
+import RenderObject.ScriptSheet;
 import RenderObject.Creatable.Vector2D;
 import RenderObject.InputListener;
 import RenderObject.InvalidGameObjectPropertyException;

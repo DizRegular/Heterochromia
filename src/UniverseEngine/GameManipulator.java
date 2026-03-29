@@ -159,6 +159,7 @@ public class GameManipulator {
 //                    k.movePostion(new Vector2D(k.getVelocity().getXCoord(), k.getVelocity().getYCoord()).multiply(deltaTime/2));
                     k.setAcceleration(new Vector2D(0, EngineSettings.GRAVITY_CONSTANT / 60));
                 }
+
                 int[] IsInside = k.getQuadrants();
                 boolean touchedFloor = false;
                 for (int quadrant : IsInside) {

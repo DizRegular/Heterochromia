@@ -1,4 +1,4 @@
-package RenderObject.Creatable;
+package RenderObject;
 
 import RenderObject.Addon.Scriptable;
 import RenderObject.BaseObject;
