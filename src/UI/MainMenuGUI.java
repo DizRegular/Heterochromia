@@ -4,7 +4,6 @@ package UI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import UniverseEngine.Game;
 
 public class MainMenuGUI implements ActionListener{
 
@@ -13,10 +12,13 @@ public class MainMenuGUI implements ActionListener{
     private JPanel p2;
     private JPanel p3;
     private JPanel p4;
+    private JPanel Lwrap;
     private JLabel l1;
+    private JLabel bg;
     private JButton b1;
     private JButton b2;
     private JButton b3;
+    private ImageIcon icon;
     private boolean isFullscreen = false;
     private String currentResolution = "1920x1080";
 
@@ -32,25 +34,38 @@ public class MainMenuGUI implements ActionListener{
         p2 = new JPanel();
         p3 = new JPanel();
         p4 = new JPanel();
+        Lwrap = new JPanel();
         l1 = new JLabel("Heterochromia");
         b1 = new JButton("Play");
         b2 = new JButton("Setting");
         b3 = new JButton("Exit");
-
+        icon = new ImageIcon("res/GameAssets/Background/mainmenubg.jpg");
+        bg = new JLabel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Image img = icon.getImage();
+                g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        
+        bg.setLayout(new BorderLayout());
         p1.setLayout(new BorderLayout());
         p2.setLayout(new GridLayout(3, 1, 10, 10));
-        p3.setLayout(new BorderLayout());
-        p4.setLayout(new BorderLayout());
-
-        l1.setFont(new Font("Arial", Font.BOLD, 70));
+        p3.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 70));
+        p4.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 100));
+        Lwrap.setLayout(new FlowLayout(FlowLayout.CENTER));
+        l1.setFont(new Font("Comic Sans MS", Font.BOLD, 100));
+        l1.setForeground(Color.white);
         l1.setHorizontalAlignment(JLabel.CENTER);
+        
 
         Dimension buttonSize = new Dimension(200, 70);
         b1.setPreferredSize(buttonSize);
         b2.setPreferredSize(buttonSize);
         b3.setPreferredSize(buttonSize);
 
-        Font buttonFont = new Font("Arial", Font.BOLD, 18);
+        Font buttonFont = new Font("Comic Sans MS", Font.BOLD, 18);
         b1.setFont(buttonFont);
         b2.setFont(buttonFont);
         b3.setFont(buttonFont);
@@ -63,22 +78,25 @@ public class MainMenuGUI implements ActionListener{
         p2.add(b2);
         p2.add(b3);
 
-        JPanel labelWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        labelWrapper.setOpaque(false);
-        labelWrapper.add(Box.createVerticalStrut(150));
-        labelWrapper.add(l1);
-        p3.add(labelWrapper, BorderLayout.NORTH);
+        Lwrap.add(Box.createVerticalStrut(150));
+        Lwrap.add(l1);
+        p3.add(l1);
 
-        JPanel buttonWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonWrapper.setOpaque(false);
-        buttonWrapper.add(p2);
-        p4.add(buttonWrapper, BorderLayout.NORTH);
+        p4.add(p2);
         p4.add(Box.createVerticalStrut(20), BorderLayout.SOUTH);
 
+        bg.add(p1);
         p1.add(p3, BorderLayout.CENTER);
         p1.add(p4, BorderLayout.SOUTH);
-        fr.add(p1);
         
+        p1.setOpaque(false);
+        p2.setOpaque(false);
+        p3.setOpaque(false);
+        p4.setOpaque(false);
+        Lwrap.setOpaque(false);
+        
+        fr.add(bg);
+        fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         applyWindowSettings();
     }
     
@@ -86,7 +104,8 @@ public class MainMenuGUI implements ActionListener{
         if (isFullscreen) {
             fr.setExtendedState(JFrame.MAXIMIZED_BOTH);
             fr.setVisible(true);
-        } else {
+        }
+        else {
             String[] res = currentResolution.split("x");
             int width = Integer.parseInt(res[0]);
             int height = Integer.parseInt(res[1]);
@@ -136,17 +155,14 @@ public class MainMenuGUI implements ActionListener{
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        //start game here
         if (e.getSource() == b1){
             fr.dispose();
             new PrologueGUI();
         }
-        //open setting
-        if (e.getSource() == b2){
+        else if (e.getSource() == b2){
             new SettingGUI(this);
         }
-        //close the game
-        if (e.getSource() == b3) {
+        else if (e.getSource() == b3) {
             System.exit(0);
         }
     }

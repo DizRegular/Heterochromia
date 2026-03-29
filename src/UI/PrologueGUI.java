@@ -17,15 +17,15 @@ public class PrologueGUI {
     private JScrollPane scrollPane;
     private int step = 0;
     
-    private String[] dialogues = {
-        "Somewhere in a bad neighborhood of Tokyo.",
-        "Three groups of teenagers that control the local area are meeting up for their showdown.",
-        "But sundenly…",
-        "Why aren't those two showing up yet. Are they trying to set me up or something?",
-        "Well, I better be careful and look around the place for a bit."
+    private final String[] dialogues = {
+        "Somewhere in a bad neighborhood in Tokyo.",
+        "Three groups of teenagers who control the local area are meeting for a showdown.",
+        "But suddenly…",
+        "Why aren't those two here yet. Are they trying to set me up?",
+        "Well, I better be careful and look around this place."
     };
     
-    private String[] speakers = {
+    private final String[] speakers = {
         null,
         null,
         null,
@@ -65,9 +65,9 @@ public class PrologueGUI {
         mainPanel.setBackground(Color.BLACK);
         mainPanel.setFocusable(true);
         
+        spritePanel.setLayout(null);
         spritePanel.setBackground(Color.BLACK);
-        spritePanel.setPreferredSize(new Dimension(400, 400));
-        spriteLabel.setHorizontalAlignment(JLabel.CENTER);
+        spriteLabel.setHorizontalAlignment(JLabel.LEFT);
         spritePanel.add(spriteLabel);
         
         textArea.setFont(new Font("Arial", Font.PLAIN, 24));
@@ -120,11 +120,24 @@ public class PrologueGUI {
     
     private void showCurrentText() {
         textArea.setText(dialogues[step]);
-        
         if (speakers[step] != null) {
             nameLabel.setText("  " + speakers[step] + "  ");
-        } else {
+
+            ImageIcon icon = new ImageIcon("res/Main char art/SekiBaseM.png");
+            Image img = icon.getImage();
+
+            int targetHeight = fr.getHeight() / 2;
+            int newWidth = (int) (img.getWidth(null) * (targetHeight / (double) img.getHeight(null)));
+            Image scaledImg = img.getScaledInstance(newWidth, targetHeight, Image.SCALE_SMOOTH);
+
+            spriteLabel.setIcon(new ImageIcon(scaledImg));
+            spriteLabel.setBounds(50, fr.getHeight() - targetHeight - 200, newWidth, targetHeight);
+            spriteLabel.setVisible(true);
+        } 
+        else {
             nameLabel.setText("");
-        }
+            spriteLabel.setVisible(false);
+            }
     }
+    
 }
