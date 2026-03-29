@@ -127,52 +127,7 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener {
     }
     @Override
     public void process(double deltaTime) {
-        level1Boss.updateBossAI(deltaTime);
-        if (setSize == false) {
-            setSize = true;
-            player.setTextureSize(new Vector2D(500, 500));
-        }
-        if (InputManager.isKeyDown('d')) {
-            lf=5;
-            player.flipXTexture(false);
-        }
-        else if (InputManager.isKeyDown('a')) {
-            lf=-5;
-            player.flipXTexture(true);
-        }
-        else{
-            lf=0;
-        }
-        if (InputManager.isKeyDown('=')) {
-            cam1.setZoomFactor(cam1.getZoomFactor() + 0.01);
-        }
-        if (InputManager.isKeyDown('-')) {
-            cam1.setZoomFactor(cam1.getZoomFactor() - 0.01);
-        }
-        if (InputManager.isKeyDown(KeyEvent.VK_SPACE)) {
-            if(!jumping&&player.getTouchedFloor()){//add chack is tuch ground after addhitbox
-                startjump=maxjump;
-                jumping=true;
-            }
-        }
-        if(jumping&&startjump>0){
-            fall=-1;
-            player.addAcceleration(new Vector2D(0, fall));
-            startjump--;
-        }
-        else{
-            fall=1;
-        }
-        if(jumping&&startjump<=0){
-            jumping=false;
-            startjump=0;
-        }
-        if (InputManager.isKeyDown(KeyEvent.VK_SPACE)) {
-            if (player.getTouchedFloor()) {
-                player.setVelocity(new Vector2D(0, -5));
-            }
-        }
-        player.movePostion(new Vector2D(lf, 0));
+
     }
 
     @Override

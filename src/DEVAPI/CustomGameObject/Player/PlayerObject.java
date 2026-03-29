@@ -106,7 +106,12 @@ public class PlayerObject extends KinematicObject implements Damagable, SpeedCon
         this.setGravity(true);
     }
 
- 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    
     
     
     @Override

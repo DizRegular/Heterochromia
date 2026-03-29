@@ -12,7 +12,6 @@ import java.awt.event.KeyEvent;
 public class OneWayPlatform extends Block implements touchable,Scriptable{
     public OneWayPlatform(String name) {
         super(name);
-        this.setCollision(true);
     }
     
     @Override
@@ -22,13 +21,13 @@ public class OneWayPlatform extends Block implements touchable,Scriptable{
 
     @Override
     public void process(double deltaTime) {
-        KinematicObject playerObj = GameUniverse.getObjectByName("player", KinematicObject.class);
-            
+        KinematicObject playerObj = GameUniverse.getObjectByName("ThePlayer", KinematicObject.class);
             double playerBottom = playerObj.getPosition().getYCoord() + playerObj.getSize().getYCoord();
             double platformTop = this.getPosition().getYCoord();
-            boolean holdingDown = InputManager.isKeyDown('s') || InputManager.isKeyDown(KeyEvent.VK_DOWN);
+            boolean holdingDown = InputManager.isKeyDown('s') || InputManager.isKeyDown(KeyEvent.VK_S);
             
-        // Logic: If player is above the platform top AND not holding 'S'
+            System.out.println(this.getCollision());
+//         Logic: If player is above the platform top AND not holding 'S'
             if (playerBottom <= platformTop + 1 && !holdingDown) {
                 this.setCollision(true); // Make it a floor
             } else {

@@ -30,7 +30,7 @@ public class Ladder extends AreaDetector implements touchable,Scriptable{
     
     @Override
     public void process(double deltaTime) {
-    KinematicObject playerObj = GameUniverse.getObjectByName("player", KinematicObject.class);
+    KinematicObject playerObj = GameUniverse.getObjectByName("ThePlayer", KinematicObject.class);
     if (playerObj == null) return;
 
     // --- 1. GET BOUNDS ---
@@ -48,9 +48,9 @@ public class Ladder extends AreaDetector implements touchable,Scriptable{
                     && (pBottom > lTop && pTop < lBottom);
 
     if (isInside) {
-        boolean holdingUp = InputManager.isKeyDown('w') || InputManager.isKeyDown(KeyEvent.VK_UP);
-        boolean holdingDown = InputManager.isKeyDown('s') || InputManager.isKeyDown(KeyEvent.VK_DOWN);
-        
+        boolean holdingUp = InputManager.isKeyDown(KeyEvent.VK_W) || InputManager.isKeyDown(KeyEvent.VK_UP);
+        boolean holdingDown = InputManager.isKeyDown(KeyEvent.VK_S) || InputManager.isKeyDown(KeyEvent.VK_DOWN);
+        System.out.println("A");
         if (holdingUp) {
             //make player climb up
             playerObj.setVelocity(new Vector2D(playerObj.getVelocity().getXCoord(), -3));

@@ -36,6 +36,12 @@ public class GameLoaderScript extends ScriptSheet{
         playerCamera = GameUniverse.createInstance(new Camera("PlayerCamera"));
         playerCamera.setSize(new Vector2D(1200, 800));
         playerCamera.setPosition(new Vector2D(0, 0));
+        window.setEnabled(true);
+        try {
+            window.setCamera(playerCamera);
+        } catch (InvalidGameObjectPropertyException e) {
+            e.printStackTrace();
+        }
 
         try {
             window.setCamera(playerCamera);
@@ -44,7 +50,7 @@ public class GameLoaderScript extends ScriptSheet{
         }
         window.setEnabled(true);
         
-        GameUniverse.createInstance(new DebugLevelLoaderScript("DebugLevelLoaderScript"));
+        GameUniverse.createInstance(new LevelTutorialLoaderScript("LevelTutorialLoaderScript"));
         GameUniverse.createInstance(new PlayerLoaderScript("PlayerLoaderScript"));
 
     }

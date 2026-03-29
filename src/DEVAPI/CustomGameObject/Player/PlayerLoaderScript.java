@@ -34,6 +34,8 @@ public class PlayerLoaderScript extends ScriptSheet {
     private double burstDamageTimer = 600;
     private double currBurstDamageTimer = 0;
     
+    private Camera playerCamera;
+    
     private final String playerSwordIdlePathFile = "res/2D-Pixel-Art-Character-Template - Copy/2D-Pixel-Art-Character-Template/Sword Idle/Player Sword Idle 48x48.png";
     private final String playerSwordRunPathFile = "res/2D-Pixel-Art-Character-Template - Copy/2D-Pixel-Art-Character-Template/Sword Run/Player Sword Run 48x48.png";
     private final String playerSwordStabPathFile = "res/2D-Pixel-Art-Character-Template - Copy/2D-Pixel-Art-Character-Template/Sword Stab/Player Sword Stab 96x48.png";
@@ -96,7 +98,7 @@ public class PlayerLoaderScript extends ScriptSheet {
     @Override
     public void onCreate() {
         player = GameUniverse.createInstance(new PlayerObject("ThePlayer"));
-        player.setPosition(new Vector2D(0, -1000));
+        player.setPosition(new Vector2D(100, 100));
         player.setSize(playerSize);
         
         playerSwordIdleAnim = GameUniverse.createInstance(new Animator("playerSwordIdleAnim"));
@@ -180,14 +182,14 @@ public class PlayerLoaderScript extends ScriptSheet {
         playerJump2Anim.setSpeed(9);
         
         player.setCurrentAnimator("playerSwordIdleAnim", animPriority.idle.getPriority());
-        try {
-            player.addConstraint(GameUniverse.getObjectByName("PlayerCamera", Camera.class));
-        } catch (InvalidGameObjectPropertyException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            player.addConstraint(GameUniverse.getObjectByName("PlayerCamera", Camera.class));
+//        } catch (InvalidGameObjectPropertyException e) {
+//            e.printStackTrace();
+//        }
         
         
-       
+       playerCamera = GameUniverse.getObjectByName("PlayerCamera", Camera.class);
     }
     
     public void setTexutreToNormal() {
@@ -234,6 +236,16 @@ public class PlayerLoaderScript extends ScriptSheet {
         boolean num1 = InputManager.isKeyDown(KeyEvent.VK_1);
         boolean num2 = InputManager.isKeyDown(KeyEvent.VK_2);
         boolean num3 = InputManager.isKeyDown(KeyEvent.VK_3);
+        
+        boolean zoomIn = InputManager.isKeyDown(KeyEvent.VK_EQUALS);
+        boolean zoomOut = InputManager.isKeyDown(KeyEvent.VK_MINUS);
+        if (zoomIn) {
+            playerCamera.setZoomFactor(playerCamera.getZoomFactor()-0.01);
+        }
+        if (zoomOut) {
+            playerCamera.setZoomFactor(playerCamera.getZoomFactor()+0.01);
+        }
+        
         if (player.getTouchedFloor()) {jumping = false;}
         if (attacking == false ||(playerSwordStabAnim.hasFinished() || playerSwordStab2Anim.hasFinished())) {
             this.setTexutreToNormal();

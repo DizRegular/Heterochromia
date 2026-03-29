@@ -5,6 +5,10 @@
 package DEVAPI;
 
 import DEVAPI.CustomGameObject.Door;
+import DEVAPI.CustomGameObject.Player.PlayerLoaderScript;
+import DEVAPI.CustomGameObject.PortalToLevel1;
+import DEVAPI.CustomGameObject.SceneController;
+import RenderObject.BaseObject;
 import RenderObject.Creatable.OneWayPlatform;
 
 import RenderObject.Creatable.Animator;
@@ -22,12 +26,13 @@ import RenderObject.ScriptSheet;
 import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  *
  * @author asiau
  */
-public class LevelTutorialLoaderScript extends ScriptSheet implements InputListener {
+public class LevelTutorialLoaderScript extends ScriptSheet implements InputListener, SceneController {
     public String floorImage1 = "res/GameAssets/Textures/Road1.png";
     public String floorImage2 = "res/GameAssets/Textures/Road2.png";
     public String floorImage3 = "res/GameAssets/Textures/Road3.png";
@@ -52,6 +57,7 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
     public int maxjump=3;
     public boolean jumping=false;
     public Camera cam1;
+    public ArrayList<BaseObject> itemInScene = new ArrayList<>();
     public LevelTutorialLoaderScript(String name) {
         super(name);
     }
@@ -80,6 +86,7 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
             floor1.setSize(new Vector2D(100,100));
             floor1.setPosition(new Vector2D(0 + (i*300), 700));
             floor1.setTexture("floorImage1");
+            itemInScene.add(floor1);
         }
         //floor 2,5,8,11
         for (int i = 0; i < 4; i++) {
@@ -87,6 +94,7 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
             floor2.setSize(new Vector2D(100,100));
             floor2.setPosition(new Vector2D(100 + (i*300), 700));
             floor2.setTexture("floorImage2");
+            itemInScene.add(floor2);
         }
         //floor 3,6,9,12
         for (int i = 0; i < 4; i++) {
@@ -94,6 +102,7 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
             floor3.setSize(new Vector2D(100,100));
             floor3.setPosition(new Vector2D(200 + (i*300), 700));
             floor3.setTexture("floorImage1");
+            itemInScene.add(floor3);
         }
             
         //roof
@@ -102,6 +111,7 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
             roof.setSize(new Vector2D(100,100));
             roof.setPosition(new Vector2D(i*100, -100));
             roof.setTexture("floorImage4");
+            itemInScene.add(roof);
         }
         
         // Left Wall
@@ -110,6 +120,7 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
         leftWall.setSize(new Vector2D(100, 100));
         leftWall.setPosition(new Vector2D(-100, i*100));
         leftWall.setTexture("wallImage");
+        itemInScene.add(leftWall);
         }
         
         // Right Wall
@@ -118,25 +129,26 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
         rightWall.setSize(new Vector2D(100, 100));
         rightWall.setPosition(new Vector2D(1200, i*100));
         rightWall.setTexture("wallImage");
+        itemInScene.add(rightWall);
         }
         
-        //ControlGuide
-        Decoration Control1 = GameUniverse.createInstance(new Decoration("Control1"));
-        Control1.setSize(new Vector2D(200, 150));
-        Control1.setPosition(new Vector2D(100,400));
-        Control1.setTexture("controlImage");
-        
-        //ControlGuide2
-        Decoration Control2 = GameUniverse.createInstance(new Decoration("Control2"));
-        Control2.setSize(new Vector2D(200, 150));
-        Control2.setPosition(new Vector2D(100,200));
-        Control2.setTexture("controlImage2");
-        
-        //ControlGuide3
-        Decoration Control3 = GameUniverse.createInstance(new Decoration("Control3"));
-        Control3.setSize(new Vector2D(250, 150));
-        Control3.setPosition(new Vector2D(425,375));
-        Control3.setTexture("controlImage3");
+//        //ControlGuide
+//        Decoration Control1 = GameUniverse.createInstance(new Decoration("Control1"));
+//        Control1.setSize(new Vector2D(200, 150));
+//        Control1.setPosition(new Vector2D(100,400));
+//        Control1.setTexture("controlImage");
+//        
+//        //ControlGuide2
+//        Decoration Control2 = GameUniverse.createInstance(new Decoration("Control2"));
+//        Control2.setSize(new Vector2D(200, 150));
+//        Control2.setPosition(new Vector2D(100,200));
+//        Control2.setTexture("controlImage2");
+//        
+//        //ControlGuide3
+//        Decoration Control3 = GameUniverse.createInstance(new Decoration("Control3"));
+//        Control3.setSize(new Vector2D(250, 150));
+//        Control3.setPosition(new Vector2D(425,375));
+//        Control3.setTexture("controlImage3");
         
         //ladder-Pillar as example for climbing
         for (int i = 0; i < 5; i++) {
@@ -144,125 +156,83 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
         PillarBase.setSize(new Vector2D(100,100));
         PillarBase.setPosition(new Vector2D(300,(200 + i * 100)));
         PillarBase.setTexture("PillarBase");
+        itemInScene.add(PillarBase);
         }
         //unclimbableTopPillar
         Decoration TopPillar = GameUniverse.createInstance(new Decoration("Top"));
         TopPillar.setSize(new Vector2D(100,100));
         TopPillar.setPosition(new Vector2D(300,100));
         TopPillar.setTexture("PillarTop");
+        itemInScene.add(TopPillar);
         
         //platform on the top right of ladder 
         OneWayPlatform Platform1 = GameUniverse.createInstance(new OneWayPlatform("platform1"));
         Platform1.setSize(new Vector2D(200,50));
         Platform1.setPosition(new Vector2D(400,300));
         Platform1.setTexture("TutorialPlatform");
-         
+        itemInScene.add(Platform1);
+        
         //trashcan
         Decoration Trashcan = GameUniverse.createInstance(new Decoration("Trashcan"));
         Trashcan.setSize(new Vector2D(200, 150));
         Trashcan.setPosition(new Vector2D(500,550));
         Trashcan.setTexture("Trashcan");
+        itemInScene.add(Trashcan);
         
         //platform on the top of trashcan to make it jumpable
         OneWayPlatform Platform2 = GameUniverse.createInstance(new OneWayPlatform("platform2"));
         Platform2.setSize(new Vector2D(200,50));
         Platform2.setPosition(new Vector2D(500,550));
         Platform2.setTexture("blankImage");
+        itemInScene.add(Platform2);
         
         //trashcan2
         Decoration Trashcan2 = GameUniverse.createInstance(new Decoration("Trashcan2"));
         Trashcan2.setSize(new Vector2D(200, 150));
         Trashcan2.setPosition(new Vector2D(800,550));
         Trashcan2.setTexture("Trashcan");
+        itemInScene.add(Trashcan2);
         
         //platform on the top of trashcan2 to make it jumpable
         OneWayPlatform Platform3 = GameUniverse.createInstance(new OneWayPlatform("platform3"));
         Platform3.setSize(new Vector2D(200,50));
         Platform3.setPosition(new Vector2D(800,550));
         Platform3.setTexture("blankImage");
+        itemInScene.add(Platform3);
         
         //fence on the right of trashcan
         Block fence = GameUniverse.createInstance(new Block("fence"));
             fence.setSize(new Vector2D(100,300));
             fence.setPosition(new Vector2D(700, 400));
             fence.setTexture("fenceImage");
-            
-        //player 
-        Animator idle = GameUniverse.createInstance(new Animator("idle"));
-        idle.createAnimationSheet(new Vector2D(128, 128),"res/free_sprite/individual_sheets/male_hero_template-idle.png");
-        idle.setSpeed(10);
-        player = GameUniverse.createInstance(new KinematicObject("player"));
-        player.setSize(new Vector2D(70, 120));
-        player.setPosition(new Vector2D(0,500));
-        player.addAnimator("idle", idle);
-        player.setCurrentAnimator("idle", 0);
-        idle.setEnabled(true);
+        itemInScene.add(fence);
+
+        PortalToLevel1 nextLevel = GameUniverse.createInstance(new PortalToLevel1("PortalTo1"));
+        nextLevel.setSize(new Vector2D(200, 300));
+        nextLevel.setPosition(new Vector2D(500, 400));
         
         //camera settings
-        cam1 = GameUniverse.createInstance(new Camera("cam1"));
-        cam1.setSize(new Vector2D(1200, 800));
-        cam1.setPosition(new Vector2D(0, 0));
-        ViewPort window1 = GameUniverse.createInstance(new ViewPort("window1"));
-        window1.setEnabled(true);
         GameUniverse.setBackground("res/GameAssets/Background/bgplacegholder.jpg");
-        try {
-            window1.setCamera(cam1);
-        } catch (InvalidGameObjectPropertyException e) {
-            e.printStackTrace();
-        }
         InputManager.registerInputListenerObject(this);
+        
+        //player 
     }
+    
+    
     @Override
     public void process(double deltaTime) {
-        if (setSize == false) {
-            setSize = true;
-            player.setTextureSize(new Vector2D(500, 500));
-        }
-        if (InputManager.isKeyDown('d')) {
-            lf=5;
-            player.flipXTexture(false);
-        }
-        else if (InputManager.isKeyDown('a')) {
-            lf=-5;
-            player.flipXTexture(true);
-        }
-        else{
-            lf=0;
-        }
-        if (InputManager.isKeyDown('=')) {
-            cam1.setZoomFactor(cam1.getZoomFactor() + 0.01);
-        }
-        if (InputManager.isKeyDown('-')) {
-            cam1.setZoomFactor(cam1.getZoomFactor() - 0.01);
-        }
-        if (InputManager.isKeyDown(KeyEvent.VK_SPACE)) {
-            if(!jumping&&player.getTouchedFloor()){//add chack is tuch ground after addhitbox
-                startjump=maxjump;
-                jumping=true;
-            }
-        }
-        if(jumping&&startjump>0){
-            fall=-1;
-            player.addAcceleration(new Vector2D(0, fall));
-            startjump--;
-        }
-        else{
-            fall=1;
-        }
-        if(jumping&&startjump<=0){
-            jumping=false;
-            startjump=0;
-        }
-        if (InputManager.isKeyDown(KeyEvent.VK_SPACE)) {
-            if (player.getTouchedFloor()) {
-                player.setVelocity(new Vector2D(0, -5));
-            }
-        }
-        player.movePostion(new Vector2D(lf, 0));
+
     }
 
     @Override
     public void onInput() {
         //nuh uh
+    }
+
+    @Override
+    public void deleteSceneItem() {
+       for (BaseObject obj : itemInScene) {
+           obj.destroyInstance();
+       }
     }
 }

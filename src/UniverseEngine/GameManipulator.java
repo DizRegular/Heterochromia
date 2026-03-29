@@ -42,22 +42,22 @@ public class GameManipulator {
 
     public boolean notifyGameEventListener(GameObject eventSource, GameObject eventCause) {
         if(eventSource instanceof CollisionObject col &&eventSource instanceof touchable ){
-            if ( eventSource instanceof KinematicObject){
+            if ( eventSource instanceof KinematicObject k && k instanceof touchable){
                 GameEventListener.handleTouch(eventSource, eventCause, "");
                 return true;
             }
-            if ( eventCause instanceof KinematicObject){
+            if ( eventCause instanceof KinematicObject k && k instanceof touchable){
                 GameEventListener.handleTouch(eventCause, eventSource, "");
                 return true;
             }
-            if( col.getCollision()==false){
+            if(col instanceof touchable && col.getCollision()==false){
             GameEventListener.handleTouch(eventSource, eventCause, "");
             return true;
             }
-            if(eventSource instanceof KinematicObject ){
-            GameEventListener.handleTouch(eventSource, eventCause, "");
-            return true;
-            }
+//            if(eventCause instanceof KinematicObject k && k instanceof touchable ){
+//            GameEventListener.handleTouch(eventCause, eventSource, "");
+//            return true;
+//            }
         }
 //        if (eventSource instanceof touchable && eventSource instanceof StaticObject){
 //            GameEventListener.handleTouch(eventSource, eventCause, "");
@@ -180,8 +180,8 @@ public class GameManipulator {
                             setXCollsion(XOverlap, k, otherObj, XAxis);
                         }
                         Rectangle2D floorDetector = new Rectangle2D.Double(
-                                k.getBounds().getMinX(), k.getBounds().getMaxY(),
-                                k.getSize().getXCoord(), 2);
+                                k.getBounds().getCenterX(), k.getBounds().getMaxY(),
+                                1, 2);
                         touchedFloor |= floorDetector.intersects(otherObj.getBounds());
                     }
                 }
