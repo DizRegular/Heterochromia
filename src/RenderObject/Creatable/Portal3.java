@@ -4,7 +4,7 @@
  */
 package RenderObject.Creatable;
 
-import DEVAPI.Level2LoaderScript;
+import DEVAPI.Level3LoaderScript;
 import RenderObject.Addon.Scriptable;
 import RenderObject.Creatable.Block;
 import RenderObject.GameObject;
@@ -15,8 +15,8 @@ import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
 import java.awt.event.KeyEvent;
 
-public class Portal2 extends Block implements touchable,Scriptable{
-    public Portal2(String name) {
+public class Portal3 extends Block implements touchable,Scriptable{
+    public Portal3(String name) {
         super(name);
         this.setCollision(false);
     }
@@ -41,14 +41,14 @@ public class Portal2 extends Block implements touchable,Scriptable{
     if (playerBottom >= platformTop && holdingDown) {
         
         // Use ScriptSheet.class instead of Object.class to fix the IDE error
-        ScriptSheet script = GameUniverse.getObjectByName("Level1LoaderScript", ScriptSheet.class);
+        ScriptSheet script = GameUniverse.getObjectByName("Level2LoaderScript", ScriptSheet.class);
         
         // 3. Trigger the cleanup and load the next level
         if (script instanceof DEVAPI.CustomGameObject.SceneController s) {
             s.deleteSceneItem(); // Deletes everything in the Tutorial
             
             // Spawn the Boss Level
-            GameUniverse.createInstance(new Level2LoaderScript("Level2LoaderScript"));
+            GameUniverse.createInstance(new Level3LoaderScript("Level3LoaderScript"));
             
             // Remove this portal so it doesn't trigger twice
             this.destroyInstance(); 

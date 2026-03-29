@@ -20,7 +20,7 @@ public class PrologueGUI {
     private String[] dialogues = {
         "Somewhere in a bad neighborhood of Tokyo.",
         "Three groups of teenagers that control the local area are meeting up for their showdown.",
-        "But sundenly…",
+        "But suddenly…",
         "Why aren't those two showing up yet. Are they trying to set me up or something?",
         "Well, I better be careful and look around the place for a bit."
     };

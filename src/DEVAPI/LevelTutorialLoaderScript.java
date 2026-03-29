@@ -189,24 +189,13 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
         //player 
     }
     
-    
-//    @Override
-//    public void process(double deltaTime) {
-//
-//    }
-//
-//    @Override
-//    public void onInput() {
-//        //nuh uh
-//    }
-
     @Override
     public void deleteSceneItem() {
     for (BaseObject obj : itemInScene) {
         obj.destroyInstance();
     }
     itemInScene.clear(); // Good practice to empty the list
-    InputManager.unregisterInputListenerObject(this); // Stop listening to keys
+    
     }
     @Override
     public void process(double deltaTime) {

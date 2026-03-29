@@ -5,12 +5,13 @@
 package DEVAPI;
 
 import Boss2ass.Boss2;
-import DEVAPI.CustomGameObject.Door;
+import DEVAPI.CustomGameObject.SceneController;
+import static DEVAPI.Level2LoaderScript.boss2die;
+import RenderObject.BaseObject;
 import RenderObject.Creatable.Animator;
-import RenderObject.Creatable.AreaDetector;
 import RenderObject.Creatable.Block;
 import RenderObject.Creatable.Camera;
-import RenderObject.Creatable.Decoration;
+import RenderObject.Creatable.Portal3;
 import RenderObject.Creatable.Vector2D;
 import RenderObject.Creatable.ViewPort;
 import RenderObject.InputListener;
@@ -19,13 +20,13 @@ import RenderObject.KinematicObject;
 import RenderObject.ScriptSheet;
 import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
-import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  *
  * @author asiau
  */
-public class Level2LoaderScript extends ScriptSheet implements InputListener {
+public class Level2LoaderScript extends ScriptSheet implements InputListener, SceneController {
     public String floorImage = "res/GameAssets/Textures/Blank.png";
     public String wallImage = "res/GameAssets/Textures/Cobblestone.png";
     public String shelfImage = "res/GameAssets/Textures/Shelf.jpg";
@@ -41,6 +42,8 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener {
     public Camera cam1;
     public Boss2 level1Boss;
     public static boolean boss2die=false;
+    public ArrayList<BaseObject> itemInScene = new ArrayList<>();
+    private Portal3 PortalObj;
     public Level2LoaderScript(String name) {
         super(name);
     }
@@ -131,11 +134,22 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener {
     public void process(double deltaTime) {
         level1Boss.updateBossAI(deltaTime);
         if(boss2die){
-            //plase potal this
+            PortalObj = GameUniverse.createInstance(new Portal3("PortalObj"));
+            PortalObj.setSize(new Vector2D(200, 300));
+            PortalObj.setPosition(new Vector2D(1000, 350));
+            itemInScene.add(PortalObj);
             boss2die=false;
-        }
     }
-
+    }
+    @Override
+    public void deleteSceneItem() {
+    for (BaseObject obj : itemInScene) {
+        obj.destroyInstance();
+    }
+    itemInScene.clear(); // Good practice to empty the list
+    
+    }
+    
     @Override
     public void onInput() {
         //nuh uh
