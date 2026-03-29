@@ -14,8 +14,8 @@ public class Main implements Runnable {
         //GameUniverse.createInstance(new DebugLevelLoaderScript("DebugLevelLoaderScript"));
         //GameUniverse.createInstance(new LevelTutorialLoaderScript("LevelTutorialLoaderScript"));
         //GameUniverse.createInstance(new Level1LoaderScript("Level1LoaderScript")); 
-        //GameUniverse.createInstance(new Level2LoaderScript("Level2LoaderScript"));
-        GameUniverse.createInstance(new Level3LoaderScript("Level3LoaderScript"));
+        GameUniverse.createInstance(new Level2LoaderScript("Level2LoaderScript"));
+        //GameUniverse.createInstance(new Level3LoaderScript("Level3LoaderScript"));
     }
     
     

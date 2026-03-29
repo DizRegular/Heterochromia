@@ -14,7 +14,6 @@ import java.awt.Rectangle;
 
 public class Pause extends UiItem {
 
-    // สร้างกล่องสี่เหลี่ยม (Rectangle) เพื่อเก็บตำแหน่งและขนาดของปุ่ม
     private Rectangle btnResume;
     private Rectangle btnQuit;
 
@@ -42,14 +41,14 @@ public class Pause extends UiItem {
         int titleX = x + (width - fmTitle.stringWidth("PAUSED")) / 2;
         g.drawString("PAUSED", titleX, y + (height / 3));
 
-        drawButton(g, btnResume, "Resume", new Color(70, 130, 180)); // สีฟ้า
+        drawButton(g, btnResume, "Resume", new Color(70, 130, 180));
 
-        drawButton(g, btnQuit, "Quit", new Color(200, 50, 50)); // สีแดง
+        drawButton(g, btnQuit, "Quit", new Color(200, 50, 50));
     }
 
     private void drawButton(Graphics2D g, Rectangle rect, String text, Color bgColor) {
         g.setColor(bgColor);
-        g.fillRoundRect(rect.x, rect.y, rect.width, rect.height, 15, 15); // ขอบมน
+        g.fillRoundRect(rect.x, rect.y, rect.width, rect.height, 15, 15);
         g.setColor(Color.WHITE);
         g.drawRoundRect(rect.x, rect.y, rect.width, rect.height, 15, 15);
 
