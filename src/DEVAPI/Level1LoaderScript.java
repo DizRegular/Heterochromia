@@ -28,7 +28,7 @@ import java.awt.event.KeyEvent;
  * @author asiau
  */
 public class Level1LoaderScript extends ScriptSheet implements InputListener {
-    public String floorImage = "res/GameAssets/Textures/Grass1.jpg";
+    public String floorImage = "res/GameAssets/Textures/Blank.png";
     public String wallImage = "res/GameAssets/Textures/Cobblestone.png";
     public String platformImage = "res/GameAssets/Textures/Platform.png";
     public String shelfImage = "res/GameAssets/Textures/Shelf.jpg";

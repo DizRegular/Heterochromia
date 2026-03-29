@@ -30,11 +30,11 @@ import java.awt.event.KeyEvent;
  * @author asiau
  */
 public class Level3LoaderScript extends ScriptSheet implements InputListener {
-    public String floorImage = "res/GameAssets/Textures/Grass1.jpg";
-    public String wallImage = "res/GameAssets/Textures/Cobblestone.png";
-    public String shelfImage = "res/GameAssets/Textures/Shelf.jpg";
-    public String platformImage = "res/GameAssets/Textures/Platform.png";
-    public String ladderImage = "res/GameAssets/Textures/Ladder.png";
+    public String floorImage = "res/GameAssets/Textures/Blank.png";
+    public String wallImage = "res/GameAssets/Textures/Blank.png";
+    public String shelfImage = "res/GameAssets/Textures/Blank.png";
+    public String platformImage = "res/GameAssets/Textures/Blank.png";
+    public String ladderImage = "res/GameAssets/Textures/Blank.png";
     public KinematicObject player;
     public KinematicObject ball;
     public boolean setSize = false;
