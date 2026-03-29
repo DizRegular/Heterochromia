@@ -59,12 +59,13 @@ public class Level3LoaderScript extends ScriptSheet implements InputListener {
         GameUniverse.loadImage("platformImage", platformImage);
         GameUniverse.loadImage("ladderImage", ladderImage);
         GameUniverse.loadImage("tub", "res/waring.png");
+        //pauseUI =GameUniverse.createInstance(new Pause("PauseScreen", 0, 0, 1280, 720));
+        
         //floor
-        pauseUI =GameUniverse.createInstance(new Pause("PauseScreen", 0, 0, 1280, 720));
         for (int i = 0; i < 12; i++) {
-            Block floor = GameUniverse.createInstance(new Block("Platform"));
-            floor.setSize(new Vector2D(100,100));
-            floor.setPosition(new Vector2D(i*100, 700));
+            Block floor = GameUniverse.createInstance(new Block("Floor"));
+            floor.setSize(new Vector2D(100,150));
+            floor.setPosition(new Vector2D(i*100, 650));
             floor.setTexture("floorImage");
         }
         //roof
@@ -94,16 +95,16 @@ public class Level3LoaderScript extends ScriptSheet implements InputListener {
         // Left platform1 floor1.1
         Block floor11 = GameUniverse.createInstance(new Block("floor11"));
             floor11.setSize(new Vector2D(75,10));
-            floor11.setPosition(new Vector2D(325, 540));
+            floor11.setPosition(new Vector2D(355, 500));
             floor11.setTexture("floorImage");
             
         // Left platform1 floor1.2
         Block floor12 = GameUniverse.createInstance(new Block("floor12"));
-            floor12.setSize(new Vector2D(550,10));
-            floor12.setPosition(new Vector2D(500, 540));
+            floor12.setSize(new Vector2D(615,10));
+            floor12.setPosition(new Vector2D(530, 500));
             floor12.setTexture("floorImage");
         
-        // Left platform1 floor1plat
+        // Left platform1 standable truck
         OneWayPlatform leftPlatform1 = GameUniverse.createInstance(new OneWayPlatform("platformL"));
         leftPlatform1.setSize(new Vector2D(250,10));
         leftPlatform1.setPosition(new Vector2D(0,450));
@@ -111,68 +112,68 @@ public class Level3LoaderScript extends ScriptSheet implements InputListener {
         
         // Right platform2 floor2plat
         OneWayPlatform rightPlatform2 = GameUniverse.createInstance(new OneWayPlatform("platformL"));
-        rightPlatform2.setSize(new Vector2D(125,10));
-        rightPlatform2.setPosition(new Vector2D(775,375));
+        rightPlatform2.setSize(new Vector2D(100,10));
+        rightPlatform2.setPosition(new Vector2D(825,335));
         rightPlatform2.setTexture("platformImage");
         
         // Left platform2 floor2.1
         Block floor21 = GameUniverse.createInstance(new Block("floor21"));
             floor21.setSize(new Vector2D(475,10));
-            floor21.setPosition(new Vector2D(325, 375));
+            floor21.setPosition(new Vector2D(350, 335));
             floor21.setTexture("floorImage");
             
         // Left platform2 floor2.2
         Block floor22 = GameUniverse.createInstance(new Block("floor22"));
             floor22.setSize(new Vector2D(150,10));
-            floor22.setPosition(new Vector2D(900, 375));
+            floor22.setPosition(new Vector2D(925, 335));
             floor22.setTexture("floorImage");
         
         // Right platform3 floor3
         OneWayPlatform rightPlatform3 = GameUniverse.createInstance(new OneWayPlatform("platformL"));
         rightPlatform3.setSize(new Vector2D(100,10));
-        rightPlatform3.setPosition(new Vector2D(500,210));
+        rightPlatform3.setPosition(new Vector2D(500,190));
         rightPlatform3.setTexture("platformImage");
         
         // Left platform3 floor3.1
         Block floor31 = GameUniverse.createInstance(new Block("floor31"));
-            floor31.setSize(new Vector2D(175,10));
-            floor31.setPosition(new Vector2D(325, 210));
+            floor31.setSize(new Vector2D(125,10));
+            floor31.setPosition(new Vector2D(375, 190));
             floor31.setTexture("floorImage");
             
         // Left platform3 floor3.2
         Block floor32 = GameUniverse.createInstance(new Block("floor32"));
-            floor32.setSize(new Vector2D(450,10));
-            floor32.setPosition(new Vector2D(600, 210));
+            floor32.setSize(new Vector2D(475,10));
+            floor32.setPosition(new Vector2D(600, 190));
             floor32.setTexture("floorImage");
         
         //1st floor ladder
         Ladder Righttruss = GameUniverse.createInstance(new Ladder("trussRight"));
         Righttruss.setSize(new Vector2D(100,160));
-        Righttruss.setPosition(new Vector2D(400,540));
+        Righttruss.setPosition(new Vector2D(430,500));
         Righttruss.setTexture("ladderImage");
         
         //2nd floor ladder
         Ladder Righttruss2 = GameUniverse.createInstance(new Ladder("trussRight"));
-        Righttruss2.setSize(new Vector2D(100,155));
-        Righttruss2.setPosition(new Vector2D(800,385));
+        Righttruss2.setSize(new Vector2D(100,165));
+        Righttruss2.setPosition(new Vector2D(825,335));
         Righttruss2.setTexture("ladderImage");
         
         //3rd floor ladder
         Ladder Righttruss3 = GameUniverse.createInstance(new Ladder("trussRight"));
         Righttruss3.setSize(new Vector2D(100,155));
-        Righttruss3.setPosition(new Vector2D(500,220));
+        Righttruss3.setPosition(new Vector2D(500,190));
         Righttruss3.setTexture("ladderImage");
         
         //1st floor platform truck top
         OneWayPlatform Plat1 = GameUniverse.createInstance(new OneWayPlatform("Plat1"));
         Plat1.setSize(new Vector2D(100,10));
-        Plat1.setPosition(new Vector2D(400,540));
+        Plat1.setPosition(new Vector2D(430,500));
         Plat1.setTexture("platformImage");
         
         //boss
         level1Boss = GameUniverse.createInstance(new Boss3("ArtilleryBoss"));
         level1Boss.setSize(new Vector2D(150, 200));
-        level1Boss.setPosition(new Vector2D(800, 500));
+        level1Boss.setPosition(new Vector2D(800, 450));
         level1Boss.setTexture("boss1Texture");
         level1Boss.setCollision(false);
         Animator run=GameUniverse.createInstance(new Animator("samurun"));

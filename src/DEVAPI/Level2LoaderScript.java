@@ -52,9 +52,9 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener {
         GameUniverse.loadImage("samuwarning", "res/waring.png");
         //floor
         for (int i = 0; i < 12; i++) {
-            Block floor = GameUniverse.createInstance(new Block("Platform"));
-            floor.setSize(new Vector2D(100,100));
-            floor.setPosition(new Vector2D(i*100, 700));
+            Block floor = GameUniverse.createInstance(new Block("Floor"));
+            floor.setSize(new Vector2D(100,150));
+            floor.setPosition(new Vector2D(i*100, 650));
             floor.setTexture("floorImage");
         }
         //roof
@@ -84,7 +84,7 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener {
          //boss
         level1Boss = GameUniverse.createInstance(new Boss2("ArtilleryBoss"));
         level1Boss.setSize(new Vector2D(150, 200));
-        level1Boss.setPosition(new Vector2D(800, 500));
+        level1Boss.setPosition(new Vector2D(800, 450));
         level1Boss.setTexture("boss1Texture");
         level1Boss.setCollision(false);
         Animator run=GameUniverse.createInstance(new Animator("samurun"));

@@ -12,6 +12,7 @@ import RenderObject.Creatable.AreaDetector;
 import RenderObject.Creatable.Block;
 import RenderObject.Creatable.Camera;
 import RenderObject.Creatable.Decoration;
+import RenderObject.Creatable.Ladder;
 import RenderObject.Creatable.Vector2D;
 import RenderObject.Creatable.ViewPort;
 import RenderObject.InputListener;
@@ -65,8 +66,8 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
         //floor
         for (int i = 0; i < 12; i++) {
             Block floor = GameUniverse.createInstance(new Block("Floor"));
-            floor.setSize(new Vector2D(100,100));
-            floor.setPosition(new Vector2D(i*100, 700));
+            floor.setSize(new Vector2D(100,150));
+            floor.setPosition(new Vector2D(i*100, 650));
             floor.setTexture("floorImage");
         }
         //roof
@@ -95,27 +96,75 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
         
         // Left platform1
         OneWayPlatform leftPlatform1 = GameUniverse.createInstance(new OneWayPlatform("platformL"));
-        leftPlatform1.setSize(new Vector2D(400,10));
-        leftPlatform1.setPosition(new Vector2D(0,525));
+        leftPlatform1.setSize(new Vector2D(325,10));
+        leftPlatform1.setPosition(new Vector2D(70,455));
         leftPlatform1.setTexture("platformImage");
         
         // Left platform2
         OneWayPlatform leftPlatform2 = GameUniverse.createInstance(new OneWayPlatform("platformL"));
-        leftPlatform2.setSize(new Vector2D(400,10));
-        leftPlatform2.setPosition(new Vector2D(0,350));
+        leftPlatform2.setSize(new Vector2D(325,10));
+        leftPlatform2.setPosition(new Vector2D(70,350));
         leftPlatform2.setTexture("platformImage");
         
+        // Left platform3
+        OneWayPlatform leftPlatform3 = GameUniverse.createInstance(new OneWayPlatform("platformL"));
+        leftPlatform3.setSize(new Vector2D(325,10));
+        leftPlatform3.setPosition(new Vector2D(70,235));
+        leftPlatform3.setTexture("platformImage");
+        
         // Right platform1
-        OneWayPlatform rightPlatform1 = GameUniverse.createInstance(new OneWayPlatform("platformL"));
-        rightPlatform1.setSize(new Vector2D(400,10));
-        rightPlatform1.setPosition(new Vector2D(800,525));
+        OneWayPlatform rightPlatform1 = GameUniverse.createInstance(new OneWayPlatform("platformR"));
+        rightPlatform1.setSize(new Vector2D(325,10));
+        rightPlatform1.setPosition(new Vector2D(800,455));
         rightPlatform1.setTexture("platformImage");
         
         // Right platform2
-        OneWayPlatform rightPlatform2 = GameUniverse.createInstance(new OneWayPlatform("platformL"));
-        rightPlatform2.setSize(new Vector2D(400,10));
+        OneWayPlatform rightPlatform2 = GameUniverse.createInstance(new OneWayPlatform("platformR"));
+        rightPlatform2.setSize(new Vector2D(325,10));
         rightPlatform2.setPosition(new Vector2D(800,350));
         rightPlatform2.setTexture("platformImage");
+        
+        // Right platform3
+        OneWayPlatform rightPlatform3 = GameUniverse.createInstance(new OneWayPlatform("platformR"));
+        rightPlatform3.setSize(new Vector2D(325,10));
+        rightPlatform3.setPosition(new Vector2D(800,235));
+        rightPlatform3.setTexture("platformImage");
+        
+        //1st floor ladder L
+        Ladder LeftLadder1 = GameUniverse.createInstance(new Ladder("trussRight"));
+        LeftLadder1.setSize(new Vector2D(100,200));
+        LeftLadder1.setPosition(new Vector2D(275,460));
+        LeftLadder1.setTexture("floorImage");
+        
+        //2nd floor ladder L
+        Ladder LeftLadder2 = GameUniverse.createInstance(new Ladder("trussRight"));
+        LeftLadder2.setSize(new Vector2D(75,100));
+        LeftLadder2.setPosition(new Vector2D(200,360));
+        LeftLadder2.setTexture("floorImage");
+        
+        //3rd floor ladder L
+        Ladder LeftLadder3 = GameUniverse.createInstance(new Ladder("trussRight"));
+        LeftLadder3.setSize(new Vector2D(75,110));
+        LeftLadder3.setPosition(new Vector2D(255,230));
+        LeftLadder3.setTexture("floorImage");
+        
+        //1st floor ladder R
+        Ladder RightLadder1 = GameUniverse.createInstance(new Ladder("trussRight"));
+        RightLadder1.setSize(new Vector2D(100,200));
+        RightLadder1.setPosition(new Vector2D(825,460));
+        RightLadder1.setTexture("floorImage");
+        
+        //2nd floor ladder R
+        Ladder RightLadder2 = GameUniverse.createInstance(new Ladder("trussRight"));
+        RightLadder2.setSize(new Vector2D(75,100));
+        RightLadder2.setPosition(new Vector2D(900,360));
+        RightLadder2.setTexture("floorImage");
+        
+        //3rd floor ladder R
+        Ladder RightLadder3 = GameUniverse.createInstance(new Ladder("trussRight"));
+        RightLadder3.setSize(new Vector2D(75,110));
+        RightLadder3.setPosition(new Vector2D(825,230));
+        RightLadder3.setTexture("floorImage");
         
         //boss
         level1Boss = GameUniverse.createInstance(new Boss1("ArtilleryBoss"));
