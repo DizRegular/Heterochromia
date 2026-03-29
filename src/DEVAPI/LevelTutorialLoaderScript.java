@@ -6,7 +6,6 @@ package DEVAPI;
 
 import DEVAPI.CustomGameObject.Door;
 import DEVAPI.CustomGameObject.Player.PlayerLoaderScript;
-import DEVAPI.CustomGameObject.PortalToLevel1;
 import DEVAPI.CustomGameObject.SceneController;
 import RenderObject.BaseObject;
 import RenderObject.Creatable.OneWayPlatform;
@@ -17,6 +16,7 @@ import RenderObject.Creatable.Block;
 import RenderObject.Creatable.Camera;
 import RenderObject.Creatable.Decoration;
 import RenderObject.Creatable.Ladder;
+import RenderObject.Creatable.Portal1;
 import RenderObject.Creatable.Vector2D;
 import RenderObject.Creatable.ViewPort;
 import RenderObject.InputListener;
@@ -57,6 +57,8 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
     public int maxjump=3;
     public boolean jumping=false;
     public Camera cam1;
+    private KinematicObject playerObj;
+    private Portal1 portalObj;
     public ArrayList<BaseObject> itemInScene = new ArrayList<>();
     public LevelTutorialLoaderScript(String name) {
         super(name);
@@ -131,25 +133,7 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
         rightWall.setTexture("wallImage");
         itemInScene.add(rightWall);
         }
-        
-//        //ControlGuide
-//        Decoration Control1 = GameUniverse.createInstance(new Decoration("Control1"));
-//        Control1.setSize(new Vector2D(200, 150));
-//        Control1.setPosition(new Vector2D(100,400));
-//        Control1.setTexture("controlImage");
-//        
-//        //ControlGuide2
-//        Decoration Control2 = GameUniverse.createInstance(new Decoration("Control2"));
-//        Control2.setSize(new Vector2D(200, 150));
-//        Control2.setPosition(new Vector2D(100,200));
-//        Control2.setTexture("controlImage2");
-//        
-//        //ControlGuide3
-//        Decoration Control3 = GameUniverse.createInstance(new Decoration("Control3"));
-//        Control3.setSize(new Vector2D(250, 150));
-//        Control3.setPosition(new Vector2D(425,375));
-//        Control3.setTexture("controlImage3");
-        
+            
         //ladder-Pillar as example for climbing
         for (int i = 0; i < 5; i++) {
         Ladder PillarBase = GameUniverse.createInstance(new Ladder("PillarBase"));
@@ -171,27 +155,13 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
         Platform1.setPosition(new Vector2D(400,300));
         Platform1.setTexture("TutorialPlatform");
         itemInScene.add(Platform1);
-        
-        //trashcan
-        Decoration Trashcan = GameUniverse.createInstance(new Decoration("Trashcan"));
-        Trashcan.setSize(new Vector2D(200, 150));
-        Trashcan.setPosition(new Vector2D(500,550));
-        Trashcan.setTexture("Trashcan");
-        itemInScene.add(Trashcan);
-        
+           
         //platform on the top of trashcan to make it jumpable
         OneWayPlatform Platform2 = GameUniverse.createInstance(new OneWayPlatform("platform2"));
         Platform2.setSize(new Vector2D(200,50));
         Platform2.setPosition(new Vector2D(500,550));
         Platform2.setTexture("blankImage");
         itemInScene.add(Platform2);
-        
-        //trashcan2
-        Decoration Trashcan2 = GameUniverse.createInstance(new Decoration("Trashcan2"));
-        Trashcan2.setSize(new Vector2D(200, 150));
-        Trashcan2.setPosition(new Vector2D(800,550));
-        Trashcan2.setTexture("Trashcan");
-        itemInScene.add(Trashcan2);
         
         //platform on the top of trashcan2 to make it jumpable
         OneWayPlatform Platform3 = GameUniverse.createInstance(new OneWayPlatform("platform3"));
@@ -207,9 +177,10 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
             fence.setTexture("fenceImage");
         itemInScene.add(fence);
 
-        PortalToLevel1 nextLevel = GameUniverse.createInstance(new PortalToLevel1("PortalTo1"));
-        nextLevel.setSize(new Vector2D(200, 300));
-        nextLevel.setPosition(new Vector2D(500, 400));
+        this.portalObj = GameUniverse.createInstance(new Portal1("PortalObj"));
+        this.portalObj.setSize(new Vector2D(200, 300));
+        this.portalObj.setPosition(new Vector2D(1000, 400));
+        itemInScene.add(portalObj);
         
         //camera settings
         GameUniverse.setBackground("res/GameAssets/Background/bgplacegholder.jpg");
@@ -219,20 +190,31 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
     }
     
     
+//    @Override
+//    public void process(double deltaTime) {
+//
+//    }
+//
+//    @Override
+//    public void onInput() {
+//        //nuh uh
+//    }
+
+    @Override
+    public void deleteSceneItem() {
+    for (BaseObject obj : itemInScene) {
+        obj.destroyInstance();
+    }
+    itemInScene.clear(); // Good practice to empty the list
+    InputManager.unregisterInputListenerObject(this); // Stop listening to keys
+    }
     @Override
     public void process(double deltaTime) {
-
+        //Non
     }
 
     @Override
     public void onInput() {
-        //nuh uh
-    }
-
-    @Override
-    public void deleteSceneItem() {
-       for (BaseObject obj : itemInScene) {
-           obj.destroyInstance();
-       }
+        //not used yet
     }
 }

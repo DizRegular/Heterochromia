@@ -29,10 +29,10 @@ import java.awt.event.KeyEvent;
  * @author asiau
  */
 public class Level1LoaderScript extends ScriptSheet implements InputListener {
-    public String floorImage = "res/GameAssets/Textures/Blank.png";
-    public String wallImage = "res/GameAssets/Textures/Cobblestone.png";
-    public String platformImage = "res/GameAssets/Textures/Platform.png";
-    public String shelfImage = "res/GameAssets/Textures/Shelf.jpg";
+    public String floorImage1 = "res/GameAssets/Textures/Blank.png";
+    public String wallImage1 = "res/GameAssets/Textures/Cobblestone.png";
+    public String platformImage1 = "res/GameAssets/Textures/Platform.png";
+    public String shelfImage1 = "res/GameAssets/Textures/Shelf.jpg";
     public KinematicObject player;
     public KinematicObject ball;
     public boolean setSize = false;
@@ -65,10 +65,10 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener {
 
     @Override
     public void onCreate(){
-        GameUniverse.loadImage("floorImage", floorImage);
-        GameUniverse.loadImage("wallImage", wallImage);
-        GameUniverse.loadImage("platformImage", platformImage);
-        GameUniverse.loadImage("shelfImage", shelfImage);
+        GameUniverse.loadImage("floorImage", floorImage1);
+        GameUniverse.loadImage("wallImage", wallImage1);
+        GameUniverse.loadImage("platformImage", platformImage1);
+        GameUniverse.loadImage("shelfImage", shelfImage1);
         GameUniverse.loadImage("realLaserImage", "res/Boss1/Skill 1/reallaser.png");
         GameUniverse.loadImage("realLaserXImage", "res/Boss1/Skill 1/reallaser X.png");
         GameUniverse.loadImage("redWarning", "res/waring.png");
