@@ -47,25 +47,13 @@ public class laserwaringX1 extends StaticObject implements touchable,Scriptable 
                 real.setCollision(false);
                 real.setPosition(this.getPosition());
                 blinkCount=0;
-                System.out.println(real.getCollision());
             }}
             
         if(destroy<delaydestroy){ 
-//             GameUniverse.getObjectByName("reallaser", spawnRealLaser.class).destroyInstance();
             this.destroyInstance();
             }
         
     }
-
-//    private void spawnRealLaser() {
-//        
-//        Block realLaser = GameUniverse.createInstance(new Block("RealLaserBeam"));
-//        realLaser.setPosition(this.getPosition());
-//        realLaser.setSize(new Vector2D(66,10000));
-//        realLaser.setTexture("realLaserImage");
-//        realLaser.setCollision(false);
-//        
-//    }
     
     @Override
     public void onCreate() {

@@ -5,29 +5,22 @@
 package DEVAPI;
 
 import Boss1ass.Boss1;
-import DEVAPI.CustomGameObject.Door;
 import DEVAPI.CustomGameObject.Player.PlayerObject;
 import DEVAPI.CustomGameObject.SceneController;
 import RenderObject.BaseObject;
-import RenderObject.Creatable.OneWayPlatform;
+import DEVAPI.CustomGameObject.OneWayPlatform;
 import RenderObject.Creatable.Animator;
-import RenderObject.Creatable.AreaDetector;
 import RenderObject.Creatable.Block;
 import RenderObject.Creatable.Camera;
-import RenderObject.Creatable.Decoration;
-import RenderObject.Creatable.Ladder;
-import RenderObject.Creatable.Portal2;
+import DEVAPI.CustomGameObject.Ladder;
+import DEVAPI.CustomGameObject.Portal2;
 import RenderObject.Creatable.Vector2D;
-import RenderObject.Creatable.ViewPort;
 import RenderObject.InputListener;
-import RenderObject.InvalidGameObjectPropertyException;
 import RenderObject.KinematicObject;
 import RenderObject.ScriptSheet;
-import RenderObject.StaticObject;
 import UI.Boss1HpDisplay;
 import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**

@@ -1,10 +1,11 @@
-package RenderObject.Creatable;
+package DEVAPI.CustomGameObject;
 
 import RenderObject.Addon.Scriptable;
 import RenderObject.Creatable.Block;
 import RenderObject.GameObject;
 import RenderObject.KinematicObject;
 import RenderObject.Addon.touchable;
+import RenderObject.Creatable.Block;
 import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
 import java.awt.event.KeyEvent;
@@ -26,7 +27,6 @@ public class OneWayPlatform extends Block implements touchable,Scriptable{
             double platformTop = this.getPosition().getYCoord();
             boolean holdingDown = InputManager.isKeyDown('s') || InputManager.isKeyDown(KeyEvent.VK_S);
             
-            System.out.println(this.getCollision());
 //         Logic: If player is above the platform top AND not holding 'S'
             if (playerBottom <= platformTop + 1 && !holdingDown) {
                 this.setCollision(true); // Make it a floor

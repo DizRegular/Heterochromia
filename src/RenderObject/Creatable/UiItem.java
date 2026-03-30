@@ -1,5 +1,6 @@
-package RenderObject;
+package RenderObject.Creatable;
 
+import RenderObject.BaseObject;
 import UniverseEngine.UiManager;
 import java.awt.Graphics2D;
 

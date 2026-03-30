@@ -26,7 +26,7 @@ public class Character1 extends  CharacterSet {
 
     @Override
     public void useSkill(PlayerObject player) {
-        player.takeDamage(player.getMaxHealthPoint()*-0.01, player);
+        player.takeDamage(player.getMaxHealthPoint()*-0.05, player);
         
     }
 

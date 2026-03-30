@@ -8,11 +8,9 @@ package Boss2ass;
  *
  * @author tin_sel
  */
-import Boss1ass.Boss1;
 import DEVAPI.CustomGameObject.Damagable;
 import RenderObject.Addon.Scriptable;
 import RenderObject.Addon.touchable;
-import RenderObject.Creatable.Vector2D;
 import RenderObject.GameObject;
 import RenderObject.StaticObject;
 import UniverseEngine.GameUniverse;

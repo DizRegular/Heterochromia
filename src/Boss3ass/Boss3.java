@@ -153,7 +153,6 @@ public class Boss3 extends StaticObject implements touchable, Damagable {
     @Override
     public void onTouched(GameObject obj) {
         if(skill1useing){
-            System.out.println("hp player--");
             skill1useing=false;
             //set anim defalse
         }

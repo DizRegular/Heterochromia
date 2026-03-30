@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package RenderObject.Creatable;
+package DEVAPI.CustomGameObject;
 
 import DEVAPI.Level2LoaderScript;
 import RenderObject.Addon.Scriptable;
@@ -10,6 +10,7 @@ import RenderObject.Creatable.Block;
 import RenderObject.GameObject;
 import RenderObject.KinematicObject;
 import RenderObject.Addon.touchable;
+import RenderObject.Creatable.Block;
 import RenderObject.ScriptSheet;
 import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
@@ -30,7 +31,7 @@ public class Portal2 extends Block implements touchable{
 
     double playerBottom = playerObj.getPosition().getYCoord() + playerObj.getSize().getYCoord();
     double platformTop = this.getPosition().getYCoord();
-    boolean holdingDown = InputManager.isKeyDown('s') || InputManager.isKeyDown(KeyEvent.VK_S);
+    boolean holdingDown = InputManager.isKeyDown('e') || InputManager.isKeyDown(KeyEvent.VK_E);
 
     // 2. Check if player is overlapping the portal while holding 'S'
     if (playerBottom >= platformTop && holdingDown) {

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class AnimationManager {
     private static ArrayList<Animator> animators = new ArrayList<>();
-    private static double accumulateTime = 0;
     
     public static void registerStyledObject(Animator animator) {
         AnimationManager.animators.add(animator);

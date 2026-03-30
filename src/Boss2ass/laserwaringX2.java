@@ -8,15 +8,11 @@ package Boss2ass;
  *
  * @author tin_sel
  */
-import Boss1ass.*;
-import RenderObject.Creatable.Block;
 import RenderObject.Creatable.Vector2D;
 import RenderObject.Addon.Scriptable;
 import RenderObject.Addon.touchable;
 import RenderObject.*;
 import UniverseEngine.GameUniverse;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 public class laserwaringX2 extends StaticObject implements touchable,Scriptable {
     private double timer = 0;
     private double delaydestroy=0;

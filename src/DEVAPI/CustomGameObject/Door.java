@@ -6,7 +6,6 @@ package DEVAPI.CustomGameObject;
 
 import RenderObject.Creatable.AreaDetector;
 import RenderObject.GameObject;
-import RenderObject.InvalidGameObjectPropertyException;
 import RenderObject.StaticObject;
 import RenderObject.Creatable.Vector2D;
 import RenderObject.Addon.touchable;
@@ -29,7 +28,6 @@ public class Door extends StaticObject implements touchable{
                 AreaDetector area = GameUniverse.createInstance(new AreaDetector("ExtraPlatform"));
                 area.setSize(new Vector2D(50, 500));
                 area.setPosition(new Vector2D(200, -200));
-//            SceneManager.setScene(/*scene*/null);
     }
     }
     

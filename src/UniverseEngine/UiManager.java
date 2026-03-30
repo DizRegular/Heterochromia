@@ -1,6 +1,6 @@
 package UniverseEngine;
 
-import RenderObject.UiItem;
+import RenderObject.Creatable.UiItem;
 import java.awt.Graphics2D;
 import java.util.Comparator;
 import java.util.concurrent.CopyOnWriteArrayList;

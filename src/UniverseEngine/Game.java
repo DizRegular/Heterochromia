@@ -29,12 +29,10 @@ public class Game implements Runnable {
         running = true;
         Fetcher.initiate();
         devAPI = new Main();
-        Thread processAPI = new Thread(devAPI);
         gameManipulator = new GameManipulator(devAPI);
         devAPI.initialize();   
         game = new Thread(this);
         game.start();
-        processAPI.start();
     }
     
     public void stop() {

@@ -4,7 +4,7 @@
  */
 package UI;
 
-import RenderObject.UiItem;
+import RenderObject.Creatable.UiItem;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;

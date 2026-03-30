@@ -8,15 +8,15 @@ import DEVAPI.CustomGameObject.Door;
 import DEVAPI.CustomGameObject.Player.PlayerLoaderScript;
 import DEVAPI.CustomGameObject.SceneController;
 import RenderObject.BaseObject;
-import RenderObject.Creatable.OneWayPlatform;
+import DEVAPI.CustomGameObject.OneWayPlatform;
 
 import RenderObject.Creatable.Animator;
 import RenderObject.Creatable.AreaDetector;
 import RenderObject.Creatable.Block;
 import RenderObject.Creatable.Camera;
 import RenderObject.Creatable.Decoration;
-import RenderObject.Creatable.Ladder;
-import RenderObject.Creatable.Portal1;
+import DEVAPI.CustomGameObject.Ladder;
+import DEVAPI.CustomGameObject.Portal1;
 import RenderObject.Creatable.Vector2D;
 import RenderObject.Creatable.ViewPort;
 import RenderObject.InputListener;
@@ -184,11 +184,9 @@ public class LevelTutorialLoaderScript extends ScriptSheet implements InputListe
         portalObj.setCurrentAnimator("portalAnim", 0);
         itemInScene.add(portalObj);
         
-        //camera settings
         GameUniverse.setBackground("res/GameAssets/Background/bgplacegholder.jpg");
         InputManager.registerInputListenerObject(this);
         
-        //player 
     }
     
     @Override

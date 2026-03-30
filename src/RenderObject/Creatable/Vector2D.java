@@ -32,8 +32,7 @@ public class Vector2D {
     }
 
     /** calculate the result of two 2d vector combine
-     * @param v
-     * @return 
+     * @param y
      */
     public void setY(double y) {    
         this.y = y;

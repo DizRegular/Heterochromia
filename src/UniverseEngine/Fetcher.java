@@ -1,12 +1,8 @@
 package UniverseEngine;
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
 import java.io.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.WritableRaster;
 public class Fetcher {
     /** Load games assets so other game handler can use the resource.
      */

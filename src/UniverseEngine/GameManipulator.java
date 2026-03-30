@@ -54,23 +54,7 @@ public class GameManipulator {
             GameEventListener.handleTouch(eventSource, eventCause, "");
             return true;
             }
-//            if(eventCause instanceof KinematicObject k && k instanceof touchable ){
-//            GameEventListener.handleTouch(eventCause, eventSource, "");
-//            return true;
-//            }
         }
-//        if (eventSource instanceof touchable && eventSource instanceof StaticObject){
-//            GameEventListener.handleTouch(eventSource, eventCause, "");
-//            return false;
-//        }
-//        if (eventSource instanceof touchable && eventSource instanceof KinematicObject){
-//            GameEventListener.handleTouch(eventSource, eventCause, "");
-//            return true;
-//        }
-//        if(eventSource instanceof  touchable&& eventSource instanceof StaticObject sto && sto.getCollision()==false){
-//            GameEventListener.handleTouch(eventSource, eventCause, "");
-//            return true;
-//        }
         return false;
     }
 
@@ -116,7 +100,6 @@ public class GameManipulator {
             countSize++;
         }
         obj.setQuadrant(countedQuadrant);
-        Renderer.setPrintingTextOnScreen("|" + obj.getQuadrants()[0] + "|" + obj.getQuadrants()[1] + "|" + obj.getQuadrants()[2] + "|" + obj.getQuadrants()[3] + "|");
     }
 
     private void setYCollsion(double YIntersect, KinematicObject k, CollisionObject otherObj, double YAxis) {

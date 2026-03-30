@@ -4,7 +4,6 @@
  */
 package DEVAPI;
 
-import Boss1ass.Boss1;
 import Boss2ass.Boss2;
 import DEVAPI.CustomGameObject.Player.PlayerObject;
 import DEVAPI.CustomGameObject.SceneController;
@@ -13,11 +12,9 @@ import RenderObject.BaseObject;
 import RenderObject.Creatable.Animator;
 import RenderObject.Creatable.Block;
 import RenderObject.Creatable.Camera;
-import RenderObject.Creatable.Portal3;
+import DEVAPI.CustomGameObject.Portal3;
 import RenderObject.Creatable.Vector2D;
-import RenderObject.Creatable.ViewPort;
 import RenderObject.InputListener;
-import RenderObject.InvalidGameObjectPropertyException;
 import RenderObject.KinematicObject;
 import RenderObject.ScriptSheet;
 import UI.Boss2HpDisplay;

@@ -189,12 +189,6 @@ public class PlayerLoaderScript extends ScriptSheet {
         playerJump2Anim.setSpeed(9);
         
         player.setCurrentAnimator("playerSwordIdleAnim", animPriority.idle.getPriority());
-//        try {
-//            player.addConstraint(GameUniverse.getObjectByName("PlayerCamera", Camera.class));
-//        } catch (InvalidGameObjectPropertyException e) {
-//            e.printStackTrace();
-//        }
-        
         
        playerCamera = GameUniverse.getObjectByName("PlayerCamera", Camera.class);
     }
@@ -283,7 +277,7 @@ public class PlayerLoaderScript extends ScriptSheet {
 
         }
         
-        if (attack && attackableTime < currAttackableTime && !attacking) {
+        if (attack && attackableTime < currAttackableTime && !attacking && !shift && !shifting) {
             attacking = true;
             player.setCurrentAnimator(player.getCurrentCharacterSet().getSpecificCharacterAnimationName(animPriority.attack.getPriority()), animPriority.attack.getPriority());
             player.getCurrentCharacterSet().normalAttack(player);
@@ -312,7 +306,7 @@ public class PlayerLoaderScript extends ScriptSheet {
             canUseSkill = false;
         }
 
-        if (shift && jumping && !shifting) {
+        if (shift && jumping && !shifting && !attacking) {
             if (currShiftableTime >= ShiftableTime) {
                 if (!(player.getCurrentCharacterSet() instanceof Character1)) {
                     player.setCurrentAnimator(player.getCurrentCharacterSet().getSpecificCharacterAnimationName(animPriority.dashParry.getPriority()), animPriority.dashParry.getPriority());
@@ -368,7 +362,6 @@ public class PlayerLoaderScript extends ScriptSheet {
                 continuousHeal = false;
             }
         }
-        player.printStat();
         if (burstDamage) {
             currBurstDamageTimer += deltaTime;
             player.takeDamage(0.1, player);

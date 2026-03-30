@@ -1,6 +1,5 @@
 package RenderObject.Creatable;
 
-import RenderObject.Creatable.Vector2D;
 import RenderObject.Addon.touchable;
 import RenderObject.GameObject;
 import RenderObject.KinematicObject;

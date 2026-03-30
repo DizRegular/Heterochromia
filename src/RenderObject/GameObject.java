@@ -1,6 +1,5 @@
 package RenderObject;
 import RenderObject.Creatable.Vector2D;
-import java.util.ArrayList;
 
 abstract public class GameObject extends BaseObject { 
     protected Vector2D position;

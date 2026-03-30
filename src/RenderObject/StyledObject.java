@@ -80,7 +80,6 @@ abstract public class StyledObject extends GameObject {
         this.getCurrentAnimator().setEnabled(false);
         this.currPriority = IncomingPriority;
         this.currentAnim = animName;
-        System.out.println(this.getCurrentAnimator() + "," + this.name + "," + animName);
         this.getCurrentAnimator().setFinished(false);
         this.getCurrentAnimator().setCurrentFrame(0);
         this.getCurrentAnimator().setEnabled(true);

@@ -4,7 +4,7 @@
  */
 package UI;
 
-import RenderObject.UiItem;
+import RenderObject.Creatable.UiItem;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -24,6 +24,6 @@ public class DeathScreen extends UiItem {
     public void draw(Graphics2D g) {
         g.setColor(Color.RED);
         g.setFont(font);
-        g.drawString("You died!", 350, 450);
+        g.drawString("You died..", 350, 450);
     }
 }

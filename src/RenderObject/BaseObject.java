@@ -1,6 +1,5 @@
 package RenderObject;
 
-import UniverseEngine.GameUniverse;
 import java.util.ArrayList;
 
 abstract public class BaseObject {
@@ -15,8 +14,6 @@ abstract public class BaseObject {
     protected ArrayList<String> TagsContainer = new ArrayList<>();
     protected ArrayList<BaseObject> constraints = new ArrayList<>();
 
-    protected DataModifier extraData;
-    
     public BaseObject(String name) {
         this.name = name;
     }
@@ -116,11 +113,4 @@ abstract public class BaseObject {
         obj.parent = null;
     }
     
-    public DataModifier getDataModifier() {
-        return this.extraData;
-    }
-    
-    public void setDataModifier(DataModifier data) {
-        this.extraData = data;
-    }
 }

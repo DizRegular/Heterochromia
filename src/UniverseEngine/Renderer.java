@@ -9,9 +9,7 @@ import javax.swing.JFrame;
 
 public class Renderer {
     /** Render everything that this game is meant to show to the player */
-    private Fetcher gameAssetsLoader;
     private static final CopyOnWriteArrayList<StyledObject> texturedObject = new CopyOnWriteArrayList<>();
-    private static String text = ""; // use this for debugging
 
     public static void render(Camera camera, JFrame viewPort) {
         BufferStrategy bs = camera.getWindow().getBufferStrategy();
@@ -75,7 +73,4 @@ public class Renderer {
         Renderer.texturedObject.remove(styObj);
     }
 
-    public static void setPrintingTextOnScreen(String s) {
-        Renderer.text = s;
-    }
 }

@@ -5,30 +5,20 @@
 package DEVAPI;
 
 import Boss3ass.Boss3;
-import DEVAPI.CustomGameObject.Door;
 import DEVAPI.CustomGameObject.Player.PlayerObject;
-import static DEVAPI.Level2LoaderScript.boss2die;
-import RenderObject.Creatable.OneWayPlatform;
+import DEVAPI.CustomGameObject.OneWayPlatform;
 import RenderObject.Creatable.Animator;
-import RenderObject.Creatable.AreaDetector;
 import RenderObject.Creatable.Block;
 import RenderObject.Creatable.Camera;
-import RenderObject.Creatable.Decoration;
-import RenderObject.Creatable.Ladder;
-import RenderObject.Creatable.Portal3;
+import DEVAPI.CustomGameObject.Ladder;
 import RenderObject.Creatable.Vector2D;
-import RenderObject.Creatable.ViewPort;
 import RenderObject.InputListener;
-import RenderObject.InvalidGameObjectPropertyException;
 import RenderObject.KinematicObject;
 import RenderObject.ScriptSheet;
 import UI.Boss3HpDisplay;
-import UI.Pause;
 import UI.WinningScreen;
 import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
-import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 
 /**
  *
@@ -50,9 +40,7 @@ public class Level3LoaderScript extends ScriptSheet implements InputListener {
     public boolean jumping=false;
     public Camera cam1;
     public Boss3 level1Boss;
-    private Pause pauseUI;
     boolean isPaused = false; 
-    boolean wasEscDown = false;
     public boolean hasBoss3Create = false;
     public static boolean boss3die = false;
     public Level3LoaderScript(String name) {

@@ -39,7 +39,6 @@ public class HomingOrb extends StaticObject implements touchable,Scriptable {
 
     @Override
     public void onTouched(GameObject obj) {
-        System.out.println("heeyai");
         if(obj instanceof Damagable d){
             d.takeDamage(20,GameUniverse.getObjectByName("ArtilleryBoss", Boss1.class) );
         }

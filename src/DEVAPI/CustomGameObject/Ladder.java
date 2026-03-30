@@ -2,10 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package RenderObject.Creatable;
+package DEVAPI.CustomGameObject;
 
 import RenderObject.Addon.Scriptable;
 import RenderObject.Addon.touchable;
+import RenderObject.Creatable.AreaDetector;
+import RenderObject.Creatable.Vector2D;
 import RenderObject.GameObject;
 import RenderObject.KinematicObject;
 import UniverseEngine.GameUniverse;
@@ -50,7 +52,6 @@ public class Ladder extends AreaDetector implements touchable,Scriptable{
     if (isInside) {
         boolean holdingUp = InputManager.isKeyDown(KeyEvent.VK_W) || InputManager.isKeyDown(KeyEvent.VK_UP);
         boolean holdingDown = InputManager.isKeyDown(KeyEvent.VK_S) || InputManager.isKeyDown(KeyEvent.VK_DOWN);
-        System.out.println("A");
         if (holdingUp) {
             //make player climb up
             playerObj.setVelocity(new Vector2D(playerObj.getVelocity().getXCoord(), -3));

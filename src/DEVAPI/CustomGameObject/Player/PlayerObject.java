@@ -3,7 +3,6 @@ package DEVAPI.CustomGameObject.Player;
 import DEVAPI.CustomGameObject.Damagable;
 import DEVAPI.CustomGameObject.Parryable;
 import DEVAPI.CustomGameObject.SpeedController;
-import RenderObject.GameObject;
 import RenderObject.KinematicObject;
 
 public class PlayerObject extends KinematicObject implements Damagable, SpeedController, Parryable{

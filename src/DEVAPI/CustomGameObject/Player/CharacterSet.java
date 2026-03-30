@@ -1,8 +1,5 @@
 package DEVAPI.CustomGameObject.Player;
 
-import RenderObject.Creatable.Vector2D;
-
-
 abstract public class CharacterSet {
     
    abstract public int ShiftInteraction(PlayerObject player);

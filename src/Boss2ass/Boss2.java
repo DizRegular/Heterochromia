@@ -8,7 +8,6 @@ package Boss2ass;
  *
  * @author tin_sel
  */
-import Boss1ass.laserwaringY;
 import DEVAPI.CustomGameObject.Damagable;
 import DEVAPI.Level2LoaderScript;
 import RenderObject.GameObject;
@@ -16,13 +15,12 @@ import RenderObject.KinematicObject;
 import RenderObject.StaticObject;
 import RenderObject.Creatable.Vector2D;
 import RenderObject.Addon.touchable;
-import RenderObject.Creatable.Animator;
 import UniverseEngine.GameUniverse;
 import java.util.Random;
 public class Boss2 extends StaticObject implements touchable, Damagable {
     private boss2stat stats;
     int shootTimer = 0;
-    int shootCooldown = 180;
+    int shootCooldown = 120;
     int randomskill=0;
     int speed=1;
     boolean havelife=true;
@@ -31,7 +29,6 @@ public class Boss2 extends StaticObject implements touchable, Damagable {
     double dashSpeed = 30.0;
     int dashtime=0;
     boolean a=false;
-    Vector2D taget;
     Random rand = new Random();
     public Boss2(String name) {
         super(name);
@@ -45,7 +42,6 @@ public class Boss2 extends StaticObject implements touchable, Damagable {
 
     public void takeDamage(double damage, Damagable culprit) {
         stats.boss1takedamage(damage);
-        System.out.println("ngsaejklrhfiopqahfpiourahweewfgpiuhasdioufghgqapi");
         if (stats.getHp() <= 0) {
             Level2LoaderScript.boss2die=true;
             this.destroyInstance();
@@ -140,7 +136,6 @@ public class Boss2 extends StaticObject implements touchable, Damagable {
     @Override
     public void onTouched(GameObject obj) {
         if(skill1useing){
-            System.out.println("hp player--");
             skill1useing=false;
             //set anim defalse
         }

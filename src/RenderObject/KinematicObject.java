@@ -3,7 +3,6 @@ package RenderObject;
 import RenderObject.Creatable.Vector2D;
 import RenderObject.Addon.Gravity;
 import UniverseEngine.GameManipulator;
-import UniverseEngine.GameUniverse;
 
 public class KinematicObject extends CollisionObject implements Gravity {
     protected Vector2D acceleration = new Vector2D(0,0);

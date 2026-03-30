@@ -51,21 +51,10 @@ public class laserwaringY extends StaticObject implements touchable,Scriptable {
             }}
             
         if(destroy<delaydestroy){ 
-//             GameUniverse.getObjectByName("reallaser", spawnRealLaser.class).destroyInstance();
             this.destroyInstance();
             }
         
     }
-
-//    private void spawnRealLaser() {
-//        
-//        Block realLaser = GameUniverse.createInstance(new Block("RealLaserBeam"));
-//        realLaser.setPosition(this.getPosition());
-//        realLaser.setSize(new Vector2D(66,10000));
-//        realLaser.setTexture("realLaserImage");
-//        realLaser.setCollision(false);
-//        
-//    }
     
     @Override
     public void onCreate() {

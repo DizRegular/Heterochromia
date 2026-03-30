@@ -1,12 +1,8 @@
 package UI;
 
-import Boss1ass.Boss1;
-import Boss2ass.Boss2;
 import Boss3ass.Boss3;
-import DEVAPI.CustomGameObject.Player.PlayerObject;
-import RenderObject.Addon.Scriptable;
 import RenderObject.Tween;
-import RenderObject.UiItem;
+import RenderObject.Creatable.UiItem;
 import UniverseEngine.GameUniverse;
 import java.awt.Color;
 import java.awt.Font;
