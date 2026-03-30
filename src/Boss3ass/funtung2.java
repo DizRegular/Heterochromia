@@ -4,13 +4,9 @@
  */
 package Boss3ass;
 
-import Boss2ass.*;
-import Boss1ass.*;
 import DEVAPI.CustomGameObject.Damagable;
 import RenderObject.Addon.Scriptable;
 import RenderObject.Addon.touchable;
-import RenderObject.Creatable.Block;
-import RenderObject.Creatable.Vector2D;
 import RenderObject.GameObject;
 import RenderObject.StaticObject;
 import UniverseEngine.GameUniverse;
@@ -19,32 +15,35 @@ import UniverseEngine.GameUniverse;
  *
  * @author tin_sel
  */
-public class funtung2 extends StaticObject implements touchable,Scriptable {
-     private double delaydestroy=0;
-     boolean hit=false;
+public class funtung2 extends StaticObject implements touchable, Scriptable {
+
+    private double delaydestroy = 0;
+    boolean hit = false;
+
     public funtung2(String name) {
         super(name);
     }
 
-    
     @Override
-    public void onCreate(){
+    public void onCreate() {
         super.onCreate();
-        
+
     }
 
     @Override
     public void onTouched(GameObject obj) {
-                        if(obj instanceof Damagable d){
-                            if(!hit){
-            d.takeDamage(80,GameUniverse.getObjectByName("rock", Boss3.class) );hit=true;}
+        if (obj instanceof Damagable d) {
+            if (!hit) {
+                d.takeDamage(80, GameUniverse.getObjectByName("rock", Boss3.class));
+                hit = true;
+            }
         }
     }
 
     @Override
     public void process(double deltaTime) {
         delaydestroy++;
-        if(delaydestroy>=40){
+        if (delaydestroy >= 40) {
             this.destroyInstance();
         }
     }

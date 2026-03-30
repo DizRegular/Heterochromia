@@ -11,6 +11,7 @@ package Boss3ass;
 import Boss2ass.*;
 import Boss1ass.laserwaringY;
 import DEVAPI.CustomGameObject.Damagable;
+import DEVAPI.CustomGameObject.Player.PlayerObject;
 import DEVAPI.Level3LoaderScript;
 import RenderObject.Addon.Scriptable;
 import RenderObject.GameObject;
@@ -51,6 +52,9 @@ public class Boss3 extends StaticObject implements touchable, Damagable {
     public void takeDamage(double damage, Damagable culprit) {
         stats.boss1takedamage(damage);
         //rammus
+        if (culprit instanceof PlayerObject) {
+            culprit.thorn(1);
+        }
         if (stats.getHp() <= 0) {
             this.destroyInstance();
             Level3LoaderScript.boss3die = true;
@@ -166,6 +170,10 @@ public class Boss3 extends StaticObject implements touchable, Damagable {
         fun.setSize(new Vector2D(150,150));
         fun.setVisibility(false);
     } 
+
+    @Override
+    public void thorn(double damage) {
+    }
 
     
     }

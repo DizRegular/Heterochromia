@@ -140,5 +140,10 @@ public class Boss2 extends StaticObject implements touchable, Damagable {
             //set anim defalse
         }
     }
+
+    @Override
+    public void thorn(double damage) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
    
 }

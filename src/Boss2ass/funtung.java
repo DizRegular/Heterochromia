@@ -36,7 +36,7 @@ public class funtung extends StaticObject implements touchable,Scriptable {
     public void onTouched(GameObject obj) {
                        if(obj instanceof Damagable d){
                            if(!hit){
-            d.takeDamage(70,GameUniverse.getObjectByName("samurai", Boss2.class) );hit=true;}
+            d.takeDamage(50,GameUniverse.getObjectByName("samurai", Boss2.class) );hit=true;}
         }
     }
 

@@ -145,5 +145,11 @@ public class PlayerObject extends KinematicObject implements Damagable, SpeedCon
     public void printStat() {
         System.out.println(this.HealthPoint + "HP| " + this.BaseDamage + "DP| ");
     }
+
+    @Override
+    public void thorn(double damage) {
+        if (this.getHealthPoint() - damage >= this.getMaxHealthPoint()) {return;}
+        this.setHealthPoint(this.getHealthPoint() - damage);
+    }
     
 }

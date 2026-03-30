@@ -4,8 +4,6 @@
  */
 package Boss3ass;
 
-import Boss2ass.*;
-import Boss1ass.*;
 
 /**
  *

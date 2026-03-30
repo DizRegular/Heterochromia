@@ -116,4 +116,9 @@ public class Boss1 extends StaticObject implements touchable, Damagable {
         bul.addAnimator("frie",GameUniverse.getObjectByName("frie",Animator.class ) );
         bul.setCurrentAnimator("frie", 0); //ABCED
     }
+
+    @Override
+    public void thorn(double damage) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
