@@ -7,6 +7,7 @@ import RenderObject.ScriptSheet;
 import RenderObject.Creatable.Vector2D;
 import RenderObject.InputListener;
 import RenderObject.InvalidGameObjectPropertyException;
+import UI.DeathScreen;
 import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
 import java.awt.event.KeyEvent;
@@ -27,12 +28,18 @@ public class PlayerLoaderScript extends ScriptSheet {
     private double attackableTime = 30;
     private double currAttackableTime = 0;
     private boolean attacking = false;
+    private double HealthAmount = 30;
     private boolean continuousHeal = false;
-    private double continuousHealTimer = 50;
+    private double continuousHealTimer = 300;
     private double currContinuousHealTimer = 0;
     private boolean burstDamage = false;
     private double burstDamageTimer = 600;
     private double currBurstDamageTimer = 0;
+    private double deathTimer = 300;
+    private double currDeathTimer = 0;
+    private double skillTimer = 600;
+    private double currSkillTimer = 0;
+    private boolean canUseSkill = true;
     
     private Camera playerCamera;
     
@@ -218,8 +225,10 @@ public class PlayerLoaderScript extends ScriptSheet {
     @Override
     public void process(double deltaTime) {
         if (player.getHealthPoint()<=0) {
-            player.setVisibility(true);
-            System.exit(0);
+            player.setPosition(new Vector2D(5000, 5000));
+            GameUniverse.createInstance(new DeathScreen("DeathScreen", 5, 5, 5, 5));
+            currDeathTimer += deltaTime;
+            if (currDeathTimer > deathTimer) {System.exit(0);}
         }
         
         if (created == false) {
@@ -290,7 +299,7 @@ public class PlayerLoaderScript extends ScriptSheet {
         if (!attack && faceDown && !jumping) {
             player.setCurrentAnimator(player.getCurrentCharacterSet().getSpecificCharacterAnimationName(animPriority.crouch.getPriority()), animPriority.crouch.getPriority());
         }
-        if (useSkill && !(walkLeft || walkRight) && player.getTouchedFloor() ) {
+        if (useSkill && !(walkLeft || walkRight) && player.getTouchedFloor() && canUseSkill) {
             CharacterSet pcharacter = player.getCurrentCharacterSet();
             player.setCurrentAnimator(player.getCurrentCharacterSet().getSpecificCharacterAnimationName(animPriority.skill.getPriority()), animPriority.skill.getPriority());
             if (pcharacter instanceof Character1 && player.getHealthPoint() < player.getMaxHealthPoint()) {
@@ -300,6 +309,7 @@ public class PlayerLoaderScript extends ScriptSheet {
                 pcharacter.useSkill(player);
                 burstDamage = true;
             }
+            canUseSkill = false;
         }
 
         if (shift && jumping && !shifting) {
@@ -330,18 +340,19 @@ public class PlayerLoaderScript extends ScriptSheet {
             playerShiftAnim.setFinished(true);
         }
         if (currSwitchCharTime > switchCharacterTime && !(walkLeft || walkRight) && player.getTouchedFloor()) {
-            if (num1 || num2 || num3) {
+            if ((num1 || num2 || num3) ) {
                 currSwitchCharTime = 0;
                 this.setTexutreToNormal();
                 player.setCurrPriority(0);
-                player.setCurrentAnimator(player.getCurrentCharacterSet().getSpecificCharacterAnimationName(animPriority.idle.getPriority()), animPriority.idle.getPriority());
             }
-            if (num1 ) {
+            if (num1 && player.hasCharacter(1)) {
                 player.switchCharacter(1);
-            } else if (num2) {
+                player.setCurrentAnimator(player.getCurrentCharacterSet().getSpecificCharacterAnimationName(animPriority.idle.getPriority()), animPriority.idle.getPriority());
+            } else if (num2 && player.hasCharacter(2)) {
                 player.switchCharacter(2);
                 player.movePostion(new Vector2D(0, -40));
-            } else if (num3) {
+                player.setCurrentAnimator(player.getCurrentCharacterSet().getSpecificCharacterAnimationName(animPriority.idle.getPriority()), animPriority.idle.getPriority());
+            } else if (num3 && player.hasCharacter(3)) {
                 player.switchCharacter(3);
             }
                             
@@ -351,7 +362,7 @@ public class PlayerLoaderScript extends ScriptSheet {
         }
         if (continuousHeal) {
             currContinuousHealTimer += deltaTime;
-            player.takeDamage(-0.5, player);
+            player.takeDamage(HealthAmount*-0.001, player);
             if (currContinuousHealTimer > continuousHealTimer) {
                 currContinuousHealTimer = 0;
                 continuousHeal = false;
@@ -361,14 +372,19 @@ public class PlayerLoaderScript extends ScriptSheet {
         if (burstDamage) {
             currBurstDamageTimer += deltaTime;
             player.takeDamage(0.1, player);
-            System.out.println(currBurstDamageTimer + "/" + burstDamageTimer);
             if (currBurstDamageTimer > burstDamageTimer) {
                 player.setBaseDamage(10);
                 currBurstDamageTimer = 0;
                 burstDamage = false;
             }
         }
-        
+        if (!canUseSkill) {
+            currSkillTimer += deltaTime;
+            if (currSkillTimer > skillTimer) {
+                canUseSkill = true;
+                currSkillTimer = 0;
+            }
+        }
         currAttackableTime += deltaTime;
         currSwitchCharTime += deltaTime;
         currShiftableTime += deltaTime;

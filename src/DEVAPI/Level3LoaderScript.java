@@ -6,6 +6,8 @@ package DEVAPI;
 
 import Boss3ass.Boss3;
 import DEVAPI.CustomGameObject.Door;
+import DEVAPI.CustomGameObject.Player.PlayerObject;
+import static DEVAPI.Level2LoaderScript.boss2die;
 import RenderObject.Creatable.OneWayPlatform;
 import RenderObject.Creatable.Animator;
 import RenderObject.Creatable.AreaDetector;
@@ -13,13 +15,16 @@ import RenderObject.Creatable.Block;
 import RenderObject.Creatable.Camera;
 import RenderObject.Creatable.Decoration;
 import RenderObject.Creatable.Ladder;
+import RenderObject.Creatable.Portal3;
 import RenderObject.Creatable.Vector2D;
 import RenderObject.Creatable.ViewPort;
 import RenderObject.InputListener;
 import RenderObject.InvalidGameObjectPropertyException;
 import RenderObject.KinematicObject;
 import RenderObject.ScriptSheet;
+import UI.Boss3HpDisplay;
 import UI.Pause;
+import UI.WinningScreen;
 import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
 import java.awt.Graphics2D;
@@ -35,7 +40,6 @@ public class Level3LoaderScript extends ScriptSheet implements InputListener {
     public String shelfImage = "res/GameAssets/Textures/Blank.png";
     public String platformImage = "res/GameAssets/Textures/Blank.png";
     public String ladderImage = "res/GameAssets/Textures/Blank.png";
-    public KinematicObject player;
     public KinematicObject ball;
     public boolean setSize = false;
     public double lf=0;
@@ -49,6 +53,8 @@ public class Level3LoaderScript extends ScriptSheet implements InputListener {
     private Pause pauseUI;
     boolean isPaused = false; 
     boolean wasEscDown = false;
+    public boolean hasBoss3Create = false;
+    public static boolean boss3die = false;
     public Level3LoaderScript(String name) {
         super(name);
     }
@@ -196,6 +202,9 @@ public class Level3LoaderScript extends ScriptSheet implements InputListener {
         level1Boss.addAnimator("nomalatk",nomal) ;
         level1Boss.addTags("boss");
         
+        PlayerObject player = GameUniverse.getObjectByName("ThePlayer", PlayerObject.class);
+        player.setHealthPoint(player.getMaxHealthPoint());
+        
         GameUniverse.setBackground("res/GameAssets/Background/Stage3Placeholder.png");
         InputManager.registerInputListenerObject(this);
         
@@ -203,23 +212,15 @@ public class Level3LoaderScript extends ScriptSheet implements InputListener {
     }
     @Override
     public void process(double deltaTime) {
-        
-
-        boolean isEscDown = InputManager.isKeyDown(KeyEvent.VK_ESCAPE);
-
-        if (isEscDown && !wasEscDown) {
-            isPaused = !isPaused;
-            
-            if (isPaused) {
-                pauseUI = GameUniverse.createInstance(new Pause("PauseScreen", 0, 0, 1280, 720));
-            } else {
-                if (pauseUI != null) {
-                    pauseUI.destroyInstance(); 
-                    pauseUI = null;
-                }
-            }
+         if (GameUniverse.getObjectByName("rock", Boss3.class) != null && !hasBoss3Create) {
+            hasBoss3Create = true;
+            GameUniverse.createInstance(new Boss3HpDisplay("Boss2HPUI", 5 , 5, 5, 5));
         }
-        wasEscDown = isEscDown; 
+
+        if(boss3die){
+            GameUniverse.createInstance(new WinningScreen("Winning", 5 , 5, 5, 5));
+            boss3die=false;
+        }
 
 
         if (!isPaused) {

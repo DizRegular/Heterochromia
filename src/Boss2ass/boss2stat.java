@@ -11,7 +11,7 @@ import Boss1ass.*;
  * @author tin_sel
  */
 public class boss2stat {
-    double maxhp=100;
+    double maxhp=250;
     double hp=maxhp;
     double atk=20;
     boolean phase2=false;

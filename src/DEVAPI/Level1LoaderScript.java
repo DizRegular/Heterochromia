@@ -6,6 +6,7 @@ package DEVAPI;
 
 import Boss1ass.Boss1;
 import DEVAPI.CustomGameObject.Door;
+import DEVAPI.CustomGameObject.Player.PlayerObject;
 import DEVAPI.CustomGameObject.SceneController;
 import RenderObject.BaseObject;
 import RenderObject.Creatable.OneWayPlatform;
@@ -23,6 +24,7 @@ import RenderObject.InvalidGameObjectPropertyException;
 import RenderObject.KinematicObject;
 import RenderObject.ScriptSheet;
 import RenderObject.StaticObject;
+import UI.Boss1HpDisplay;
 import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
 import java.awt.event.KeyEvent;
@@ -37,7 +39,6 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener, Sc
     public String wallImage1 = "res/GameAssets/Textures/Cobblestone.png";
     public String platformImage1 = "res/GameAssets/Textures/Platform.png";
     public String shelfImage1 = "res/GameAssets/Textures/Shelf.jpg";
-    public KinematicObject player;
     public KinematicObject ball;
     public boolean setSize = false;
     public double lf=0;
@@ -66,6 +67,8 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener, Sc
     public ArrayList<BaseObject> itemInScene = new ArrayList<>();
     private Portal2 PortalObj;
     public static boolean boss1die=false;
+    public boolean hasBoss1Create = false;
+    
     public Level1LoaderScript(String name) {
         super(name);
     }
@@ -207,20 +210,24 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener, Sc
         level1Boss = GameUniverse.createInstance(new Boss1("ArtilleryBoss"));
     
         level1Boss.setSize(new Vector2D(200, 300));
-        level1Boss.setTextureSize(new Vector2D(300,300));
         level1Boss.setPosition(new Vector2D(500, 250));
         level1Boss.setTexture("boss1Texture");
         level1Boss.setCollision(false);
         level1Boss.addTags("boss");
-        
-        //camera settings
+        level1Boss.setTextureSize(new Vector2D(600,300));
 
         GameUniverse.setBackground("res/GameAssets/Background/Stage1Placeholder.jpg");
-        
+        PlayerObject player = GameUniverse.getObjectByName("ThePlayer", PlayerObject.class);
+        player.setHealthPoint(player.getMaxHealthPoint());
         InputManager.registerInputListenerObject(this);
     }
     @Override
     public void process(double deltaTime) {
+        if (GameUniverse.getObjectByName("ArtilleryBoss", Boss1.class) != null && !hasBoss1Create) {
+            hasBoss1Create = true;
+            Boss1HpDisplay Boss1Ui = GameUniverse.createInstance(new Boss1HpDisplay("BossHPUI", 5 , 5, 5, 5));
+            itemInScene.add(Boss1Ui);
+        }
         level1Boss.updateBossAI(deltaTime);
         if(boss1die){
             PortalObj = GameUniverse.createInstance(new Portal2("PortalObj"));
@@ -230,6 +237,8 @@ public class Level1LoaderScript extends ScriptSheet implements InputListener, Sc
             PortalObj.setPosition(new Vector2D(1000, 350));
             itemInScene.add(PortalObj);
             boss1die=false;
+            PlayerObject player = GameUniverse.getObjectByName("ThePlayer", PlayerObject.class);
+            player.unlockedCharacter(2);
     }
     }
     @Override

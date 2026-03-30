@@ -21,7 +21,7 @@ public class Renderer {
         }
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 
-        g.setColor(EngineSettings.DEBUG_TEXT_COLOR);
+        
         g.fillRect(0, 0, (int) camera.getSize().getXCoord(), (int) camera.getSize().getYCoord());
         g.drawImage(GameUniverse.getBackground(), 0, 0,
                 (int) camera.getSize().getXCoord(), (int) camera.getSize().getYCoord(), null);
@@ -58,10 +58,10 @@ public class Renderer {
         // FIX: เพิ่ม UiManager.drawUI() — วาด UI Items ทับบน GameObjects
         UiManager.drawUI(g);
 
-        g.drawString("Frames:" + Game.getFramesPerSecond(), 100, 50);
-        g.drawString("Tick:" + Game.getTickPerSecond(), 100, 70);
-        g.drawString(camera.getSize().toString(), 100, 90);
-        g.drawString(text, (int) camera.getSize().getXCoord() / 2, (int) camera.getSize().getYCoord() / 2);
+        g.setColor(EngineSettings.DEBUG_TEXT_COLOR);
+        g.setFont(new Font("", Font.PLAIN, 10));
+        g.drawString("Frames:" + Game.getFramesPerSecond(), 0, 20);
+        g.drawString("Tick:" + Game.getTickPerSecond(), 0, 40);
         g.dispose();
         bs.show();
         Toolkit.getDefaultToolkit().sync();

@@ -4,7 +4,9 @@
  */
 package DEVAPI;
 
+import Boss1ass.Boss1;
 import Boss2ass.Boss2;
+import DEVAPI.CustomGameObject.Player.PlayerObject;
 import DEVAPI.CustomGameObject.SceneController;
 import static DEVAPI.Level2LoaderScript.boss2die;
 import RenderObject.BaseObject;
@@ -18,6 +20,7 @@ import RenderObject.InputListener;
 import RenderObject.InvalidGameObjectPropertyException;
 import RenderObject.KinematicObject;
 import RenderObject.ScriptSheet;
+import UI.Boss2HpDisplay;
 import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
 import java.util.ArrayList;
@@ -30,7 +33,6 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener, Sc
     public String floorImage = "res/GameAssets/Textures/Blank.png";
     public String wallImage = "res/GameAssets/Textures/Cobblestone.png";
     public String shelfImage = "res/GameAssets/Textures/Shelf.jpg";
-    public KinematicObject player;
     public KinematicObject ball;
     public boolean setSize = false;
     public double lf=0;
@@ -44,6 +46,7 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener, Sc
     public static boolean boss2die=false;
     public ArrayList<BaseObject> itemInScene = new ArrayList<>();
     private Portal3 PortalObj;
+    public boolean hasBoss2Create = false;
     public Level2LoaderScript(String name) {
         super(name);
     }
@@ -111,9 +114,17 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener, Sc
         
         GameUniverse.setBackground("res/GameAssets/Background/Stage2Placeholder.jpg");
          InputManager.registerInputListenerObject(this);
+         
+        PlayerObject player = GameUniverse.getObjectByName("ThePlayer", PlayerObject.class);
+        player.setHealthPoint(player.getMaxHealthPoint());
     }
     @Override
     public void process(double deltaTime) {
+        if (GameUniverse.getObjectByName("samurai", Boss2.class) != null && !hasBoss2Create) {
+            hasBoss2Create = true;
+            Boss2HpDisplay Boss2Ui = GameUniverse.createInstance(new Boss2HpDisplay("Boss2HPUI", 5 , 5, 5, 5));
+            itemInScene.add(Boss2Ui);
+        }
         level2Boss.updateBossAI(deltaTime);
         if(boss2die){
             PortalObj = GameUniverse.createInstance(new Portal3("PortalObj"));
@@ -123,7 +134,7 @@ public class Level2LoaderScript extends ScriptSheet implements InputListener, Sc
             PortalObj.setPosition(new Vector2D(1000, 350));
             itemInScene.add(PortalObj);
             boss2die=false;
-    }
+        }
     }
     @Override
     public void deleteSceneItem() {

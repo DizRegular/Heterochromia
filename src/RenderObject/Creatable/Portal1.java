@@ -15,7 +15,7 @@ import UniverseEngine.GameUniverse;
 import UniverseEngine.InputManager;
 import java.awt.event.KeyEvent;
 
-public class Portal1 extends Block implements touchable,Scriptable{
+public class Portal1 extends Block implements touchable{
     public Portal1(String name) {
         super(name);
         this.setCollision(false);
@@ -51,8 +51,4 @@ public class Portal1 extends Block implements touchable,Scriptable{
     }
     }
 
-    @Override
-    public void process(double deltaTime) {
-
-}
 }

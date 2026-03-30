@@ -9,6 +9,7 @@ import DEVAPI.CustomGameObject.Player.PlayerObject;
 import RenderObject.Creatable.*;
 import RenderObject.ScriptSheet;
 import RenderObject.InvalidGameObjectPropertyException;
+import UI.HpDisplay;
 import UniverseEngine.GameUniverse;
 
 /**
@@ -20,7 +21,7 @@ public class GameLoaderScript extends ScriptSheet{
     public ViewPort window;
     public Camera playerCamera;
     public String portalPathfile = "res/PixelPortal/OrangePortal.png";
-    
+    public boolean hasCreateHud = false;
     public GameLoaderScript() {
         super(null);
     }
@@ -62,7 +63,10 @@ public class GameLoaderScript extends ScriptSheet{
     
     @Override
     public void process(double deltaTime) {
-
+        if (GameUniverse.getObjectByName("ThePlayer", PlayerObject.class) != null && !hasCreateHud) {
+            hasCreateHud = true;
+            GameUniverse.createInstance(new HpDisplay("PlayerHUD", 5 , 5, 5, 5));
+        }
     }
     
 }

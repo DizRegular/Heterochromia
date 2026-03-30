@@ -11,6 +11,7 @@ package Boss3ass;
 import Boss2ass.*;
 import Boss1ass.laserwaringY;
 import DEVAPI.CustomGameObject.Damagable;
+import DEVAPI.Level3LoaderScript;
 import RenderObject.Addon.Scriptable;
 import RenderObject.GameObject;
 import RenderObject.KinematicObject;
@@ -46,11 +47,13 @@ public class Boss3 extends StaticObject implements touchable, Damagable {
     }
 
 //-----------------------------------------------------------------------------------------------------------------
+    @Override
     public void takeDamage(double damage, Damagable culprit) {
         stats.boss1takedamage(damage);
         //rammus
         if (stats.getHp() <= 0) {
             this.destroyInstance();
+            Level3LoaderScript.boss3die = true;
             havelife=false;
         }
     }

@@ -9,7 +9,7 @@ import RenderObject.KinematicObject;
 public class PlayerObject extends KinematicObject implements Damagable, SpeedController, Parryable{
     private double MaxHealthPoint = 200;
     private double HealthPoint = 200;
-    private double BaseDamage = 10;
+    private double BaseDamage = 12;
     
     private boolean invicibility = false;
     private boolean parryingb = false;
@@ -17,7 +17,7 @@ public class PlayerObject extends KinematicObject implements Damagable, SpeedCon
     
     private CharacterSet currCharacterSet = new Character1();
     private boolean hasCharacter1 = true;
-    private boolean hasCharacter2 = true;
+    private boolean hasCharacter2 = false;
     private boolean hasCharacter3 = false;
     
     private Character1 char1 = new Character1();
@@ -32,6 +32,17 @@ public class PlayerObject extends KinematicObject implements Damagable, SpeedCon
     
     public CharacterSet getCurrentCharacterSet() {
         return this.currCharacterSet;
+    }
+    
+    public boolean hasCharacter(int i) {
+        if (i ==1) {
+            return hasCharacter1;
+        } else if (i ==2) {
+            return hasCharacter2;
+        } else if (i ==3) {
+            return hasCharacter3;
+        }
+        return false;
     }
     
     public void switchCharacter(int i) {
